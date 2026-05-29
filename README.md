@@ -8,7 +8,7 @@
 
 ## 👤 Author
 **Samuel Alex** - [LinkedIn](https://linkedin.com/in/samuel-alex-47496a289) · [GitHub](https://github.com/samuelalex3737)
-```
+
 
 ![Homepage](assets/1.png)
 ![Dashboard](assets/2.png)
