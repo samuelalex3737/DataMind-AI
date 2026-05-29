@@ -1,6 +1,6 @@
-# 🧠 DataMind AI — Intelligent Data Analyst
+# 🧠 DataMind AI - Intelligent Data Analyst
 
-> AI-powered data analysis dashboard — upload any CSV and get instant EDA,
+> AI-powered data analysis dashboard - upload any CSV and get instant EDA,
 > 20+ interactive charts, forecasting, and natural language AI insights.
 
 🚀 **Live Demo:** https://huggingface.co/spaces/samuelalex37/DataMind-AI
@@ -14,14 +14,14 @@
 ---
 
 ## ✨ Features
-- **CSV Upload** — Drag-and-drop any CSV file (up to 500MB)
-- **Sample Datasets** — Pre-built Retail Sales and E-Commerce datasets
-- **Automated EDA** — Missing values, duplicates, outliers, correlations
-- **20+ Chart Types** — Line, bar, pie, heatmap, waterfall, radar, BCG, RFM, and more
-- **AI Chat Analyst** — Ask questions about your data in natural language
-- **Forecasting** — Time series forecasting with confidence intervals
-- **Key Insights** — AI-generated actionable business insights
-- **What-If Analysis** — Scenario simulation with adjustable parameters
+- **CSV Upload** - Drag-and-drop any CSV file (up to 500MB)
+- **Sample Datasets** - Pre-built Retail Sales and E-Commerce datasets
+- **Automated EDA** - Missing values, duplicates, outliers, correlations
+- **20+ Chart Types** - Line, bar, pie, heatmap, waterfall, radar, BCG, RFM, and more
+- **AI Chat Analyst** - Ask questions about your data in natural language
+- **Forecasting** - Time series forecasting with confidence intervals
+- **Key Insights** - AI-generated actionable business insights
+- **What-If Analysis** - Scenario simulation with adjustable parameters
 
 ## 🛠️ Tech Stack
 - **Backend**: Python, Flask
