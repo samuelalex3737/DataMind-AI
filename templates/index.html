@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="DataMind AI - Intelligent Data Analyst Dashboard powered by AI. Upload CSV, explore data, generate charts, and get insights.">
+  <title>DataMind - AI Data Analyst</title>
+  <link rel="stylesheet" href="/static/style.css?v=9">
+  <link rel="icon" type="image/png" href="/static/logo.png">
+  <script src="https://cdn.plot.ly/plotly-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ANIMATED BACKGROUND ORBS -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-bg"></div>
+  </div>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <a href="/" class="topbar-brand-link" onclick="location.reload(); return false;" title="Return to Home">
+        <img src="/static/logo.png" alt="DataMind AI" class="topbar-logo-img">
+        <div class="topbar-title"><span>DataMind</span> AI</div>
+      </a>
+    </div>
+    <div class="topbar-meta">
+      <div class="topbar-dataset" id="topbar-dataset"></div>
+      <div class="export-dropdown" id="export-dropdown" style="display: none;">
+        <button class="btn btn-ghost" onclick="toggleExportMenu()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Export
+        </button>
+        <div class="export-menu" id="export-menu">
+          <button onclick="exportData('csv')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            CSV File
+          </button>
+          <button onclick="exportData('excel')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            Excel Workbook
+          </button>
+          <button onclick="exportData('json')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            JSON Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- WAKE-UP OVERLAY -->
+  <div class="wakeup-overlay" id="wakeup-overlay">
+    <div class="ai-brain-loader">
+      <div class="brain-core"></div>
+      <div class="brain-ring ring-1"></div>
+      <div class="brain-ring ring-2"></div>
+      <div class="brain-ring ring-3"></div>
+    </div>
+    <div class="wakeup-text" id="wakeup-text">Waking up DataMind AI, please wait...</div>
+  </div>
+
+  <!-- SPINNER OVERLAY -->
+  <div class="spinner-overlay" id="spinner-overlay">
+    <div id="shader-bg" style="position:absolute; inset:0; z-index:-1; overflow:hidden; opacity:0.8;"></div>
+    <div class="ai-brain-loader">
+      <div class="brain-core"></div>
+      <div class="brain-ring ring-1"></div>
+      <div class="brain-ring ring-2"></div>
+      <div class="brain-ring ring-3"></div>
+    </div>
+    <div class="spinner-text" id="spinner-text">Processing...</div>
+    <div class="spinner-progress-track">
+      <div class="spinner-progress-bar" id="spinner-progress-bar"></div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <img id="modal-img" src="" alt="Chart fullscreen">
+    </div>
+  </div>
+
+  <!-- PREVIEW MODAL -->
+  <div class="preview-modal-overlay" id="preview-modal-overlay" style="display:none;">
+    <div class="preview-modal-content">
+      <h2>Dataset Preview</h2>
+      <div id="preview-stats"></div>
+      <div class="preview-table-container">
+        <table id="preview-table"></table>
+      </div>
+      <div class="preview-actions">
+        <button class="btn btn-secondary" onclick="cancelPreview()">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmPreview()">Begin Analysis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP LAYOUT -->
+  <div class="app-layout sidebar-hidden" id="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar-panel">
+      <div class="sidebar-section">
+        <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dataset</h3>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="sidebar-rows">—</div>
+            <div class="stat-label">Rows</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="sidebar-cols">—</div>
+            <div class="stat-label">Columns</div>
+          </div>
+        </div>
+        <div class="eda-item" style="margin-top:12px">
+          <span class="label">Name</span>
+          <span class="value" id="sidebar-name">No dataset</span>
+        </div>
+      </div>
+
+      <!-- Data Quality Score -->
+      <div class="sidebar-section" id="quality-section" style="display:none;">
+        <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Data Quality</h3>
+        <div class="quality-gauge-container">
+          <svg class="quality-gauge" viewBox="0 0 120 120">
+            <circle class="gauge-bg" cx="60" cy="60" r="52" />
+            <circle class="gauge-fill" id="gauge-fill" cx="60" cy="60" r="52" />
+            <text class="gauge-text" id="gauge-text" x="60" y="58" text-anchor="middle">—</text>
+            <text class="gauge-label" x="60" y="76" text-anchor="middle">Quality</text>
+          </svg>
+          <div class="quality-details" id="quality-details"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> EDA Report</h3>
+        <div id="sidebar-eda">
+          <p style="color:var(--text-dim);font-size:0.8rem;">Load a dataset to see EDA results</p>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Key Statistics</h3>
+        <div id="sidebar-stats">
+          <p style="color:var(--text-dim);font-size:0.8rem;">No data loaded</p>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg> Fill Strategies</h3>
+        <div id="sidebar-strategies">
+          <p style="color:var(--text-dim);font-size:0.8rem;">Run EDA to see strategies</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RESIZE HANDLE: SIDEBAR ↔ MAIN -->
+    <div class="resize-handle" id="resize-left" title="Drag to resize sidebar"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- LANDING -->
+      <div class="landing" id="landing">
+        <canvas id="dm-shader-bg"></canvas>
+        <h1 class="landing-title">Welcome to <span>DataMind AI</span></h1>
+        <p class="landing-sub">Upload your dataset or generate a sample to unlock AI-powered analysis, stunning
+          visualisations, and actionable insights.</p>
+
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" accept=".csv" class="upload-input" id="file-input">
+          <div class="upload-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <p class="upload-text">Drag & drop your CSV here</p>
+          <p class="upload-hint">or click to browse • Max 500MB</p>
+        </div>
+
+        <div class="divider-or"><span>or use a sample</span></div>
+
+        <div class="dataset-options">
+          <div class="dataset-card" onclick="generateDataset('retail')">
+            <div class="icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/><path d="M14 17l2-2 2 2"/><path d="M16 15v4"/></svg>
+            </div>
+            <h4>Retail Sales</h4>
+            <p>500 rows • 11 columns<br>Sales, products, customers</p>
+            <div class="explore-btn">Explore Dataset <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </div>
+          <div class="dataset-card" onclick="generateDataset('ecommerce')">
+            <div class="icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <h4>E-Commerce Orders</h4>
+            <p>500 rows • 15 columns<br>Orders, shipping, profits</p>
+            <div class="explore-btn">Explore Dataset <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </div>
+        </div>
+
+        <div class="how-it-works" id="how-it-works">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4>Upload Data</h4>
+            <p>Upload or select a dataset</p>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4>AI Analysis</h4>
+            <p>AI cleans &amp; analyses your data</p>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4>Discover</h4>
+            <p>Explore charts, insights &amp; forecasts</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div class="dashboard" id="dashboard">
+
+        <!-- KPI Cards Row -->
+        <div class="kpi-row" id="kpi-row"></div>
+
+        <div class="section-header">
+          <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Analysis Dashboard</h2>
+          <p>AI-generated charts tailored to your data</p>
+        </div>
+        
+        <!-- DATE FILTERS -->
+        <div class="date-filters-container" id="date-filters-container" style="display:none; align-items: center; gap: 15px; margin-bottom: 20px; padding: 10px 15px; background: var(--panel-bg); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--text-dim); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Filter by Date:</span>
+          <input type="date" id="date-from" class="date-input" title="Start Date">
+          <span style="color: var(--text-dim);">to</span>
+          <input type="date" id="date-to" class="date-input" title="End Date">
+          <button class="btn btn-secondary" onclick="applyDateFilters()" style="padding: 4px 10px; font-size: 0.85rem;">Apply</button>
+        </div>
+
+        <div class="charts-grid" id="charts-grid"></div>
+
+        <!-- Insights -->
+        <div class="insights-panel" id="insights-panel">
+          <div class="section-header">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2>
+            <p>Load data to generate insights</p>
+          </div>
+        </div>
+
+        <!-- Business Recommendations -->
+        <div class="recommendations-panel" id="recommendations-panel">
+          <div class="section-header">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Business Recommendations</h2>
+            <p>AI-powered actionable strategies</p>
+          </div>
+        </div>
+
+        <!-- Forecast -->
+        <div class="forecast-panel" id="forecast-panel">
+          <div class="section-header">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2>
+            <p>Load data with date columns for forecasting</p>
+          </div>
+        </div>
+
+        <!-- What-If -->
+        <div id="whatif-section" class="hidden">
+          <div class="whatif-panel">
+            <div class="section-header">
+              <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> What-If Scenario</h2>
+              <p>Adjust parameters to simulate outcomes</p>
+            </div>
+            <div class="whatif-controls">
+              <div>
+                <label>Target Metric</label>
+                <select id="whatif-target"></select>
+              </div>
+              <div>
+                <label>Adjust Column</label>
+                <select id="whatif-adjust"></select>
+              </div>
+              <div style="flex:1">
+                <label>Change: <span class="slider-value" id="slider-label">0%</span></label>
+                <input type="range" id="whatif-slider" min="-30" max="30" value="0" step="5"
+                  oninput="updateSliderLabel(this.value)">
+              </div>
+              <button class="btn btn-accent" onclick="runWhatIf()">Run Scenario</button>
+            </div>
+            <div id="whatif-result" style="font-size:0.9rem;padding:8px 0;color:var(--text-dim);"></div>
+            <img id="whatif-chart" class="hidden" src="" alt="What-if chart">
+          </div>
+        </div>
+    </main>
+  </div>
+
+  <!-- Chat Widget -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <div id="dm-chat-popup" class="dm-chat-popup">
+    <div class="dm-chat-header">
+      <div class="dm-chat-avatar"><i class="ti ti-robot"></i></div>
+      <div class="dm-chat-header-info">
+        <strong>AI Analyst</strong>
+        <span><span class="dm-online-dot"></span>Online</span>
+      </div>
+      <button id="dm-close-btn" aria-label="Close chat"><i class="ti ti-x"></i></button>
+    </div>
+    <div id="dm-messages" class="dm-messages"></div>
+    <div class="dm-suggestions" id="dm-suggestions">
+      <button class="dm-sug" data-msg="Show main trends">Main trends</button>
+      <button class="dm-sug" data-msg="Find anomalies">Anomalies</button>
+      <button class="dm-sug" data-msg="Revenue drivers">Revenue drivers</button>
+    </div>
+    <div class="dm-input-row">
+      <input id="dm-input" type="text" placeholder="Ask about your data…" />
+      <button id="dm-send-btn" aria-label="Send"><i class="ti ti-send"></i></button>
+    </div>
+  </div>
+
+  <button id="dm-chat-fab" aria-label="Open AI chat">
+    <i class="ti ti-message-chatbot"></i>
+  </button>
+
+  <script src="/static/app.js?v=7"></script>
+  <script src="/static/shader-background.js"></script>
+</body>
+
+</html>
