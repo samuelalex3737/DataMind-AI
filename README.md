@@ -1,9 +1,14 @@
+
 # 🧠 DataMind AI - Intelligent Data Analyst
 
 > AI-powered data analysis dashboard - upload any CSV and get instant EDA,
 > 20+ interactive charts, forecasting, and natural language AI insights.
 
 🚀 **Live Demo:** https://huggingface.co/spaces/samuelalex37/DataMind-AI
+
+## 👤 Author
+**Samuel Alex** - [LinkedIn](https://linkedin.com/in/samuel-alex-47496a289) · [GitHub](https://github.com/samuelalex3737)
+```
 
 ![Homepage](assets/1.png)
 ![Dashboard](assets/2.png)
@@ -56,3 +61,16 @@ python app.py
 Navigate to **http://localhost:5000**
 
 ## 📁 Project Structure
+```
+├── app.py              # Flask backend & API routes
+├── datasets.py         # Sample dataset generators
+├── eda.py              # EDA pipeline
+├── charts.py           # Chart orchestrator
+├── charts_core.py      # Core chart functions (12 types)
+├── charts_advanced.py  # Advanced chart functions (11 types)
+├── ai_analyst.py       # Groq API integration
+├── templates/
+│   └── index.html      # Frontend SPA
+└── requirements.txt
+```
+
