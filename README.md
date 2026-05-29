@@ -5,7 +5,6 @@ colorFrom: blue
 colorTo: indigo
 sdk: docker
 pinned: false
-app_port: 5000
 ---
 
 # 🧠 DataMind AI — Intelligent Data Analyst
