@@ -1,17 +1,16 @@
 ---
 title: DataMind AI
-emoji: 🧠
-colorFrom: blue
 colorTo: indigo
 sdk: docker
-pinned: false
+
+Live at: https://huggingface.co/spaces/samuelalex37/DataMind-AI
 ---
 
-# 🧠 DataMind AI — Intelligent Data Analyst
+#  DataMind AI — Intelligent Data Analyst
 
 An AI-powered data analysis dashboard that automatically performs EDA, generates 20+ chart types, provides AI-driven insights, forecasting, and an interactive chat analyst.
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Install Dependencies
 ```bash
@@ -42,7 +41,7 @@ python app.py
 ### 4. Open in Browser
 Navigate to: **http://localhost:5000**
 
-## 📊 Features
+##  Features
 
 - **CSV Upload** — Drag-and-drop any CSV file
 - **Simulated Datasets** — Pre-built Retail Sales and E-Commerce datasets
@@ -53,7 +52,7 @@ Navigate to: **http://localhost:5000**
 - **Key Insights** — AI-generated actionable business insights
 - **What-If Analysis** — Scenario simulation with adjustable parameters
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Backend**: Python, Flask
 - **Frontend**: HTML, CSS, JavaScript (single-page app)
@@ -62,7 +61,7 @@ Navigate to: **http://localhost:5000**
 - **ML**: scikit-learn (KMeans), mlxtend (Apriori)
 - **Forecasting**: statsmodels (Exponential Smoothing)
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 ├── app.py              # Flask backend
