@@ -1,3 +1,13 @@
+---
+title: DataMind AI
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+app_port: 5000
+---
+
 # 🧠 DataMind AI — Intelligent Data Analyst
 
 An AI-powered data analysis dashboard that automatically performs EDA, generates 20+ chart types, provides AI-driven insights, forecasting, and an interactive chat analyst.
