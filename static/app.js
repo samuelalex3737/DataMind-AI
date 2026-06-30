@@ -208,21 +208,7 @@ async function uploadFile(file) {
 }
 
 async function generateDataset(type) {
-  showSpinner('Generating your dataset...');
-  try {
-    const res = await fetch(`${API}/api/generate`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type })
-    });
-    const data = await res.json();
-    if (data.success) {
-      hideSpinner();
-      showPreviewModal(data, async () => {
-        showSpinner('Cleaning data & running EDA...');
-        await startAnalysis(data);
-      });
-    } else { showToast(data.error || 'Generation failed', 'error'); hideSpinner(); }
-  } catch (e) { showToast('Generation failed: ' + e.message, 'error'); hideSpinner(); }
+  showToast('Sample dataset generation is not available in the Vercel lightweight version. Please upload your own CSV.', 'info');
 }
 
 // ===== ANALYSIS PIPELINE =====
@@ -619,7 +605,7 @@ async function loadInsights(isRetry = false) {
   const panel = $('#insights-panel');
   panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div>`;
   try {
-    const res = await fetch(`api/chat`, {
+    const res = await fetch(`/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: [{role: 'user', content: 'Generate 3 bullet points of key insights for this dataset.'}], dataset_summary: DataEngine.eda_results })
@@ -745,7 +731,7 @@ async function loadInsights(isRetry = false) {
       window.chatHistory = window.chatHistory || [];
       window.chatHistory.push({ role: 'user', content: text });
       
-      const res = await fetch(`api/chat`, {
+      const res = await fetch(`/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: window.chatHistory, dataset_summary: DataEngine.eda_results })
@@ -1094,7 +1080,7 @@ async function loadRecommendations() {
   const panel = $('#recommendations-panel');
   panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2></div><div class="skeleton skeleton-text"></div>`;
   try {
-    const res = await fetch(`api/chat`, {
+    const res = await fetch(`/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: [{role: 'user', content: 'Generate 2 business recommendations based on this data.'}], dataset_summary: DataEngine.eda_results })
