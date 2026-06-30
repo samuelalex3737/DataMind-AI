@@ -2,29 +2,6 @@
 const API = '';
 let chatOpen = false;
 
-// ===== WAKE-UP CHECK =====
-(async function doWakeup() {
-  const overlay = document.getElementById('wakeup-overlay');
-  const text = document.getElementById('wakeup-text');
-  if (!overlay) return;
-  
-  let attempts = 0;
-  while (attempts < 10) {
-    try {
-      const res = await fetch(`${API}/api/health`);
-      if (res.ok) {
-        overlay.style.display = 'none';
-        return;
-      }
-    } catch (e) {}
-    attempts++;
-    await new Promise(r => setTimeout(r, 3000));
-  }
-  if (text) {
-    text.textContent = "Unable to connect. Please refresh.";
-    text.style.color = "#ff6b6b";
-  }
-})();
 
 // ===== UTILITIES =====
 const $ = (sel) => document.querySelector(sel);
