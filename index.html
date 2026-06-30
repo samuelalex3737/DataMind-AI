@@ -7,10 +7,11 @@
   <meta name="description"
     content="DataMind AI - Intelligent Data Analyst Dashboard powered by AI. Upload CSV, explore data, generate charts, and get insights.">
   <title>DataMind - AI Data Analyst</title>
-  <link rel="stylesheet" href="/static/style.css?v=9">
-  <link rel="icon" type="image/png" href="/static/logo.png">
+  <link rel="stylesheet" href="static/style.css?v=10">
+  <link rel="icon" type="image/png" href="static/logo.png">
   <script src="https://cdn.plot.ly/plotly-3.5.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 
 <body>
@@ -339,7 +340,8 @@
   <button id="dm-chat-fab" aria-label="Open AI chat">
     <i class="ti ti-message-chatbot"></i>
   </button>
-
+  <script src="static/data_engine.js"></script>
+  <script src="static/charts_engine.js"></script>
   <script src="/static/app.js?v=7"></script>
   <script src="/static/shader-background.js"></script>
 </body>

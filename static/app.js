@@ -215,31 +215,19 @@ function showPreviewModal(data, proceedCallback) {
 async function uploadFile(file) {
   if (!file.name.toLowerCase().endsWith('.csv')) { showToast('Please upload a CSV file', 'error'); return; }
   showSpinner('Uploading & parsing CSV...');
-  const form = new FormData(); form.append('file', file);
   try {
-    const res = await fetch(`${API}/api/upload`, { method: 'POST', body: form });
-    
-    // Check if the response is JSON (not an HTML error page)
-    const contentType = res.headers.get('content-type') || '';
-    if (!contentType.includes('application/json')) {
-      if (res.status === 413) {
-        showToast('File is too large. Maximum upload size is 500MB.', 'error');
-      } else {
-        showToast(`Server error (${res.status}). Please try a smaller file.`, 'error');
-      }
-      hideSpinner();
-      return;
-    }
-    
-    const data = await res.json();
-    if (data.success) {
-      hideSpinner();
-      showPreviewModal(data, async () => {
-        showSpinner('Cleaning data & running EDA...');
-        await startAnalysis(data);
-      });
-    } else { showToast(data.error || 'Upload failed', 'error'); hideSpinner(); }
-  } catch (e) { showToast('Upload failed. The file may be too large or in an unsupported format.', 'error'); hideSpinner(); }
+    const data = await DataEngine.loadCSV(file);
+    const datasetInfo = { name: file.name, rows: data.length, columns: Object.keys(data[0]||{}).length, column_names: Object.keys(data[0]||{}), sample: data.slice(0,3) };
+    hideSpinner();
+    showPreviewModal(datasetInfo, async () => {
+      showSpinner('Cleaning data & running EDA...');
+      await startAnalysis(datasetInfo);
+    });
+  } catch (e) {
+    console.error(e);
+    showToast('Upload failed. The file may be in an unsupported format.', 'error');
+    hideSpinner();
+  }
 }
 
 async function generateDataset(type) {
@@ -388,9 +376,8 @@ window.applyDateFilters = async () => {
 async function runEDA() {
   $('#sidebar-eda').innerHTML = '<div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div>';
   try {
-    const res = await fetch(`${API}/api/eda`);
-    const data = await res.json();
-    if (data.success) renderEDA(data.results);
+    const results = DataEngine.runEDA();
+    renderEDA(results);
   } catch (e) { console.error('EDA error:', e); }
 }
 
@@ -461,10 +448,28 @@ function showChartSkeletons() {
 
 async function loadCharts() {
   try {
-    const res = await fetch(`${API}/api/charts`);
-    const data = await res.json();
-    if (data.success) renderCharts(data.charts);
-    else showToast('Chart generation had issues', 'error');
+    let df = DataEngine.clean_data;
+    let charts = [];
+    let numCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'numeric');
+    let catCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'object');
+    let dateCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'datetime');
+
+    if (catCols.length > 0 && numCols.length > 0) {
+      let b1 = ChartsEngine.barChart(df, catCols[0], numCols[0]);
+      if (b1) charts.push(b1);
+      let p1 = ChartsEngine.pieChart(df, catCols[0], numCols[0]);
+      if (p1) charts.push(p1);
+    }
+    if (dateCols.length > 0 && numCols.length > 0) {
+      let l1 = ChartsEngine.lineChart(df, dateCols[0], numCols[0]);
+      if (l1) charts.push(l1);
+    }
+    if (dateCols.length > 0 && catCols.length > 0 && numCols.length > 0) {
+       let rfm = ChartsEngine.rfmChart(df, catCols[0], dateCols[0], numCols[0]);
+       if (rfm) charts.push(rfm);
+    }
+
+    renderCharts(charts);
   } catch (e) { console.error('Charts error:', e); showToast('Charts failed to load', 'error'); }
 }
 
@@ -629,61 +634,29 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== FORECAST =====
 async function loadForecast() {
   const panel = $('#forecast-panel');
-  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2><p>Predicting future trends...</p></div><div class="skeleton skeleton-chart"></div>`;
-  try {
-    const res = await fetch(`${API}/api/forecast`);
-    const data = await res.json();
-    if (data.success || data.chart_json) {
-      const forecastDivId = 'forecast-plotly-chart';
-      panel.innerHTML = `
-        <div class="section-header">
-          <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast — ${data.title || 'Prediction'}</h2>
-          <p>Next 3 months ${data.growth_pct ? `(${data.growth_pct > 0 ? '+' : ''}${data.growth_pct}% projected)` : ''}</p>
-        </div>
-        <div id="${forecastDivId}" style="width:100%;height:420px;"></div>
-        <div class="forecast-commentary">${data.commentary || data.summary || ''}</div>`;
-      if (data.chart_json) {
-        Plotly.newPlot(forecastDivId, data.chart_json.data, data.chart_json.layout, { responsive: true, displaylogo: false });
-      }
-    } else {
-      panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div>
-        <p style="color:var(--text-dim);padding:20px;">${data.error || 'Insufficient data.'}</p>`;
-    }
-  } catch(e) {
-    panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div>
-      <p style="color:var(--text-dim);padding:20px;">Forecast unavailable.</p>`;
-  }
+  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div><p style="color:var(--text-dim);padding:20px;">Time-series forecasting is only available in the advanced Python backend.</p>`;
 }
 
 // ===== INSIGHTS =====
 async function loadInsights(isRetry = false) {
   const panel = $('#insights-panel');
-  if (!isRetry) {
-    panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div>`;
-  }
+  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div>`;
   try {
-    const res = await fetch(`${API}/api/insights`);
+    const res = await fetch(`api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: [{role: 'user', content: 'Generate 3 bullet points of key insights for this dataset.'}], dataset_summary: DataEngine.eda_results })
+    });
     const data = await res.json();
-    if (data.success && data.insights && data.insights.length > 0) {
-      let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2><p>AI-generated actionable findings</p></div>`;
-      data.insights.forEach(insight => {
-        html += `<div class="insight-item"><div class="insight-bullet"></div><span>${insight}</span></div>`;
-      });
+    if (data.response) {
+      let html = `<div class="section-header"><h2>Key Insights</h2></div>`;
+      html += `<div class="insight-item"><span>${data.response}</span></div>`;
       panel.innerHTML = html;
     } else {
-      if (!isRetry) {
-        setTimeout(() => loadInsights(true), 3000);
-      } else {
-        panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p style="color:var(--text-dim);padding:20px;">Insights could not be generated.</p>`;
-      }
+      panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p>Insights could not be generated.</p>`;
     }
   } catch (e) { 
-    console.error('Insights error:', e); 
-    if (!isRetry) {
-      setTimeout(() => loadInsights(true), 3000);
-    } else {
-      panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p style="color:var(--text-dim);padding:20px;">Insights could not be generated.</p>`;
-    }
+    panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p>Insights could not be generated.</p>`;
   }
 }
 
@@ -792,12 +765,21 @@ async function loadInsights(isRetry = false) {
     showTyping();
 
     try {
-      const res = await fetch(`${API}/api/chat`, {
+      window.chatHistory = window.chatHistory || [];
+      window.chatHistory.push({ role: 'user', content: text });
+      
+      const res = await fetch(`api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: text })
+        body: JSON.stringify({ messages: window.chatHistory, dataset_summary: DataEngine.eda_results })
       });
       const data = await res.json();
+      
+      if (data.response) {
+         window.chatHistory.push({ role: 'assistant', content: data.response });
+         data.success = true;
+         data.answer = data.response;
+      }
       removeTyping();
       
       if (data.success) {
@@ -825,33 +807,8 @@ async function loadInsights(isRetry = false) {
 
 // ===== WHAT-IF SCENARIO =====
 async function setupWhatIf() {
-  try {
-    const res = await fetch(`${API}/api/dataset-info`);
-    const data = await res.json();
-    if (!data.success) return;
-
-    const numCols = data.numeric_columns || [];
-    if (numCols.length < 2) return; // Need at least 2 numeric cols
-
-    const targetSelect = $('#whatif-target');
-    const adjustSelect = $('#whatif-adjust');
-    targetSelect.innerHTML = '';
-    adjustSelect.innerHTML = '';
-
-    numCols.forEach(col => {
-      targetSelect.innerHTML += `<option value="${col}">${col}</option>`;
-      adjustSelect.innerHTML += `<option value="${col}">${col}</option>`;
-    });
-
-    // Set different defaults for target and adjust
-    if (numCols.length >= 2) {
-      adjustSelect.selectedIndex = 1;
-    }
-
-    // Show the what-if section
-    const section = $('#whatif-section');
-    if (section) section.classList.remove('hidden');
-  } catch (e) { console.warn('What-If setup failed:', e); }
+  const section = $('#whatif-section');
+  if (section) section.classList.add('hidden');
 }
 
 let _whatIfTimer = null;
@@ -1158,32 +1115,23 @@ function updateQualityGauge(score, breakdown) {
 // ===== BUSINESS RECOMMENDATIONS =====
 async function loadRecommendations() {
   const panel = $('#recommendations-panel');
-  if (!panel) return;
-
+  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2></div><div class="skeleton skeleton-text"></div>`;
   try {
-    const res = await fetch(`${API}/api/recommendations`);
-    const data = await res.json();
-    if (!data.success || !data.recommendations) return;
-
-    const recs = data.recommendations;
-    const icons = { critical: '●', opportunity: '●', strength: '●' };
-
-    let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Business Recommendations</h2><p>${recs.length} actionable strategies identified</p></div>`;
-
-    recs.forEach((rec, i) => {
-      const severity = rec.severity || 'opportunity';
-      html += `
-        <div class="rec-item" style="animation-delay:${i * 0.1}s">
-          <div class="rec-badge ${severity}">${icons[severity] || '●'}</div>
-          <div class="rec-content">
-            <div class="rec-title">${rec.title}</div>
-            <div class="rec-desc">${rec.description}</div>
-          </div>
-        </div>
-      `;
+    const res = await fetch(`api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: [{role: 'user', content: 'Generate 2 business recommendations based on this data.'}], dataset_summary: DataEngine.eda_results })
     });
-
-    panel.innerHTML = html;
-  } catch (e) { console.warn('Recommendations load failed:', e); }
+    const data = await res.json();
+    if (data.response) {
+      let html = `<div class="section-header"><h2>Business Recommendations</h2></div>`;
+      html += `<div class="insight-item"><span>${data.response}</span></div>`;
+      panel.innerHTML = html;
+    } else {
+      panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p>Recommendations could not be generated.</p>`;
+    }
+  } catch (e) { 
+    panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p>Recommendations could not be generated.</p>`;
+  }
 }
 
