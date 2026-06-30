@@ -208,7 +208,16 @@ async function uploadFile(file) {
 }
 
 async function generateDataset(type) {
-  showToast('Sample dataset generation is not available in the Vercel lightweight version. Please upload your own CSV.', 'info');
+  showSpinner('Loading sample dataset...');
+  try {
+    const response = await fetch('static/sample.csv');
+    const text = await response.text();
+    const file = new File([text], 'ecommerce_sample.csv', { type: 'text/csv' });
+    await uploadFile(file);
+  } catch (e) {
+    showToast('Failed to load sample dataset', 'error');
+    hideSpinner();
+  }
 }
 
 // ===== ANALYSIS PIPELINE =====

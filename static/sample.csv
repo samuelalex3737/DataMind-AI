@@ -1,0 +1,31 @@
+Date,CustomerID,Category,Product,Price,Quantity,TotalRevenue,Status,Region,Device
+2023-01-15,CUST-001,Electronics,Laptop Pro,1200.00,1,1200.00,Completed,North America,Desktop
+2023-01-18,CUST-002,Accessories,Wireless Mouse,45.00,2,90.00,Completed,Europe,Mobile
+2023-02-05,CUST-003,Apparel,Winter Jacket,120.50,1,120.50,Returned,Asia,Mobile
+2023-02-12,CUST-004,Electronics,Smartphone X,850.00,1,850.00,Completed,North America,Desktop
+2023-02-28,CUST-001,Accessories,USB-C Hub,35.00,3,105.00,Completed,North America,Desktop
+2023-03-10,CUST-005,Home,Coffee Maker,95.00,1,95.00,Completed,Europe,Tablet
+2023-03-22,CUST-006,Apparel,Running Shoes,85.00,2,170.00,Completed,North America,Mobile
+2023-04-05,CUST-007,Electronics,Tablet Pro,450.00,1,450.00,Completed,Asia,Desktop
+2023-04-18,CUST-002,Electronics,Noise Cancelling Headphones,250.00,1,250.00,Returned,Europe,Mobile
+2023-05-01,CUST-008,Home,Smart Thermostat,180.00,1,180.00,Completed,North America,Mobile
+2023-05-15,CUST-001,Apparel,Graphic T-Shirt,25.00,4,100.00,Completed,North America,Desktop
+2023-06-02,CUST-009,Accessories,Mechanical Keyboard,110.00,1,110.00,Completed,Europe,Desktop
+2023-06-20,CUST-010,Electronics,4K Monitor,320.00,2,640.00,Completed,Asia,Desktop
+2023-07-05,CUST-003,Home,LED Desk Lamp,40.00,1,40.00,Completed,Asia,Mobile
+2023-07-18,CUST-011,Accessories,Laptop Sleeve,30.00,1,30.00,Completed,North America,Tablet
+2023-08-10,CUST-012,Apparel,Denim Jeans,65.00,2,130.00,Returned,Europe,Mobile
+2023-08-25,CUST-004,Accessories,Power Bank,55.00,2,110.00,Completed,North America,Desktop
+2023-09-05,CUST-013,Electronics,Smartwatch,199.99,1,199.99,Completed,Asia,Mobile
+2023-09-22,CUST-005,Home,Air Purifier,150.00,1,150.00,Completed,Europe,Tablet
+2023-10-12,CUST-014,Apparel,Sneakers,95.00,1,95.00,Completed,North America,Mobile
+2023-10-30,CUST-015,Electronics,Wireless Earbuds,129.99,1,129.99,Completed,Europe,Mobile
+2023-11-15,CUST-001,Electronics,Gaming Console,499.00,1,499.00,Completed,North America,Desktop
+2023-11-28,CUST-016,Accessories,HDMI Cable,15.00,5,75.00,Completed,Asia,Desktop
+2023-12-10,CUST-017,Home,Robot Vacuum,299.00,1,299.00,Completed,North America,Mobile
+2023-12-20,CUST-018,Apparel,Winter Gloves,20.00,3,60.00,Completed,Europe,Desktop
+2024-01-05,CUST-019,Electronics,Webcam 1080p,60.00,2,120.00,Completed,North America,Mobile
+2024-01-18,CUST-020,Accessories,Ergonomic Mouse,50.00,1,50.00,Returned,Asia,Desktop
+2024-02-02,CUST-002,Home,Blender,85.00,1,85.00,Completed,Europe,Mobile
+2024-02-14,CUST-021,Apparel,Wool Scarf,35.00,2,70.00,Completed,North America,Tablet
+2024-02-28,CUST-006,Electronics,Bluetooth Speaker,75.00,1,75.00,Completed,North America,Mobile
