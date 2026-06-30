@@ -936,26 +936,6 @@ function initResize() {
 // ===== KPI CARDS =====
 
 
-      const card = document.createElement('div');
-      card.className = 'kpi-card';
-      card.style.animationDelay = `${i * 0.1}s`;
-
-      const formatted = formatKPIValue(kpi.value, kpi.format);
-      const trendClass = kpi.trend > 0 ? 'up' : kpi.trend < 0 ? 'down' : 'neutral';
-      const trendIcon = kpi.trend > 0 ? '↑' : kpi.trend < 0 ? '↓' : '—';
-
-      card.innerHTML = `
-        <div class="kpi-label">${kpi.label}</div>
-        <div class="kpi-value" data-target="${kpi.value}" data-format="${kpi.format}">${formatted}</div>
-        <div class="kpi-trend ${trendClass}">${trendIcon} ${kpi.trend_label || ''}</div>
-      `;
-      row.appendChild(card);
-    });
-
-    // Animate counting
-    animateKPICounters();
-  } catch (e) { console.warn('KPI load failed:', e); }
-}
 
 function formatKPIValue(value, format) {
   if (format === 'currency') {
