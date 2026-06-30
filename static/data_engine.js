@@ -102,7 +102,7 @@ window.DataEngine = {
           row[col] = new Date(val).toISOString();
         }
       });
-      if (changedCasing) normalised_columns.append(col);
+      if (changedCasing) normalised_columns.push(col);
     });
 
     // 3. Handle Missing Values

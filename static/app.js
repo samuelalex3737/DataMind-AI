@@ -208,11 +208,12 @@ async function uploadFile(file) {
 }
 
 async function generateDataset(type) {
-  showSpinner('Loading sample dataset...');
+  showSpinner(`Loading ${type} dataset...`);
   try {
-    const response = await fetch('static/sample.csv');
+    let filename = type === 'ecommerce' ? 'ecommerce.csv' : 'retail.csv';
+    const response = await fetch(`static/${filename}`);
     const text = await response.text();
-    const file = new File([text], 'ecommerce_sample.csv', { type: 'text/csv' });
+    const file = new File([text], filename, { type: 'text/csv' });
     await uploadFile(file);
   } catch (e) {
     showToast('Failed to load sample dataset', 'error');
