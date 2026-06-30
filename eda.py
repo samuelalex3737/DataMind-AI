@@ -167,11 +167,9 @@ def run_full_eda(df: pd.DataFrame) -> Dict[str, Any]:
                     
                 before_sample = df[col].dropna().head(5).tolist()
                 
-                # Optimised transformation using categories (instant for millions of rows)
-                cat_col = df[col].astype('category')
-                new_categories = [str(x).strip().title() if pd.notna(x) else x for x in cat_col.cat.categories]
-                cat_col = cat_col.cat.rename_categories(new_categories)
-                df[col] = cat_col.astype(object)
+                # Safely normalize casing without category duplicate errors
+                mask = df[col].notna()
+                df.loc[mask, col] = df.loc[mask, col].astype(str).str.strip().str.title()
                 
                 after_sample = df[col].dropna().head(5).tolist()
                 if before_sample != after_sample:
@@ -189,6 +187,7 @@ def run_full_eda(df: pd.DataFrame) -> Dict[str, Any]:
     # =========================================================================
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
     outlier_info = {}
+    outlier_row_indices = set()
 
     for col in numeric_cols:
         Q1 = df[col].quantile(0.25)
@@ -210,8 +209,10 @@ def run_full_eda(df: pd.DataFrame) -> Dict[str, Any]:
             }
         # Flag but do NOT remove
         df[f"_{col}_outlier"] = outlier_mask
+        outlier_row_indices.update(df.index[outlier_mask].tolist())
 
     results["outliers"] = outlier_info
+    results["total_unique_outlier_rows"] = len(outlier_row_indices)
 
     # =========================================================================
     # 7. SUMMARY STATISTICS

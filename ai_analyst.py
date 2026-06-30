@@ -98,24 +98,40 @@ def chat_with_analyst(
     AI chat analyst — answers questions about the dataset.
     Returns dict with 'answer' and optionally 'chart_type' if a chart is implied.
     """
+    try:
+        from app import store
+        if store.get("df_clean") is None:
+            return {
+                "answer": "Please load a dataset first — upload a CSV or select a sample dataset, and I'll be ready to help!",
+                "chart_type": None
+            }
+        
+        # Build fresh summary directly from store to avoid stale context
+        eda = store.get("eda_results") or {}
+        df_info = eda.get("shape", {})
+        dataset_summary = build_dataset_summary(df_info, eda)
+    except ImportError:
+        pass
+
     system_prompt = (
-        "You are DataMind AI, a senior data analyst assistant. You analyze datasets and provide "
-        "clear, actionable insights. You have access to the following dataset information:\n\n"
+        "You are a friendly, concise AI data analyst assistant. "
+        "You are having a conversation, not writing a report.\n\n"
+        "Rules you must always follow:\n"
+        "- Keep every response under 100 words unless the user explicitly asks for more detail\n"
+        "- Never list raw column totals or dump statistics unless directly asked\n"
+        "- Speak in plain English, not data jargon\n"
+        "- Give 2-3 key takeaways maximum per response\n"
+        "- Use bullet points only when there are 3 or more items\n"
+        "- End with one short actionable recommendation at most\n"
+        "- If the user asks a follow-up, go deeper only on that specific point\n"
+        "- Never mention column names like 'Unnamed: 0' or internal technical identifiers\n"
+        "- If the question implies a chart, include [CHART_SUGGESTED: chart_type] at the end (e.g. bar_chart, line_chart)\n\n"
+        "Dataset Context:\n"
         f"{dataset_summary}\n\n"
     )
     
     if sample_data:
-        system_prompt += f"Sample rows:\n{sample_data}\n\n"
-    
-    system_prompt += (
-        "Rules:\n"
-        "1. Always be specific — cite numbers, percentages, column names\n"
-        "2. If the question implies a chart, include the line: [CHART_SUGGESTED: chart_type] at the end "
-        "(e.g., [CHART_SUGGESTED: bar_chart], [CHART_SUGGESTED: line_chart], [CHART_SUGGESTED: pie_chart])\n"
-        "3. Provide actionable recommendations when relevant\n"
-        "4. If you cannot answer with the available data, explain what additional data would be needed\n"
-        "5. Do NOT use markdown headers (##). Use plain text with bullet points if needed.\n"
-    )
+        system_prompt += f"Aggregated Data Context:\n{sample_data}\n\n"
 
     messages = [{"role": "system", "content": system_prompt}]
 
@@ -128,7 +144,7 @@ def chat_with_analyst(
 
     messages.append({"role": "user", "content": question})
 
-    result = _call_openai(messages, max_tokens=1500, temperature=0.7)
+    result = _call_openai(messages, max_tokens=300, temperature=0.7)
 
     if not result:
         # Generate a smart offline response from the dataset summary

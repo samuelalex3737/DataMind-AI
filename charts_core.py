@@ -62,7 +62,10 @@ def line_chart(df, date_col, num_col):
 
 
 def bar_chart(df, cat_col, num_col, top_n=10):
-    grouped = df.groupby(cat_col)[num_col].sum().nlargest(top_n).reset_index()
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat_col]):
+        tmp[cat_col] = tmp[cat_col].dt.strftime('%Y-%m')
+    grouped = tmp.groupby(cat_col)[num_col].sum().nlargest(top_n).reset_index()
     if len(grouped) < 2:
         return None
 
@@ -81,7 +84,10 @@ def bar_chart(df, cat_col, num_col, top_n=10):
 
 
 def grouped_bar(df, cat1, cat2, num_col):
-    pivot = df.pivot_table(index=cat1, columns=cat2,
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat1]): tmp[cat1] = tmp[cat1].dt.strftime('%Y-%m')
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat2]): tmp[cat2] = tmp[cat2].dt.strftime('%Y-%m')
+    pivot = tmp.pivot_table(index=cat1, columns=cat2,
                            values=num_col, aggfunc='sum').fillna(0)
     if pivot.shape[0] > 10:
         pivot = pivot.loc[pivot.sum(axis=1).nlargest(10).index]
@@ -104,7 +110,10 @@ def grouped_bar(df, cat1, cat2, num_col):
 
 
 def stacked_bar(df, cat1, cat2, num_col):
-    pivot = df.pivot_table(index=cat1, columns=cat2,
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat1]): tmp[cat1] = tmp[cat1].dt.strftime('%Y-%m')
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat2]): tmp[cat2] = tmp[cat2].dt.strftime('%Y-%m')
+    pivot = tmp.pivot_table(index=cat1, columns=cat2,
                            values=num_col, aggfunc='sum').fillna(0)
     if pivot.shape[0] > 10:
         pivot = pivot.loc[pivot.sum(axis=1).nlargest(10).index]
@@ -125,8 +134,10 @@ def stacked_bar(df, cat1, cat2, num_col):
 
 
 def pie_chart(df, cat_col, num_col=None):
-    data = df.groupby(cat_col)[num_col].sum() if num_col \
-           else df[cat_col].value_counts()
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat_col]): tmp[cat_col] = tmp[cat_col].dt.strftime('%Y-%m')
+    data = tmp.groupby(cat_col)[num_col].sum() if num_col \
+           else tmp[cat_col].value_counts()
     if len(data) > 8 or len(data) < 2:
         return None
 
@@ -144,8 +155,10 @@ def pie_chart(df, cat_col, num_col=None):
 
 
 def doughnut_chart(df, cat_col, num_col=None):
-    data = df.groupby(cat_col)[num_col].sum() if num_col \
-           else df[cat_col].value_counts()
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat_col]): tmp[cat_col] = tmp[cat_col].dt.strftime('%Y-%m')
+    data = tmp.groupby(cat_col)[num_col].sum() if num_col \
+           else tmp[cat_col].value_counts()
     if len(data) > 8 or len(data) < 2:
         return None
 

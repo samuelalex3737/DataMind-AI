@@ -103,8 +103,10 @@ def double_axis_chart(df, date_col, num1, num2):
 
 
 def pareto_chart(df, cat_col, num_col=None):
-    data = df.groupby(cat_col)[num_col].sum().sort_values(ascending=False).head(10) \
-           if num_col else df[cat_col].value_counts().head(10)
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat_col]): tmp[cat_col] = tmp[cat_col].dt.strftime('%Y-%m')
+    data = tmp.groupby(cat_col)[num_col].sum().sort_values(ascending=False).head(10) \
+           if num_col else tmp[cat_col].value_counts().head(10)
     if len(data) < 3:
         return None
     cum_pct = data.cumsum() / data.sum() * 100
@@ -137,18 +139,20 @@ def pareto_chart(df, cat_col, num_col=None):
 
 
 def radar_chart(df, cat_col, num_cols):
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat_col]): tmp[cat_col] = tmp[cat_col].dt.strftime('%Y-%m')
     metrics = num_cols[:6]
     if len(metrics) < 3:
         return None
-    cats = df[cat_col].value_counts().head(4).index.tolist()
+    cats = tmp[cat_col].value_counts().head(4).index.tolist()
     if len(cats) < 2:
         return None
 
     fig = go.Figure()
     for i, cat in enumerate(cats):
-        vals = df[df[cat_col] == cat][metrics].mean().values
-        max_vals = np.where(df[metrics].max().values == 0, 1,
-                            df[metrics].max().values)
+        vals = tmp[tmp[cat_col] == cat][metrics].mean().values
+        max_vals = np.where(tmp[metrics].max().values == 0, 1,
+                            tmp[metrics].max().values)
         vals_norm = (vals / max_vals).tolist()
         vals_norm += vals_norm[:1]
         angles = metrics + [metrics[0]]
@@ -172,7 +176,9 @@ def radar_chart(df, cat_col, num_cols):
 
 
 def treemap_chart(df, cat_col, num_col):
-    data = df.groupby(cat_col)[num_col].sum().nlargest(15).reset_index()
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[cat_col]): tmp[cat_col] = tmp[cat_col].dt.strftime('%Y-%m')
+    data = tmp.groupby(cat_col)[num_col].sum().nlargest(15).reset_index()
     if len(data) < 2:
         return None
 
@@ -192,7 +198,10 @@ def treemap_chart(df, cat_col, num_col):
 
 
 def sunburst_chart(df, parent_col, child_col, num_col):
-    grouped = df.groupby([parent_col, child_col])[num_col].sum().reset_index()
+    tmp = df.copy()
+    if pd.api.types.is_datetime64_any_dtype(tmp[parent_col]): tmp[parent_col] = tmp[parent_col].dt.strftime('%Y-%m')
+    if pd.api.types.is_datetime64_any_dtype(tmp[child_col]): tmp[child_col] = tmp[child_col].dt.strftime('%Y-%m')
+    grouped = tmp.groupby([parent_col, child_col])[num_col].sum().reset_index()
     if len(grouped) < 3:
         return None
     parent_totals = grouped.groupby(parent_col)[num_col].sum().reset_index()

@@ -336,6 +336,22 @@ button, a, select, .chip, .dataset-card, .upload-zone, .chart-expand-btn { curso
   flex: 0 0 40px; height: 1px; background: var(--border); position: relative; top: -20px;
 }
 
+.landing-footer-links {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13px;
+  color: #555577;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.landing-footer-links a {
+  color: #555577;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.landing-footer-links a:hover { color: #00d4ff; }
+
 /* ===== DASHBOARD VIEW ===== */
 .dashboard { display: none; padding: 24px; }
 .dashboard.active { display: block; }
@@ -609,7 +625,8 @@ button, a, select, .chip, .dataset-card, .upload-zone, .chart-expand-btn { curso
   right: 28px;
   width: 420px;
   min-height: 500px;
-  max-height: 720px;
+  max-height: calc(100vh - 80px);
+  top: auto;
   background: #13131f;
   border-radius: 14px;
   border: 0.5px solid #2a2a3a;
@@ -758,7 +775,7 @@ button, a, select, .chip, .dataset-card, .upload-zone, .chart-expand-btn { curso
 
 /* ===== MODAL ===== */
 .modal-overlay {
-  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.85);
+  position: fixed; inset: 0; z-index: 1100; background: rgba(0,0,0,0.85);
   display: none; align-items: center; justify-content: center; padding: 40px;
   backdrop-filter: blur(8px);
 }

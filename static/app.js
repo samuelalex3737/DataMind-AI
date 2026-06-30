@@ -307,6 +307,16 @@ async function startAnalysis(datasetInfo) {
   if (datasetInfo.dtypes) {
     const hasDate = Object.values(datasetInfo.dtypes).some(t => String(t).includes('datetime'));
     if (hasDate) {
+      try {
+        const dRes = await fetch(`${API}/api/date-range`);
+        const dData = await dRes.json();
+        if (dData.min && dData.max) {
+          const df = $('#date-from');
+          const dt = $('#date-to');
+          if (df) { df.min = dData.min; df.max = dData.max; }
+          if (dt) { dt.min = dData.min; dt.max = dData.max; }
+        }
+      } catch(e) {}
       const filters = $('#date-filters-container');
       if (filters) filters.style.display = 'flex';
     }
@@ -316,6 +326,29 @@ async function startAnalysis(datasetInfo) {
 }
 
 // ===== DATE FILTERS =====
+window.resetDateFilters = async () => {
+  if ($('#date-from')) $('#date-from').value = '';
+  if ($('#date-to')) $('#date-to').value = '';
+  const chartsGrid = $('#charts-grid');
+  if (chartsGrid) chartsGrid.innerHTML = '<div style="color:var(--text-dim);grid-column:1/-1;">Re-generating charts...</div>';
+  
+  try {
+    const pCharts = fetch(`${API}/api/charts`).then(r => r.json());
+    const pKpis = fetch(`${API}/api/kpis`).then(r => r.json());
+    const [cData, kData] = await Promise.all([pCharts, pKpis]);
+    
+    if (cData.success && chartsGrid) {
+      chartsGrid.innerHTML = '';
+      renderCharts(cData.charts);
+    }
+    if (kData.success) {
+      renderKPIs(kData.kpis);
+    }
+  } catch(e) {
+    console.error('Reset filters error:', e);
+  }
+};
+
 window.applyDateFilters = async () => {
   const dFrom = $('#date-from').value;
   const dTo = $('#date-to').value;
@@ -378,7 +411,7 @@ function renderEDA(r) {
   html += `<div class="eda-item"><span class="label">Duplicates removed</span><span class="eda-badge ${r.duplicates?.removed > 0 ? 'warning' : 'success'}">${r.duplicates?.removed || 0}</span></div>`;
 
   // Outliers
-  const totalOutliers = Object.values(r.outliers || {}).reduce((s, o) => s + (o.count || 0), 0);
+  const totalOutliers = r.total_unique_outlier_rows || 0;
   html += `<div class="eda-item"><span class="label">Outliers flagged</span><span class="eda-badge warning">${totalOutliers}</span></div>`;
 
   // Type fixes
@@ -403,16 +436,17 @@ function renderEDA(r) {
 
   // Missing value strategies
   const strategies = r.missing_values?.strategies || {};
-  let stratHtml = '';
-  for (const [col, strat] of Object.entries(strategies).slice(0, 8)) {
-    stratHtml += `<div class="eda-item"><span class="label">${col}</span><span class="value" style="font-size:0.75rem">${strat}</span></div>`;
-  }
-  if (stratHtml) {
-    const stratSection = document.createElement('div');
-    stratSection.className = 'sidebar-section';
-    stratSection.innerHTML = `<h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg> Fill Strategies</h3>${stratHtml}`;
-    const existing = $('#sidebar-strategies');
-    if (existing) existing.innerHTML = stratHtml;
+  const existing = $('#sidebar-strategies');
+  if (existing) {
+    if (Object.keys(strategies).length === 0) {
+      existing.innerHTML = '<p style="color:var(--text-dim);font-size:0.8rem;padding:8px 0;">No missing values detected</p>';
+    } else {
+      let stratHtml = '';
+      for (const [col, strat] of Object.entries(strategies).slice(0, 8)) {
+        stratHtml += `<div class="eda-item"><span class="label">${col}</span><span class="value" style="font-size:0.75rem">${strat}</span></div>`;
+      }
+      existing.innerHTML = stratHtml;
+    }
   }
 }
 
@@ -546,6 +580,8 @@ function expandPlotlyChart(divId) {
   });
   Plotly.newPlot('modal-plot-div', data, layout, { responsive: true });
   $('#modal-overlay').classList.add('active');
+  const popup = document.getElementById('dm-chat-popup');
+  if (popup) popup.style.zIndex = '0';
 }
 
 function closeModal() {
@@ -553,6 +589,8 @@ function closeModal() {
   const mp = document.getElementById('modal-plot-div');
   if (mp) mp.style.display = 'none';
   $('#modal-img').style.display = '';
+  const popup = document.getElementById('dm-chat-popup');
+  if (popup) popup.style.zIndex = '999';
 }
 
 function openImageModal(src) {
@@ -562,6 +600,8 @@ function openImageModal(src) {
   img.src = src;
   img.style.display = 'block';
   $('#modal-overlay').classList.add('active');
+  const popup = document.getElementById('dm-chat-popup');
+  if (popup) popup.style.zIndex = '0';
 }
 
 // Close modal on Escape key
@@ -616,20 +656,35 @@ async function loadForecast() {
 }
 
 // ===== INSIGHTS =====
-async function loadInsights() {
+async function loadInsights(isRetry = false) {
   const panel = $('#insights-panel');
-  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div>`;
+  if (!isRetry) {
+    panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div>`;
+  }
   try {
     const res = await fetch(`${API}/api/insights`);
     const data = await res.json();
-    if (data.success && data.insights) {
+    if (data.success && data.insights && data.insights.length > 0) {
       let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2><p>AI-generated actionable findings</p></div>`;
       data.insights.forEach(insight => {
         html += `<div class="insight-item"><div class="insight-bullet"></div><span>${insight}</span></div>`;
       });
       panel.innerHTML = html;
+    } else {
+      if (!isRetry) {
+        setTimeout(() => loadInsights(true), 3000);
+      } else {
+        panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p style="color:var(--text-dim);padding:20px;">Insights could not be generated.</p>`;
+      }
     }
-  } catch (e) { console.error('Insights error:', e); }
+  } catch (e) { 
+    console.error('Insights error:', e); 
+    if (!isRetry) {
+      setTimeout(() => loadInsights(true), 3000);
+    } else {
+      panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p style="color:var(--text-dim);padding:20px;">Insights could not be generated.</p>`;
+    }
+  }
 }
 
 // ===== WHAT-IF (first definition removed — FIX 2) =====

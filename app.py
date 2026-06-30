@@ -160,6 +160,8 @@ def upload_csv():
             return jsonify({"success": False, "error": "The uploaded CSV is empty"}), 400
         
         store["df"] = df
+        store["df_clean"] = None
+        store["dataset_summary"] = None
         store["dataset_name"] = secure_filename(file.filename).rsplit('.', 1)[0]
         store["chat_history"] = []
         store["charts_cache"] = None
@@ -256,6 +258,28 @@ def run_eda():
         })
     except Exception as e:
         return jsonify({"error": f"EDA failed: {str(e)}"}), 500
+
+
+@app.route('/api/date-range')
+def date_range():
+    """Return the actual minimum and maximum dates found in the dataset."""
+    df = store.get('df_clean')
+    
+    if df is None:
+        return jsonify({'min': None, 'max': None})
+        
+    date_cols = [c for c in df.columns if pd.api.types.is_datetime64_any_dtype(df[c])]
+    if not date_cols:
+        return jsonify({'min': None, 'max': None})
+        
+    date_col = date_cols[0]
+    # Ensure it's correctly parsed
+    df[date_col] = pd.to_datetime(df[date_col], infer_datetime_format=True, errors='coerce')
+    
+    return jsonify({
+        'min': str(df[date_col].min().date()) if pd.notna(df[date_col].min()) else None,
+        'max': str(df[date_col].max().date()) if pd.notna(df[date_col].max()) else None
+    })
 
 
 @app.route('/api/charts', methods=['GET'])
@@ -536,15 +560,21 @@ def get_kpis():
         })
 
     # 5. Data Quality Score
-    total_cells = len(df) * len(df.columns)
-    missing_before = eda.get("missing_values", {}).get("total_before", 0)
-    dup_count = eda.get("duplicates", {}).get("found", 0)
-    outlier_count = sum(o.get("count", 0) for o in eda.get("outliers", {}).values())
+    df_original = store.get("df")
+    total_rows = len(df_original) if df_original is not None else max(len(df), 1)
+    total_cells = total_rows * len(df.columns)
+
+    missing_after = eda.get("missing_values", {}).get("total_after", 0)
+    dup_count = eda.get("duplicates", {}).get("removed", 0)
+    outlier_count = eda.get("total_unique_outlier_rows", 0)
     
-    completeness = max(0, (1 - missing_before / max(total_cells, 1)) * 100)
-    uniqueness = max(0, (1 - dup_count / max(len(df), 1)) * 100)
-    outlier_score = max(0, (1 - outlier_count / max(len(df), 1)) * 100)
+    completeness = max(0, (1 - missing_after / max(total_cells, 1)) * 100)
+    uniqueness = max(0, (1 - dup_count / max(total_rows, 1)) * 100)
+    outlier_score = max(0, 100 - (outlier_count / max(total_rows, 1) * 100))
     quality_score = round((completeness * 0.4 + uniqueness * 0.3 + outlier_score * 0.3), 1)
+    
+    if completeness == 100 and uniqueness == 100 and outlier_score == 100:
+        quality_score = 100.0
 
     kpis.append({
         "label": "Data Quality",
@@ -781,5 +811,6 @@ if __name__ == '__main__':
     else:
         print("[OK] Groq API key detected")
     
-    print("[*] Starting DataMind AI on http://localhost:5000")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    print(f"[*] Starting DataMind AI on http://localhost:{port}")
+    app.run(debug=False, host='0.0.0.0', port=port)
