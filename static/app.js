@@ -259,13 +259,17 @@ async function startAnalysis(datasetInfo) {
     const hasDate = Object.values(datasetInfo.dtypes).some(t => String(t).includes('datetime'));
     if (hasDate) {
       try {
-        const dRes = await fetch(`${API}/api/date-range`);
-        const dData = await dRes.json();
-        if (dData.min && dData.max) {
-          const df = $('#date-from');
-          const dt = $('#date-to');
-          if (df) { df.min = dData.min; df.max = dData.max; }
-          if (dt) { dt.min = dData.min; dt.max = dData.max; }
+        let dateCols = Object.keys(datasetInfo.dtypes || {}).filter(c => datasetInfo.dtypes[c] === 'datetime');
+        if (dateCols.length > 0 && DataEngine.clean_data.length > 0) {
+          let dates = DataEngine.clean_data.map(r => new Date(r[dateCols[0]])).filter(d => !isNaN(d));
+          if (dates.length > 0) {
+            let minD = new Date(Math.min(...dates)).toISOString().split('T')[0];
+            let maxD = new Date(Math.max(...dates)).toISOString().split('T')[0];
+            const df = $('#date-from');
+            const dt = $('#date-to');
+            if (df) { df.min = minD; df.max = maxD; }
+            if (dt) { dt.min = minD; dt.max = maxD; }
+          }
         }
       } catch(e) {}
       const filters = $('#date-filters-container');
@@ -280,60 +284,36 @@ async function startAnalysis(datasetInfo) {
 window.resetDateFilters = async () => {
   if ($('#date-from')) $('#date-from').value = '';
   if ($('#date-to')) $('#date-to').value = '';
-  const chartsGrid = $('#charts-grid');
-  if (chartsGrid) chartsGrid.innerHTML = '<div style="color:var(--text-dim);grid-column:1/-1;">Re-generating charts...</div>';
-  
-  try {
-    const pCharts = fetch(`${API}/api/charts`).then(r => r.json());
-    const pKpis = fetch(`${API}/api/kpis`).then(r => r.json());
-    const [cData, kData] = await Promise.all([pCharts, pKpis]);
-    
-    if (cData.success && chartsGrid) {
-      chartsGrid.innerHTML = '';
-      renderCharts(cData.charts);
-    }
-    if (kData.success) {
-      renderKPIs(kData.kpis);
-    }
-  } catch(e) {
-    console.error('Reset filters error:', e);
-  }
+  loadCharts();
+  loadKPIs();
 };
 
 window.applyDateFilters = async () => {
   const dFrom = $('#date-from').value;
   const dTo = $('#date-to').value;
+  if (!dFrom && !dTo) return resetDateFilters();
   
   const chartsGrid = $('#charts-grid');
   if (chartsGrid) chartsGrid.innerHTML = '<div style="color:var(--text-dim);grid-column:1/-1;">Re-generating charts...</div>';
   
-  try {
-    let url = `${API}/api/charts`;
-    let params = [];
-    if (dFrom) params.push(`date_from=${encodeURIComponent(dFrom)}`);
-    if (dTo) params.push(`date_to=${encodeURIComponent(dTo)}`);
-    if (params.length > 0) url += '?' + params.join('&');
-    
-    const res = await fetch(url);
-    const data = await res.json();
-    
-    if (data.success) {
-      chartsGrid.innerHTML = '';
-      if (!data.charts || data.charts.length === 0) {
-        chartsGrid.innerHTML = '<div style="color:var(--text-dim);grid-column:1/-1;">No charts to display for this date range.</div>';
-      } else {
-        data.charts.forEach(chartHtml => {
-          const card = document.createElement('div');
-          card.innerHTML = chartHtml;
-          chartsGrid.appendChild(card.firstElementChild);
-        });
-      }
-    } else {
-      showToast('Failed to apply filters: ' + data.error, 'error');
-    }
-  } catch (e) {
-    showToast('Failed to fetch filtered charts', 'error');
+  let dateCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'datetime');
+  if (dateCols.length === 0) return;
+  let dCol = dateCols[0];
+  
+  let filtered = DataEngine.clean_data.filter(row => {
+    let d = new Date(row[dCol]);
+    if (isNaN(d)) return false;
+    if (dFrom && d < new Date(dFrom)) return false;
+    if (dTo && d > new Date(dTo)) return false;
+    return true;
+  });
+  
+  if (filtered.length === 0) {
+    if (chartsGrid) chartsGrid.innerHTML = '<div style="color:var(--text-dim);grid-column:1/-1;">No data available for this date range.</div>';
+    return;
   }
+  
+  loadCharts(filtered);
 };
 
 async function runEDA() {
@@ -409,9 +389,10 @@ function showChartSkeletons() {
   }
 }
 
-async function loadCharts() {
+async function loadCharts(customData = null) {
+  let df = customData || DataEngine.clean_data;
   try {
-    let df = DataEngine.clean_data;
+    
     let charts = [];
     let numCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'numeric');
     let catCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'object');
@@ -798,16 +779,7 @@ async function runWhatIf() {
   resultDiv.textContent = 'Running scenario...';
 
   try {
-    const res = await fetch(`${API}/api/whatif`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        target_col: targetCol,
-        adjust_col: adjustCol,
-        adjust_pct: parseFloat(adjustPct)
-      })
-    });
-    const data = await res.json();
+    const data = { success: false, error: 'What-If analysis requires the advanced Python backend.' };
 
     if (data.success) {
       const orig = data.original?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || '—';
@@ -862,40 +834,38 @@ async function exportData(format = 'csv') {
   if (menu) menu.classList.remove('active');
 
   try {
-    if (format === 'csv' || format === 'excel') {
-      // Use hidden iframe — most reliable cross-browser download method
-      const endpoint = format === 'excel' ? '/api/export/excel' : '/api/export/csv';
-      let iframe = document.getElementById('download-iframe');
-      if (!iframe) {
-        iframe = document.createElement('iframe');
-        iframe.id = 'download-iframe';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-      }
-      iframe.src = `${API}${endpoint}`;
-      showToast(`${format.toUpperCase()} download started!`, 'success');
-    } else {
-      // JSON — build from API response
-      const res = await fetch(`${API}/api/export`);
-      if (!res.ok) { showToast('No dataset loaded', 'error'); return; }
-      const data = await res.json();
-      if (!data.success) { showToast(data.error || 'Export failed', 'error'); return; }
-
-      const safeName = (data.report.dataset_name || 'export').replace(/\s+/g, '_');
-      const jsonStr = JSON.stringify(data.report, null, 2);
-      const blob = new Blob([jsonStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `datamind_report_${safeName}.json`;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 2000);
-      showToast('JSON report exported!', 'success');
+    if (!DataEngine.clean_data || DataEngine.clean_data.length === 0) {
+      showToast('No dataset loaded', 'error');
+      return;
     }
-  } catch (e) {
-    showToast('Export failed: ' + e.message, 'error');
+    
+    let content = '';
+    let filename = '';
+    let type = '';
+
+    if (format === 'csv' || format === 'excel') {
+      content = Papa.unparse(DataEngine.clean_data);
+      filename = 'datamind_cleaned.csv';
+      type = 'text/csv;charset=utf-8;';
+    } else if (format === 'json') {
+      content = JSON.stringify(DataEngine.eda_results, null, 2);
+      filename = 'datamind_report.json';
+      type = 'application/json';
+    }
+
+    const blob = new Blob([content], { type: type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast(`${format.toUpperCase()} download started!`, 'success');
+  } catch (e) { 
+    showToast('Export failed', 'error'); 
   }
 }
 
@@ -964,21 +934,7 @@ function initResize() {
 }
 
 // ===== KPI CARDS =====
-async function loadKPIs() {
-  try {
-    const res = await fetch(`${API}/api/kpis`);
-    const data = await res.json();
-    if (!data.success || !data.kpis) return;
 
-    const row = $('#kpi-row');
-    row.innerHTML = '';
-
-    data.kpis.forEach((kpi, i) => {
-      // Skip the quality KPI from the KPI row — it goes in the sidebar gauge
-      if (kpi.label === 'Data Quality') {
-        updateQualityGauge(kpi.value, kpi.quality_breakdown);
-        return;
-      }
 
       const card = document.createElement('div');
       card.className = 'kpi-card';
