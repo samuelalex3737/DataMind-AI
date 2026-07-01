@@ -705,9 +705,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== FORECAST =====
+async function loadKPIs() {
+  const row = document.getElementById('kpi-row');
+  if (!row) return;
+  const df = DataEngine.clean_data;
+  if (!df || df.length === 0) return;
+  
+  let totalRows = df.length;
+  let numericCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'numeric');
+  
+  let html = `<div class="kpi-card" style="animation: fadeSlideUp 0.5s ease both;"><h3>Total Records</h3><div class="kpi-value">${totalRows.toLocaleString()}</div></div>`;
+  
+  // Add up to 3 numeric aggregations
+  for (let i = 0; i < Math.min(numericCols.length, 3); i++) {
+    let col = numericCols[i];
+    let sum = 0;
+    for (let r of df) {
+      let v = Number(r[col]);
+      if (!isNaN(v)) sum += v;
+    }
+    html += `<div class="kpi-card" style="animation: fadeSlideUp 0.5s ${0.1 * (i+1)}s ease both;"><h3>Total ${col}</h3><div class="kpi-value">${sum.toLocaleString(undefined, {maximumFractionDigits: 1})}</div></div>`;
+  }
+  
+  row.innerHTML = html;
+}
+
 async function loadForecast() {
   const panel = $('#forecast-panel');
-  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div><p style="color:var(--text-dim);padding:20px;">Time-series forecasting is only available in the advanced Python backend.</p>`;
+  if (panel) panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div><p style="color:var(--text-dim);padding:20px;">Time-series forecasting is only available in the advanced Python backend.</p>`;
 }
 
 // ===== INSIGHTS =====
