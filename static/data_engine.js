@@ -95,7 +95,7 @@ window.DataEngine = {
           row[col] = Number(val);
         } else if (this.dtypes[col] === 'object') {
           let strVal = String(val).trim();
-          let titleVal = strVal.charAt(0).toUpperCase() + strVal.slice(1).toLowerCase();
+          let titleVal = strVal.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
           if (strVal !== titleVal) changedCasing = true;
           row[col] = titleVal;
         } else if (this.dtypes[col] === 'datetime') {
@@ -146,6 +146,14 @@ window.DataEngine = {
           strategies[col] = `mode ('${fillVal}')`;
         }
       }
+    });
+
+    // 3b. Count missing AFTER imputation
+    let missingAfter = 0;
+    df.forEach(row => {
+      this.columns.forEach(col => {
+        if (row[col] === null || row[col] === undefined || row[col] === '') missingAfter++;
+      });
     });
 
     // 4. Duplicates
@@ -222,7 +230,7 @@ window.DataEngine = {
     this.eda_results = {
       shape: { rows: this.raw_data.length, columns: this.columns.length, memory_usage_mb: ((JSON.stringify(this.raw_data).length)/1024/1024).toFixed(2) },
       dtypes: this.dtypes,
-      missing_values: { total_before: missingBefore, total_after: 0, strategies: strategies },
+      missing_values: { total_before: missingBefore, total_after: missingAfter, strategies: strategies },
       duplicates: { found: dupCount, removed: dupCount, rows_before: this.raw_data.length, rows_after: df.length },
       capitalisation: { normalised_columns: normalised_columns },
       type_fixes: [],

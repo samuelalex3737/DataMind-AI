@@ -194,7 +194,7 @@ async function uploadFile(file) {
   showSpinner('Uploading & parsing CSV...');
   try {
     const data = await DataEngine.loadCSV(file);
-    const datasetInfo = { name: file.name, rows: data.length, columns: Object.keys(data[0]||{}).length, column_names: Object.keys(data[0]||{}), sample: data.slice(0,3) };
+    const datasetInfo = { name: file.name, rows: data.length, columns: Object.keys(data[0]||{}).length, column_names: Object.keys(data[0]||{}), sample: data.slice(0,10), dtypes: {} };
     hideSpinner();
     showPreviewModal(datasetInfo, async () => {
       showSpinner('Cleaning data & running EDA...');
@@ -239,55 +239,54 @@ async function startAnalysis(datasetInfo) {
   showChartSkeletons();
 
   // ── PHASE 1: EDA (must complete first — produces df_clean) ──
-  showSpinner('Step 1/4 — Cleaning & analyzing data...', 15);
+  showSpinner('Step 1/3 — Cleaning & analyzing data...', 20);
   await runEDA();
 
-  // ── PHASE 2: Charts + Forecast + KPIs in PARALLEL ──
-  // Update spinner text so user knows work is happening
-  showSpinner('STEP 2/4 — GENERATING AI CHARTS & FORECAST...', 40);
+  // Update datasetInfo with inferred dtypes for date filter logic
+  datasetInfo.dtypes = DataEngine.dtypes;
+
+  // ── PHASE 2: Charts + KPIs (purely client-side, fast) ──
+  showSpinner('Step 2/3 — Generating charts...', 50);
+  // Use setTimeout(0) to yield to the browser so the spinner text actually renders
+  await new Promise(r => setTimeout(r, 0));
   await Promise.all([
     loadKPIs().catch(e => console.warn('KPIs:', e)),
     loadCharts().catch(e => console.warn('Charts:', e)),
     loadForecast().catch(e => console.warn('Forecast:', e)),
   ]);
 
-  // ── PHASE 3: AI Insights + Recommendations + What-If in PARALLEL ──
-  showSpinner('STEP 3/4 — GENERATING AI INSIGHTS...', 75);
-  await Promise.all([
+  // ── PHASE 3: DONE — Hide spinner immediately ──
+  showSpinner('Finalizing...', 100);
+  await new Promise(r => setTimeout(r, 300));
+  hideSpinner();
+
+  // Set up date filters from the cleaned data
+  let dateCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'datetime');
+  if (dateCols.length > 0 && DataEngine.clean_data.length > 0) {
+    try {
+      let dates = DataEngine.clean_data.map(r => new Date(r[dateCols[0]])).filter(d => !isNaN(d));
+      if (dates.length > 0) {
+        let minD = new Date(Math.min(...dates)).toISOString().split('T')[0];
+        let maxD = new Date(Math.max(...dates)).toISOString().split('T')[0];
+        const df = $('#date-from');
+        const dt = $('#date-to');
+        if (df) { df.min = minD; df.max = maxD; }
+        if (dt) { dt.min = minD; dt.max = maxD; }
+      }
+    } catch(e) {}
+    const filters = $('#date-filters-container');
+    if (filters) filters.style.display = 'flex';
+  }
+  
+  showToast('✓ Dataset cleaned & charts ready', 'success');
+
+  // ── BACKGROUND: AI Insights + Recommendations (non-blocking) ──
+  // These make network calls to the AI API and should NOT block the dashboard
+  Promise.all([
     loadInsights().catch(e => console.warn('Insights:', e)),
     loadRecommendations().catch(e => console.warn('Recommendations:', e)),
     setupWhatIf().catch(e => console.warn('What-If:', e)),
   ]);
-
-  // ── PHASE 4: Done ──
-  showSpinner('FINALIZING DASHBOARD...', 100);
-  await new Promise(r => setTimeout(r, 600)); // Brief moment so user sees the final step
-  hideSpinner();
-  
-  // Check if we have date columns to show date filters
-  if (datasetInfo.dtypes) {
-    const hasDate = Object.values(datasetInfo.dtypes).some(t => String(t).includes('datetime'));
-    if (hasDate) {
-      try {
-        let dateCols = Object.keys(datasetInfo.dtypes || {}).filter(c => datasetInfo.dtypes[c] === 'datetime');
-        if (dateCols.length > 0 && DataEngine.clean_data.length > 0) {
-          let dates = DataEngine.clean_data.map(r => new Date(r[dateCols[0]])).filter(d => !isNaN(d));
-          if (dates.length > 0) {
-            let minD = new Date(Math.min(...dates)).toISOString().split('T')[0];
-            let maxD = new Date(Math.max(...dates)).toISOString().split('T')[0];
-            const df = $('#date-from');
-            const dt = $('#date-to');
-            if (df) { df.min = minD; df.max = maxD; }
-            if (dt) { dt.min = minD; dt.max = maxD; }
-          }
-        }
-      } catch(e) {}
-      const filters = $('#date-filters-container');
-      if (filters) filters.style.display = 'flex';
-    }
-  }
-  
-  showToast('✓ Dataset cleaned & charts ready', 'success');
 }
 
 // ===== DATE FILTERS =====
@@ -402,25 +401,145 @@ function showChartSkeletons() {
 async function loadCharts(customData = null) {
   let df = customData || DataEngine.clean_data;
   try {
-    
     let charts = [];
-    let numCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'numeric');
-    let catCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'object');
-    let dateCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'datetime');
+    let allCols = Object.keys(DataEngine.dtypes);
+    let numCols  = allCols.filter(c => DataEngine.dtypes[c] === 'numeric');
+    let catCols  = allCols.filter(c => DataEngine.dtypes[c] === 'object');
+    let dateCols = allCols.filter(c => DataEngine.dtypes[c] === 'datetime');
 
-    if (catCols.length > 0 && numCols.length > 0) {
-      let b1 = ChartsEngine.barChart(df, catCols[0], numCols[0]);
-      if (b1) charts.push(b1);
-      let p1 = ChartsEngine.pieChart(df, catCols[0], numCols[0]);
-      if (p1) charts.push(p1);
+    // ── Detect ID-like columns (>80% unique values) ──
+    let idCols = [];
+    let safeCatCols = [];
+    catCols.forEach(c => {
+      let seen = {};
+      let total = 0;
+      for (let i = 0; i < Math.min(df.length, 500); i++) {
+        let v = df[i][c];
+        if (v !== null && v !== undefined && v !== '') {
+          seen[v] = true;
+          total++;
+        }
+      }
+      let uniq = Object.keys(seen).length;
+      if (total > 0 && uniq / total > 0.8) {
+        idCols.push(c);
+      } else {
+        safeCatCols.push(c);
+      }
+    });
+
+    // Use idCols for customer/order ID analysis, safeCatCols for bar/pie
+    let custCol = idCols.length > 0 ? idCols[0] : null;
+    let productCol = safeCatCols.length > 0 ? safeCatCols[0] : null;
+
+    // Helper to push if not null with try/catch to prevent pipeline freezes
+    function safeAdd(chartFunc) { 
+      try {
+        let result = chartFunc();
+        if (result) charts.push(result); 
+      } catch (e) {
+        console.warn('Chart generation failed, skipping:', e);
+      }
+    }
+
+    // ── 1. For each (cat_col, num_col) pair: bar_chart, pie_chart ──
+    let catNumDone = 0;
+    for (let ci = 0; ci < safeCatCols.length && catNumDone < 3; ci++) {
+      for (let ni = 0; ni < numCols.length && catNumDone < 3; ni++) {
+        safeAdd(() => ChartsEngine.barChart(df, safeCatCols[ci], numCols[ni]));
+        safeAdd(() => ChartsEngine.pieChart(df, safeCatCols[ci], numCols[ni]));
+        catNumDone++;
+      }
+    }
+
+    // ── 2. First (cat_col, num_col): doughnut, pareto, treemap ──
+    if (safeCatCols.length > 0 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.doughnutChart(df, safeCatCols[0], numCols[0]));
+      safeAdd(() => ChartsEngine.paretoChart(df, safeCatCols[0], numCols[0]));
+      safeAdd(() => ChartsEngine.treemapChart(df, safeCatCols[0], numCols[0]));
+    }
+
+    // ── 3. For each (date_col, num_col) pair: line_chart ──
+    let linesDone = 0;
+    for (let di = 0; di < dateCols.length && linesDone < 2; di++) {
+      for (let ni = 0; ni < numCols.length && linesDone < 3; ni++) {
+        safeAdd(() => ChartsEngine.lineChart(df, dateCols[di], numCols[ni]));
+        linesDone++;
+      }
+    }
+
+    // ── 4. First (cat1, cat2, num_col): grouped_bar, stacked_bar ──
+    if (safeCatCols.length >= 2 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.groupedBar(df, safeCatCols[0], safeCatCols[1], numCols[0]));
+      safeAdd(() => ChartsEngine.stackedBar(df, safeCatCols[0], safeCatCols[1], numCols[0]));
+    }
+
+    // ── 5. First (date_col, num1, num2): double_axis, waterfall ──
+    if (dateCols.length > 0 && numCols.length >= 2) {
+      safeAdd(() => ChartsEngine.doubleAxisChart(df, dateCols[0], numCols[0], numCols[1]));
     }
     if (dateCols.length > 0 && numCols.length > 0) {
-      let l1 = ChartsEngine.lineChart(df, dateCols[0], numCols[0]);
-      if (l1) charts.push(l1);
+      safeAdd(() => ChartsEngine.waterfallChart(df, dateCols[0], numCols[0]));
     }
-    if (dateCols.length > 0 && catCols.length > 0 && numCols.length > 0) {
-       let rfm = ChartsEngine.rfmChart(df, catCols[0], dateCols[0], numCols[0]);
-       if (rfm) charts.push(rfm);
+
+    // ── 6. First (cat_col, numCols list): radar ──
+    if (safeCatCols.length > 0 && numCols.length >= 3) {
+      safeAdd(() => ChartsEngine.radarChart(df, safeCatCols[0], numCols.slice(0, 6)));
+    }
+
+    // ── 7. First num_col: histogram ──
+    if (numCols.length > 0) {
+      safeAdd(() => ChartsEngine.histogram(df, numCols[0]));
+    }
+
+    // ── 8. All num_cols: box_plot, heatmap_corr ──
+    if (numCols.length > 0) {
+      safeAdd(() => ChartsEngine.boxPlot(df, numCols));
+    }
+    if (numCols.length >= 2) {
+      safeAdd(() => ChartsEngine.heatmapCorr(df, numCols));
+    }
+
+    // ── 9. First (num_col, cat_col): violin ──
+    if (numCols.length > 0 && safeCatCols.length > 0) {
+      safeAdd(() => ChartsEngine.violinPlot(df, numCols[0], safeCatCols[0]));
+    }
+
+    // ── 10. First (date_col, num_col): seasonal_heatmap ──
+    if (dateCols.length > 0 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.seasonalHeatmap(df, dateCols[0], numCols[0]));
+    }
+
+    // ── 11. Sunburst: first (parent_col, child_col, num_col) where 2 cat cols ──
+    if (safeCatCols.length >= 2 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.sunburstChart(df, safeCatCols[0], safeCatCols[1], numCols[0]));
+    }
+
+    // ── 12. RFM: first (cust_col, date_col, value_col) ──
+    if (custCol && dateCols.length > 0 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.rfmChart(df, custCol, dateCols[0], numCols[0]));
+    } else if (safeCatCols.length > 0 && dateCols.length > 0 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.rfmChart(df, safeCatCols[0], dateCols[0], numCols[0]));
+    }
+
+    // ── 13. Market Basket: first (cust_col, product_col) ──
+    if (custCol && productCol) {
+      safeAdd(() => ChartsEngine.marketBasketChart(df, custCol, productCol));
+    }
+
+    // ── 14. Cohort Retention: first (cust_col, date_col) ──
+    if (custCol && dateCols.length > 0) {
+      safeAdd(() => ChartsEngine.cohortRetention(df, custCol, dateCols[0]));
+    }
+
+    // ── 15. BCG Matrix: first (product_col, value_col, date_col) ──
+    if (productCol && numCols.length > 0 && dateCols.length > 0) {
+      safeAdd(() => ChartsEngine.bcgMatrix(df, productCol, numCols[0], dateCols[0]));
+    }
+
+    // ── 16. Scatter: first 2 num cols ──
+    if (numCols.length >= 2) {
+      safeAdd(() => ChartsEngine.scatterChart(df, numCols[0], numCols[1]));
     }
 
     renderCharts(charts);

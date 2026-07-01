@@ -1,550 +1,557 @@
-OrderDate,OrderID,CustomerID,DeviceType,Browser,TrafficSource,Category,Product,UnitPrice,Quantity,Discount,ShippingCost,TotalAmount,DeliveryStatus,Region
-2023-09-24,ORD-20001,USR-4074,Mobile,Safari,Paid Social,Apparel,T-Shirt,309.17,1,0.0,14.07,323.24,Delivered,South America
-2023-05-29,ORD-20002,USR-6530,Desktop,Edge,Paid Social,Electronics,Smartwatch,184.96,2,0.19,19.72,319.36,Delivered,South America
-2023-12-16,ORD-20003,USR-4448,Mobile,Firefox,Direct,Electronics,Smartwatch,230.22,1,0.11,12.76,217.66,Shipped,South America
-2023-03-25,ORD-20004,USR-3031,Tablet,Edge,Organic,Accessories,Keyboard,239.1,3,0.07,23.32,690.41,Delivered,South America
-2023-06-27,ORD-20005,USR-1245,Mobile,Chrome,Paid Social,Apparel,Jeans,367.59,1,0.02,18.01,378.25,Delivered,North America
-2023-10-20,ORD-20006,USR-2166,Desktop,Firefox,Direct,Electronics,Headphones,447.9,1,0.16,21.3,397.54,Cancelled,South America
-2023-12-04,ORD-20007,USR-4816,Mobile,Firefox,Paid Social,Electronics,Speaker,91.81,2,0.12,23.42,185.01,Shipped,South America
-2023-06-13,ORD-20008,USR-6135,Mobile,Firefox,Affiliate,Accessories,Webcam,242.79,3,0.1,23.65,679.18,Delivered,North America
-2023-08-30,ORD-20009,USR-1965,Mobile,Edge,Affiliate,Electronics,Headphones,188.49,2,0.16,9.81,326.47,Delivered,Europe
-2023-09-28,ORD-20010,USR-9293,Mobile,Edge,Paid Social,Electronics,Smartwatch,28.4,2,0.05,14.72,68.68,Shipped,North America
-2023-07-17,ORD-20011,USR-6364,Desktop,Edge,Paid Social,Accessories,Mouse,407.68,2,0.06,14.34,780.78,Delivered,Europe
-2023-04-05,ORD-20012,USR-5781,Tablet,Chrome,Paid Social,Electronics,Speaker,82.99,2,0.12,8.43,154.49,Cancelled,Asia
-2023-03-26,ORD-20013,USR-4486,Mobile,Chrome,Organic,Apparel,Jeans,271.38,1,0.03,7.56,270.8,Cancelled,South America
-2023-01-08,ORD-20014,USR-3831,Desktop,Safari,Affiliate,Apparel,Hoodie,82.71,3,0.01,13.58,259.23,Delivered,South America
-2023-02-02,ORD-20015,USR-2412,Desktop,Edge,Affiliate,Apparel,Jeans,387.25,1,0.02,20.37,399.88,Delivered,Europe
-2023-05-31,ORD-20016,USR-1353,Mobile,Firefox,Affiliate,Electronics,Speaker,268.75,3,0.01,7.28,805.47,Shipped,South America
-2023-03-22,ORD-20017,USR-7962,Desktop,Chrome,Organic,Electronics,Speaker,103.91,3,0.08,23.51,310.3,Shipped,Europe
-2023-02-08,ORD-20018,USR-4449,Desktop,Edge,Organic,Apparel,T-Shirt,481.09,1,0.04,6.75,468.6,Shipped,Europe
-2023-06-11,ORD-20019,USR-2860,Tablet,Edge,Affiliate,Electronics,Speaker,348.29,1,0.11,20.3,330.28,Shipped,Europe
-2023-10-24,ORD-20020,USR-7807,Mobile,Firefox,Paid Social,Electronics,Headphones,227.35,2,0.1,20.36,429.59,Cancelled,North America
-2023-01-03,ORD-20021,USR-5104,Mobile,Safari,Direct,Electronics,Headphones,489.38,2,0.02,5.73,964.91,Shipped,Asia
-2023-05-29,ORD-20022,USR-9383,Desktop,Chrome,Paid Social,Apparel,Hoodie,181.51,1,0.07,13.16,181.96,Delivered,Europe
-2023-03-31,ORD-20023,USR-6460,Desktop,Edge,Direct,Accessories,Mouse,303.15,2,0.05,13.23,589.21,Delivered,Asia
-2023-04-03,ORD-20024,USR-5120,Desktop,Edge,Affiliate,Electronics,Headphones,63.88,1,0.13,10.01,65.59,Delivered,North America
-2023-01-16,ORD-20025,USR-4340,Tablet,Firefox,Paid Social,Electronics,Smartwatch,264.68,2,0.05,10.2,513.09,Delivered,South America
-2023-01-01,ORD-20026,USR-6420,Tablet,Safari,Affiliate,Electronics,Headphones,80.42,3,0.19,22.83,218.25,Shipped,Asia
-2023-07-12,ORD-20027,USR-5376,Desktop,Firefox,Direct,Accessories,Webcam,323.77,2,0.05,7.31,622.47,Shipped,South America
-2023-09-06,ORD-20028,USR-1677,Mobile,Safari,Paid Social,Accessories,Webcam,225.55,1,0.16,7.07,196.53,Shipped,Asia
-2023-08-25,ORD-20029,USR-4906,Mobile,Firefox,Paid Social,Accessories,Mouse,26.39,2,0.1,6.83,54.33,Cancelled,Europe
-2023-03-04,ORD-20030,USR-5029,Desktop,Firefox,Direct,Apparel,T-Shirt,480.82,1,0.17,14.67,413.75,Cancelled,Asia
-2023-06-15,ORD-20031,USR-7372,Desktop,Firefox,Direct,Accessories,Webcam,33.42,3,0.15,22.1,107.32,Cancelled,Europe
-2023-10-04,ORD-20032,USR-1103,Desktop,Chrome,Affiliate,Apparel,Hoodie,106.78,2,0.15,20.08,201.61,Delivered,South America
-2023-03-07,ORD-20033,USR-1787,Desktop,Edge,Affiliate,Electronics,Smartwatch,97.16,3,0.17,23.7,265.63,Delivered,Europe
-2023-05-26,ORD-20034,USR-9742,Mobile,Chrome,Direct,Apparel,T-Shirt,304.72,2,0.19,23.72,517.37,Cancelled,Asia
-2023-12-13,ORD-20035,USR-1813,Mobile,Edge,Paid Social,Apparel,Hoodie,102.44,2,0.06,24.71,217.3,Delivered,Europe
-2023-10-13,ORD-20036,USR-7251,Mobile,Edge,Paid Social,Electronics,Smartwatch,92.19,2,0.13,17.08,177.49,Shipped,Asia
-2023-10-10,ORD-20037,USR-2892,Tablet,Firefox,Paid Social,Accessories,Keyboard,335.71,1,0.0,12.34,348.05,Delivered,North America
-2023-06-27,ORD-20038,USR-2635,Tablet,Edge,Direct,Apparel,Jeans,95.61,3,0.17,11.77,249.84,Cancelled,South America
-2023-12-07,ORD-20039,USR-5973,Mobile,Firefox,Direct,Accessories,Keyboard,12.45,1,0.04,7.42,19.37,Delivered,South America
-2023-05-20,ORD-20040,USR-4992,Mobile,Edge,Direct,Apparel,Hoodie,214.68,2,0.15,14.37,379.33,Shipped,North America
-2023-08-26,ORD-20041,USR-5789,Mobile,Safari,Paid Social,Accessories,Keyboard,477.58,2,0.05,24.0,931.4,Shipped,Asia
-2023-12-19,ORD-20042,USR-2921,Tablet,Chrome,Affiliate,Electronics,Speaker,255.74,1,0.08,22.8,258.08,Delivered,South America
-2023-12-02,ORD-20043,USR-4997,Desktop,Edge,Paid Social,Apparel,Hoodie,400.38,2,0.05,10.94,771.66,Delivered,Europe
-2023-01-18,ORD-20044,USR-3310,Mobile,Firefox,Paid Social,Accessories,Mouse,225.3,1,0.02,5.98,226.77,Delivered,Asia
-2023-04-09,ORD-20045,USR-6091,Mobile,Edge,Affiliate,Accessories,Keyboard,232.54,3,0.05,16.79,679.53,Shipped,Europe
-2023-08-21,ORD-20046,USR-3519,Tablet,Safari,Affiliate,Electronics,Speaker,465.76,1,0.09,24.2,448.04,Cancelled,South America
-2023-08-05,ORD-20047,USR-9593,Tablet,Edge,Affiliate,Accessories,Keyboard,176.19,3,0.1,6.53,482.24,Cancelled,Asia
-2023-07-08,ORD-20048,USR-8308,Mobile,Safari,Direct,Apparel,T-Shirt,111.81,3,0.18,17.71,292.76,Delivered,South America
-2023-11-24,ORD-20049,USR-9473,Desktop,Safari,Affiliate,Electronics,Speaker,161.95,2,0.05,18.26,325.96,Cancelled,Europe
-2023-01-08,ORD-20050,USR-2783,Mobile,Safari,Paid Social,Electronics,Headphones,76.36,1,0.06,23.37,95.15,Delivered,South America
-2023-10-02,ORD-20051,USR-2725,Tablet,Chrome,Organic,Electronics,Headphones,278.42,3,0.05,23.51,817.01,Delivered,Europe
-2023-12-10,ORD-20052,USR-5218,Desktop,Safari,Direct,Apparel,Jeans,90.86,1,0.1,7.4,89.17,Shipped,Asia
-2023-07-25,ORD-20053,USR-7931,Desktop,Safari,Direct,Apparel,Jeans,76.16,3,0.09,9.37,217.29,Shipped,North America
-2023-10-18,ORD-20054,USR-5550,Tablet,Edge,Direct,Accessories,Mouse,322.62,3,0.19,16.82,800.79,Cancelled,North America
-2023-09-02,ORD-20055,USR-3952,Desktop,Edge,Affiliate,Electronics,Speaker,225.25,3,0.06,11.3,646.5,Cancelled,South America
-2023-07-27,ORD-20056,USR-6900,Tablet,Edge,Direct,Apparel,T-Shirt,307.28,1,0.0,8.59,315.87,Cancelled,Europe
-2023-03-09,ORD-20057,USR-1010,Desktop,Safari,Organic,Apparel,Jeans,394.67,2,0.05,19.32,769.19,Cancelled,South America
-2023-07-19,ORD-20058,USR-8452,Tablet,Safari,Direct,Electronics,Speaker,20.31,2,0.15,24.42,58.95,Delivered,Europe
-2023-12-22,ORD-20059,USR-9137,Mobile,Firefox,Affiliate,Electronics,Headphones,178.05,1,0.04,15.85,186.78,Delivered,Asia
-2023-02-15,ORD-20060,USR-2746,Mobile,Firefox,Affiliate,Accessories,Webcam,483.56,3,0.11,20.78,1311.89,Cancelled,Europe
-2023-02-23,ORD-20061,USR-8895,Desktop,Safari,Direct,Apparel,Hoodie,406.21,2,0.07,14.21,769.76,Shipped,South America
-2023-08-08,ORD-20062,USR-5824,Tablet,Edge,Paid Social,Apparel,T-Shirt,68.36,3,0.12,14.19,194.66,Delivered,Europe
-2023-09-07,ORD-20063,USR-2654,Tablet,Safari,Organic,Apparel,T-Shirt,402.4,1,0.11,7.57,365.71,Shipped,South America
-2023-01-18,ORD-20064,USR-8820,Mobile,Edge,Affiliate,Apparel,Jeans,81.19,1,0.18,21.0,87.58,Cancelled,Asia
-2023-05-20,ORD-20065,USR-3811,Tablet,Edge,Direct,Accessories,Keyboard,104.06,1,0.04,15.65,115.55,Shipped,North America
-2023-04-19,ORD-20066,USR-8435,Desktop,Chrome,Paid Social,Accessories,Webcam,449.78,2,0.15,17.31,781.94,Cancelled,Europe
-2023-02-23,ORD-20067,USR-7278,Mobile,Safari,Organic,Electronics,Speaker,228.08,3,0.11,22.32,631.29,Cancelled,North America
-2023-01-30,ORD-20068,USR-2426,Desktop,Chrome,Direct,Apparel,Jeans,350.07,3,0.04,8.31,1016.51,Shipped,Asia
-2023-06-22,ORD-20069,USR-1043,Desktop,Safari,Paid Social,Accessories,Mouse,252.77,3,0.09,8.77,698.83,Shipped,Asia
-2023-11-24,ORD-20070,USR-6923,Tablet,Safari,Paid Social,Electronics,Smartwatch,452.89,2,0.17,9.76,761.56,Shipped,Europe
-2023-02-26,ORD-20071,USR-2642,Mobile,Safari,Affiliate,Electronics,Headphones,247.84,1,0.13,5.57,221.19,Shipped,Europe
-2023-08-27,ORD-20072,USR-4762,Mobile,Edge,Paid Social,Electronics,Smartwatch,193.48,2,0.06,9.45,373.19,Delivered,North America
-2023-10-16,ORD-20073,USR-1957,Mobile,Chrome,Affiliate,Accessories,Keyboard,27.71,1,0.17,17.61,40.61,Cancelled,South America
-2023-06-09,ORD-20074,USR-7623,Desktop,Chrome,Affiliate,Accessories,Keyboard,220.4,3,0.13,13.44,588.68,Shipped,Europe
-2023-10-14,ORD-20075,USR-6166,Desktop,Safari,Affiliate,Electronics,Smartwatch,100.78,1,0.04,22.29,119.04,Shipped,North America
-2023-07-12,ORD-20076,USR-2766,Tablet,Firefox,Organic,Accessories,Webcam,406.12,1,0.16,21.07,362.21,Cancelled,North America
-2023-07-30,ORD-20077,USR-1939,Mobile,Firefox,Direct,Electronics,Speaker,171.93,3,0.12,12.75,466.65,Cancelled,Europe
-2023-12-27,ORD-20078,USR-9837,Mobile,Firefox,Affiliate,Apparel,T-Shirt,35.47,3,0.12,18.76,112.4,Cancelled,Europe
-2023-10-07,ORD-20079,USR-1966,Mobile,Firefox,Paid Social,Accessories,Keyboard,316.41,2,0.19,10.8,523.38,Cancelled,North America
-2023-10-18,ORD-20080,USR-1972,Tablet,Chrome,Affiliate,Apparel,Jeans,428.35,2,0.12,19.6,773.5,Delivered,South America
-2023-02-01,ORD-20081,USR-6464,Tablet,Chrome,Direct,Electronics,Headphones,49.03,3,0.08,18.54,153.86,Shipped,Europe
-2023-12-12,ORD-20082,USR-9471,Desktop,Edge,Affiliate,Electronics,Speaker,197.82,3,0.14,14.66,525.04,Delivered,Europe
-2023-01-03,ORD-20083,USR-8933,Mobile,Chrome,Direct,Apparel,T-Shirt,96.39,3,0.01,23.84,310.12,Shipped,South America
-2023-07-30,ORD-20084,USR-3406,Tablet,Safari,Paid Social,Apparel,Jeans,159.21,1,0.15,20.28,155.61,Shipped,Asia
-2023-06-27,ORD-20085,USR-3766,Mobile,Safari,Affiliate,Electronics,Smartwatch,223.35,3,0.07,21.45,644.6,Delivered,North America
-2023-01-13,ORD-20086,USR-9990,Desktop,Edge,Direct,Apparel,Hoodie,224.93,3,0.14,12.64,592.96,Delivered,North America
-2023-09-23,ORD-20087,USR-1552,Tablet,Safari,Direct,Electronics,Headphones,138.27,2,0.18,5.44,232.2,Delivered,Asia
-2023-10-23,ORD-20088,USR-3601,Desktop,Safari,Paid Social,Apparel,Jeans,169.11,2,0.12,8.88,306.51,Cancelled,South America
-2023-08-11,ORD-20089,USR-8538,Desktop,Edge,Organic,Accessories,Webcam,83.27,3,0.15,16.73,229.07,Cancelled,Europe
-2023-08-05,ORD-20090,USR-6815,Desktop,Safari,Paid Social,Electronics,Speaker,92.45,2,0.1,8.54,174.95,Cancelled,Europe
-2023-12-01,ORD-20091,USR-6326,Tablet,Chrome,Paid Social,Electronics,Headphones,210.88,2,0.16,18.8,373.08,Shipped,Europe
-2023-01-24,ORD-20092,USR-9437,Desktop,Safari,Affiliate,Accessories,Mouse,424.23,3,0.0,22.19,1294.88,Delivered,Europe
-2023-12-23,ORD-20093,USR-7285,Desktop,Firefox,Organic,Apparel,Jeans,140.11,2,0.02,14.03,288.65,Shipped,Europe
-2023-11-07,ORD-20094,USR-6618,Mobile,Edge,Paid Social,Apparel,T-Shirt,431.6,3,0.1,17.64,1182.96,Shipped,Europe
-2023-01-01,ORD-20095,USR-9264,Desktop,Safari,Paid Social,Electronics,Smartwatch,449.72,2,0.13,12.98,795.49,Shipped,Asia
-2023-07-15,ORD-20096,USR-8345,Desktop,Firefox,Organic,Electronics,Smartwatch,240.01,1,0.12,5.64,216.85,Delivered,North America
-2023-04-18,ORD-20097,USR-9248,Tablet,Chrome,Direct,Apparel,T-Shirt,66.08,3,0.04,12.19,202.5,Shipped,Europe
-2023-10-17,ORD-20098,USR-6705,Mobile,Edge,Organic,Apparel,T-Shirt,192.18,3,0.14,10.72,506.54,Delivered,North America
-2023-10-24,ORD-20099,USR-9464,Desktop,Chrome,Paid Social,Electronics,Smartwatch,227.24,1,0.16,11.22,202.1,Shipped,Europe
-2023-11-19,ORD-20100,USR-7432,Tablet,Edge,Organic,Electronics,Headphones,150.2,3,0.09,16.81,426.86,Delivered,Asia
-2023-10-28,ORD-20101,USR-3124,Desktop,Safari,Organic,Electronics,Smartwatch,449.85,3,0.15,9.77,1156.89,Shipped,South America
-2023-09-18,ORD-20102,USR-7455,Tablet,Safari,Paid Social,Electronics,Headphones,93.19,1,0.09,22.52,107.32,Shipped,North America
-2023-12-06,ORD-20103,USR-9784,Tablet,Chrome,Affiliate,Electronics,Smartwatch,311.91,3,0.17,11.61,788.27,Cancelled,North America
-2023-05-20,ORD-20104,USR-9142,Tablet,Firefox,Direct,Electronics,Speaker,372.25,2,0.17,14.65,632.58,Delivered,Europe
-2023-04-16,ORD-20105,USR-6434,Desktop,Firefox,Paid Social,Accessories,Mouse,296.77,1,0.02,22.26,313.09,Cancelled,North America
-2023-07-11,ORD-20106,USR-9714,Desktop,Edge,Direct,Electronics,Headphones,10.5,1,0.03,15.27,25.45,Shipped,Europe
-2023-11-09,ORD-20107,USR-9518,Desktop,Chrome,Organic,Apparel,Jeans,426.22,2,0.05,8.28,818.1,Delivered,Asia
-2023-08-09,ORD-20108,USR-9592,Desktop,Safari,Direct,Apparel,T-Shirt,343.06,3,0.09,23.7,960.25,Shipped,Europe
-2023-07-13,ORD-20109,USR-1245,Tablet,Edge,Organic,Apparel,T-Shirt,67.23,3,0.03,14.24,209.88,Delivered,North America
-2023-10-20,ORD-20110,USR-2624,Tablet,Safari,Affiliate,Accessories,Keyboard,180.55,2,0.02,11.78,365.66,Delivered,North America
-2023-05-24,ORD-20111,USR-9136,Desktop,Chrome,Organic,Apparel,Jeans,60.69,1,0.02,24.41,83.89,Delivered,North America
-2023-07-04,ORD-20112,USR-3423,Mobile,Chrome,Affiliate,Electronics,Speaker,161.13,1,0.18,19.5,151.63,Delivered,South America
-2023-02-14,ORD-20113,USR-7208,Tablet,Edge,Affiliate,Accessories,Mouse,138.62,1,0.2,10.05,120.95,Delivered,Asia
-2023-09-20,ORD-20114,USR-4696,Tablet,Edge,Direct,Electronics,Speaker,170.28,3,0.05,6.41,491.71,Shipped,Europe
-2023-05-07,ORD-20115,USR-9811,Desktop,Safari,Affiliate,Electronics,Speaker,417.07,1,0.06,18.8,410.85,Cancelled,North America
-2023-01-31,ORD-20116,USR-7602,Tablet,Safari,Organic,Accessories,Mouse,205.86,1,0.08,12.15,201.54,Shipped,Asia
-2023-08-25,ORD-20117,USR-8447,Mobile,Edge,Affiliate,Accessories,Mouse,326.25,2,0.18,12.38,547.43,Delivered,Europe
-2023-08-12,ORD-20118,USR-8487,Tablet,Edge,Paid Social,Apparel,Jeans,87.35,2,0.04,8.76,176.47,Shipped,North America
-2023-12-28,ORD-20119,USR-3172,Desktop,Firefox,Paid Social,Apparel,Hoodie,424.25,1,0.1,17.52,399.34,Delivered,North America
-2023-01-22,ORD-20120,USR-9704,Desktop,Chrome,Paid Social,Apparel,Hoodie,78.16,3,0.0,16.68,251.16,Delivered,Asia
-2023-05-11,ORD-20121,USR-1389,Mobile,Firefox,Direct,Apparel,Hoodie,394.62,2,0.07,22.67,756.66,Shipped,South America
-2023-09-05,ORD-20122,USR-7140,Desktop,Firefox,Paid Social,Electronics,Headphones,219.58,1,0.06,16.21,222.62,Delivered,North America
-2023-04-27,ORD-20123,USR-6701,Desktop,Firefox,Organic,Accessories,Webcam,339.98,2,0.17,11.59,575.96,Delivered,North America
-2023-07-25,ORD-20124,USR-4171,Mobile,Edge,Affiliate,Accessories,Mouse,270.16,1,0.05,12.8,269.45,Shipped,North America
-2023-02-05,ORD-20125,USR-4928,Mobile,Chrome,Organic,Apparel,T-Shirt,243.37,2,0.08,24.37,472.17,Shipped,South America
-2023-04-09,ORD-20126,USR-7495,Desktop,Chrome,Affiliate,Apparel,Jeans,421.8,3,0.2,8.23,1020.55,Cancelled,North America
-2023-05-19,ORD-20127,USR-8459,Desktop,Firefox,Organic,Accessories,Keyboard,341.26,3,0.09,9.77,941.41,Delivered,Europe
-2023-04-30,ORD-20128,USR-7112,Desktop,Chrome,Paid Social,Accessories,Webcam,270.1,2,0.17,19.88,468.25,Delivered,North America
-2023-08-09,ORD-20129,USR-4160,Desktop,Firefox,Affiliate,Electronics,Speaker,174.08,1,0.07,21.47,183.36,Shipped,South America
-2023-09-03,ORD-20130,USR-4123,Mobile,Firefox,Paid Social,Electronics,Smartwatch,192.91,2,0.07,15.06,373.87,Shipped,South America
-2023-09-30,ORD-20131,USR-7073,Mobile,Firefox,Affiliate,Electronics,Smartwatch,197.98,1,0.14,9.48,179.74,Delivered,Asia
-2023-04-06,ORD-20132,USR-4592,Desktop,Edge,Paid Social,Electronics,Smartwatch,446.79,3,0.08,7.52,1240.66,Shipped,Asia
-2023-11-22,ORD-20133,USR-4582,Desktop,Chrome,Direct,Accessories,Webcam,318.17,3,0.08,22.19,900.34,Cancelled,Asia
-2023-11-05,ORD-20134,USR-8880,Tablet,Edge,Affiliate,Accessories,Keyboard,296.38,1,0.19,5.72,245.79,Delivered,North America
-2023-08-27,ORD-20135,USR-3071,Tablet,Firefox,Paid Social,Accessories,Webcam,416.41,1,0.08,13.56,396.66,Shipped,North America
-2023-07-17,ORD-20136,USR-5764,Desktop,Chrome,Direct,Accessories,Mouse,482.8,2,0.01,10.11,966.05,Delivered,North America
-2023-07-30,ORD-20137,USR-5250,Tablet,Safari,Paid Social,Electronics,Headphones,212.63,1,0.12,15.56,202.67,Delivered,Europe
-2023-05-01,ORD-20138,USR-7320,Tablet,Chrome,Paid Social,Electronics,Speaker,325.0,2,0.02,15.65,652.65,Cancelled,South America
-2023-07-31,ORD-20139,USR-1935,Desktop,Firefox,Direct,Accessories,Mouse,437.15,3,0.06,12.37,1245.13,Delivered,South America
-2023-12-16,ORD-20140,USR-5364,Desktop,Chrome,Organic,Accessories,Webcam,166.76,1,0.13,11.88,156.96,Shipped,North America
-2023-02-07,ORD-20141,USR-7604,Tablet,Chrome,Direct,Accessories,Keyboard,338.31,1,0.06,11.48,329.49,Delivered,South America
-2023-05-22,ORD-20142,USR-7578,Mobile,Safari,Affiliate,Apparel,Jeans,191.74,3,0.1,8.51,526.21,Delivered,South America
-2023-11-10,ORD-20143,USR-7220,Tablet,Firefox,Organic,Accessories,Webcam,178.98,3,0.03,18.66,539.49,Delivered,Europe
-2023-05-09,ORD-20144,USR-4039,Tablet,Firefox,Affiliate,Accessories,Webcam,471.65,3,0.02,20.93,1407.58,Delivered,North America
-2023-04-06,ORD-20145,USR-3189,Mobile,Edge,Paid Social,Apparel,Jeans,211.26,2,0.07,7.41,400.35,Cancelled,North America
-2023-07-05,ORD-20146,USR-7298,Tablet,Safari,Paid Social,Apparel,Jeans,131.3,3,0.18,5.23,328.23,Cancelled,North America
-2023-06-10,ORD-20147,USR-8442,Mobile,Firefox,Organic,Accessories,Webcam,153.47,2,0.01,10.98,314.85,Cancelled,North America
-2023-06-16,ORD-20148,USR-5768,Desktop,Chrome,Affiliate,Electronics,Headphones,69.8,3,0.15,7.25,185.24,Shipped,South America
-2023-10-01,ORD-20149,USR-4248,Desktop,Chrome,Organic,Electronics,Headphones,455.88,3,0.04,9.79,1322.72,Cancelled,South America
-2023-03-03,ORD-20150,USR-8845,Desktop,Edge,Paid Social,Electronics,Smartwatch,193.8,2,0.12,13.77,354.86,Delivered,Europe
-2023-06-27,ORD-20151,USR-5468,Desktop,Firefox,Direct,Apparel,Hoodie,41.02,3,0.04,19.11,137.25,Delivered,Europe
-2023-09-24,ORD-20152,USR-4464,Tablet,Edge,Affiliate,Accessories,Webcam,348.82,1,0.14,15.27,315.26,Delivered,South America
-2023-07-28,ORD-20153,USR-4121,Desktop,Chrome,Paid Social,Accessories,Webcam,308.54,1,0.19,22.06,271.98,Shipped,North America
-2023-11-19,ORD-20154,USR-9928,Tablet,Safari,Direct,Accessories,Mouse,88.6,2,0.2,21.23,162.99,Delivered,Asia
-2023-06-12,ORD-20155,USR-4958,Mobile,Safari,Organic,Accessories,Keyboard,81.53,1,0.13,11.45,82.38,Shipped,Europe
-2023-03-29,ORD-20156,USR-6890,Desktop,Safari,Paid Social,Accessories,Webcam,84.34,2,0.0,7.82,176.5,Shipped,North America
-2023-12-08,ORD-20157,USR-4283,Tablet,Firefox,Direct,Accessories,Keyboard,56.38,2,0.05,22.35,129.47,Shipped,Asia
-2023-09-04,ORD-20158,USR-9779,Desktop,Firefox,Paid Social,Accessories,Keyboard,113.65,3,0.12,23.8,323.84,Delivered,Asia
-2023-03-10,ORD-20159,USR-8676,Tablet,Chrome,Organic,Electronics,Speaker,263.4,1,0.0,17.25,280.65,Cancelled,Europe
-2023-07-26,ORD-20160,USR-1928,Desktop,Safari,Direct,Apparel,T-Shirt,393.58,1,0.2,10.72,325.58,Cancelled,South America
-2023-10-12,ORD-20161,USR-9507,Desktop,Firefox,Affiliate,Apparel,Hoodie,423.32,3,0.08,22.34,1190.7,Shipped,North America
-2023-06-11,ORD-20162,USR-5299,Tablet,Chrome,Direct,Accessories,Mouse,290.75,3,0.03,18.03,864.11,Cancelled,North America
-2023-07-16,ORD-20163,USR-8901,Tablet,Safari,Affiliate,Accessories,Keyboard,51.41,2,0.19,17.53,100.81,Shipped,Europe
-2023-07-06,ORD-20164,USR-5954,Tablet,Firefox,Organic,Apparel,Hoodie,426.05,1,0.0,13.63,439.68,Delivered,Europe
-2023-05-01,ORD-20165,USR-6033,Tablet,Chrome,Direct,Electronics,Speaker,325.5,3,0.08,10.91,909.29,Delivered,South America
-2023-02-25,ORD-20166,USR-3683,Desktop,Safari,Affiliate,Apparel,T-Shirt,495.37,3,0.01,24.38,1495.63,Shipped,North America
-2023-10-14,ORD-20167,USR-4340,Desktop,Safari,Direct,Apparel,T-Shirt,51.29,2,0.09,6.52,99.87,Shipped,North America
-2023-12-01,ORD-20168,USR-7775,Desktop,Edge,Organic,Electronics,Speaker,123.01,2,0.03,21.84,260.48,Delivered,North America
-2023-07-13,ORD-20169,USR-1408,Tablet,Chrome,Paid Social,Accessories,Webcam,111.72,2,0.17,21.06,206.52,Delivered,North America
-2023-10-21,ORD-20170,USR-4803,Mobile,Firefox,Direct,Electronics,Headphones,209.03,3,0.19,9.14,517.08,Cancelled,Europe
-2023-04-18,ORD-20171,USR-9926,Desktop,Firefox,Affiliate,Electronics,Headphones,228.2,1,0.19,24.76,209.6,Cancelled,Europe
-2023-10-16,ORD-20172,USR-2128,Mobile,Edge,Organic,Accessories,Webcam,334.16,2,0.15,22.3,590.37,Cancelled,Europe
-2023-09-14,ORD-20173,USR-3299,Mobile,Safari,Organic,Apparel,Jeans,385.34,3,0.01,15.01,1159.47,Delivered,North America
-2023-10-15,ORD-20174,USR-2525,Tablet,Chrome,Paid Social,Electronics,Headphones,166.67,3,0.09,23.74,478.75,Delivered,Asia
-2023-04-15,ORD-20175,USR-2692,Mobile,Firefox,Direct,Accessories,Webcam,133.75,2,0.05,11.76,265.88,Delivered,Europe
-2023-08-28,ORD-20176,USR-6581,Mobile,Edge,Affiliate,Accessories,Keyboard,284.38,2,0.18,17.71,484.09,Shipped,Europe
-2023-05-14,ORD-20177,USR-9047,Desktop,Edge,Affiliate,Accessories,Keyboard,111.83,1,0.12,10.33,108.74,Delivered,North America
-2023-11-19,ORD-20178,USR-2801,Desktop,Firefox,Paid Social,Electronics,Speaker,144.0,2,0.19,10.89,244.17,Delivered,Asia
-2023-10-08,ORD-20179,USR-7388,Mobile,Edge,Direct,Apparel,T-Shirt,279.4,1,0.17,16.65,248.55,Delivered,Europe
-2023-02-19,ORD-20180,USR-5978,Desktop,Chrome,Direct,Accessories,Keyboard,431.49,2,0.14,9.52,751.68,Cancelled,Asia
-2023-05-17,ORD-20181,USR-4795,Desktop,Edge,Affiliate,Electronics,Smartwatch,273.55,3,0.03,6.27,802.3,Delivered,South America
-2023-02-10,ORD-20182,USR-9280,Mobile,Chrome,Direct,Accessories,Webcam,424.87,2,0.08,9.2,790.96,Cancelled,Europe
-2023-07-05,ORD-20183,USR-6041,Mobile,Chrome,Paid Social,Electronics,Headphones,499.38,3,0.05,11.75,1434.98,Delivered,South America
-2023-04-24,ORD-20184,USR-4103,Tablet,Safari,Direct,Accessories,Webcam,425.93,2,0.16,9.98,725.54,Cancelled,North America
-2023-09-07,ORD-20185,USR-3162,Desktop,Safari,Direct,Accessories,Mouse,346.7,1,0.08,13.1,332.06,Shipped,Europe
-2023-07-12,ORD-20186,USR-8678,Mobile,Safari,Affiliate,Accessories,Webcam,391.0,1,0.05,12.81,384.26,Shipped,South America
-2023-09-08,ORD-20187,USR-4010,Tablet,Chrome,Direct,Apparel,T-Shirt,330.78,1,0.03,17.0,337.86,Shipped,South America
-2023-05-03,ORD-20188,USR-4361,Mobile,Safari,Organic,Electronics,Smartwatch,260.92,3,0.18,18.11,659.97,Delivered,Europe
-2023-08-03,ORD-20189,USR-9579,Mobile,Safari,Direct,Accessories,Webcam,56.05,2,0.05,20.33,126.82,Delivered,North America
-2023-10-20,ORD-20190,USR-6035,Desktop,Firefox,Affiliate,Accessories,Webcam,495.06,2,0.0,11.5,1001.62,Cancelled,Asia
-2023-04-13,ORD-20191,USR-8703,Mobile,Firefox,Direct,Accessories,Webcam,19.76,3,0.05,7.31,63.63,Delivered,North America
-2023-07-07,ORD-20192,USR-8137,Tablet,Chrome,Organic,Accessories,Mouse,52.13,2,0.07,18.26,115.22,Delivered,North America
-2023-04-25,ORD-20193,USR-9683,Tablet,Firefox,Organic,Apparel,Jeans,440.28,2,0.18,23.05,745.11,Cancelled,South America
-2023-11-23,ORD-20194,USR-7263,Tablet,Firefox,Organic,Accessories,Mouse,235.34,3,0.08,13.36,662.9,Shipped,South America
-2023-04-26,ORD-20195,USR-7201,Tablet,Safari,Organic,Accessories,Mouse,36.7,1,0.03,11.16,46.76,Delivered,North America
-2023-04-21,ORD-20196,USR-1699,Tablet,Chrome,Paid Social,Electronics,Smartwatch,141.11,3,0.02,24.18,439.04,Shipped,Europe
-2023-04-05,ORD-20197,USR-9830,Tablet,Edge,Organic,Accessories,Keyboard,327.34,3,0.09,14.84,908.48,Shipped,Asia
-2023-03-10,ORD-20198,USR-1976,Tablet,Chrome,Organic,Accessories,Keyboard,415.4,1,0.16,11.18,360.12,Delivered,South America
-2023-05-23,ORD-20199,USR-9743,Mobile,Firefox,Paid Social,Electronics,Speaker,173.83,3,0.03,11.03,516.88,Delivered,Asia
-2023-03-30,ORD-20200,USR-5745,Desktop,Chrome,Affiliate,Apparel,Hoodie,155.19,3,0.16,15.52,406.6,Cancelled,South America
-2023-02-24,ORD-20201,USR-1057,Desktop,Safari,Affiliate,Electronics,Headphones,94.78,2,0.15,6.28,167.41,Shipped,Asia
-2023-11-13,ORD-20202,USR-3597,Desktop,Firefox,Organic,Accessories,Mouse,305.42,1,0.12,18.95,287.72,Delivered,Asia
-2023-09-11,ORD-20203,USR-6747,Mobile,Edge,Direct,Apparel,Hoodie,285.8,1,0.1,6.81,264.03,Delivered,Asia
-2023-08-05,ORD-20204,USR-1130,Desktop,Safari,Organic,Apparel,Hoodie,170.27,1,0.02,16.16,183.02,Delivered,North America
-2023-02-15,ORD-20205,USR-6033,Tablet,Edge,Direct,Accessories,Webcam,229.96,2,0.02,16.07,466.79,Delivered,Asia
-2023-05-11,ORD-20206,USR-8324,Tablet,Firefox,Paid Social,Electronics,Smartwatch,231.47,3,0.14,22.75,619.94,Delivered,South America
-2023-07-09,ORD-20207,USR-2186,Tablet,Chrome,Affiliate,Electronics,Speaker,302.92,3,0.04,23.42,895.83,Delivered,Asia
-2023-08-11,ORD-20208,USR-8004,Mobile,Safari,Organic,Electronics,Headphones,109.92,2,0.09,5.14,205.19,Shipped,Asia
-2023-01-25,ORD-20209,USR-2373,Tablet,Chrome,Organic,Accessories,Webcam,174.16,1,0.07,9.48,171.45,Delivered,South America
-2023-10-15,ORD-20210,USR-6066,Desktop,Safari,Organic,Electronics,Speaker,236.59,2,0.08,20.32,455.65,Shipped,South America
-2023-08-19,ORD-20211,USR-8171,Tablet,Edge,Organic,Accessories,Webcam,151.53,1,0.11,24.67,159.53,Cancelled,South America
-2023-04-05,ORD-20212,USR-7439,Desktop,Edge,Paid Social,Electronics,Speaker,290.99,3,0.16,14.61,747.9,Cancelled,Europe
-2023-06-07,ORD-20213,USR-7753,Desktop,Chrome,Affiliate,Accessories,Webcam,182.83,1,0.02,19.8,198.97,Shipped,North America
-2023-06-26,ORD-20214,USR-9549,Tablet,Safari,Affiliate,Accessories,Webcam,197.34,1,0.19,11.69,171.54,Delivered,North America
-2023-04-23,ORD-20215,USR-4786,Tablet,Chrome,Direct,Apparel,T-Shirt,251.27,2,0.07,23.61,490.97,Shipped,North America
-2023-09-08,ORD-20216,USR-9180,Desktop,Safari,Affiliate,Electronics,Speaker,348.89,3,0.15,18.57,908.24,Delivered,Europe
-2023-01-24,ORD-20217,USR-8900,Tablet,Safari,Direct,Apparel,T-Shirt,184.13,3,0.18,21.03,473.99,Delivered,Asia
-2023-04-02,ORD-20218,USR-3118,Mobile,Chrome,Direct,Accessories,Mouse,412.75,3,0.15,16.46,1068.97,Delivered,North America
-2023-06-20,ORD-20219,USR-8128,Mobile,Chrome,Direct,Electronics,Smartwatch,392.19,1,0.05,17.54,390.12,Delivered,South America
-2023-12-16,ORD-20220,USR-4108,Mobile,Firefox,Affiliate,Accessories,Keyboard,29.4,1,0.01,21.58,50.69,Delivered,South America
-2023-01-14,ORD-20221,USR-8949,Desktop,Firefox,Direct,Apparel,Hoodie,92.75,1,0.2,18.94,93.14,Delivered,Europe
-2023-10-12,ORD-20222,USR-6923,Mobile,Edge,Organic,Electronics,Headphones,12.73,2,0.07,6.21,29.89,Delivered,South America
-2023-03-24,ORD-20223,USR-1942,Desktop,Firefox,Affiliate,Accessories,Mouse,361.92,3,0.1,6.81,983.99,Delivered,South America
-2023-12-26,ORD-20224,USR-6086,Tablet,Chrome,Organic,Electronics,Speaker,388.44,3,0.09,17.39,1077.83,Shipped,Europe
-2023-09-08,ORD-20225,USR-9900,Tablet,Firefox,Affiliate,Apparel,T-Shirt,199.17,3,0.09,5.02,548.75,Shipped,Europe
-2023-11-08,ORD-20226,USR-7821,Desktop,Edge,Organic,Electronics,Headphones,395.85,3,0.11,21.92,1078.84,Delivered,Europe
-2023-12-15,ORD-20227,USR-4630,Tablet,Chrome,Direct,Accessories,Mouse,92.23,2,0.18,22.08,173.34,Shipped,Asia
-2023-11-29,ORD-20228,USR-7777,Desktop,Safari,Affiliate,Electronics,Headphones,63.26,2,0.11,14.38,126.98,Delivered,Asia
-2023-01-27,ORD-20229,USR-8528,Mobile,Edge,Paid Social,Electronics,Smartwatch,280.37,2,0.13,18.47,506.31,Delivered,South America
-2023-07-10,ORD-20230,USR-8908,Desktop,Safari,Organic,Electronics,Smartwatch,276.26,3,0.11,16.2,753.81,Delivered,Asia
-2023-03-17,ORD-20231,USR-7995,Desktop,Firefox,Organic,Electronics,Headphones,150.14,3,0.11,9.66,410.53,Shipped,South America
-2023-04-25,ORD-20232,USR-2253,Mobile,Chrome,Paid Social,Apparel,Hoodie,430.85,3,0.13,22.97,1147.49,Delivered,Asia
-2023-06-19,ORD-20233,USR-3423,Tablet,Firefox,Direct,Apparel,T-Shirt,277.65,1,0.14,19.48,258.26,Delivered,South America
-2023-09-15,ORD-20234,USR-8283,Mobile,Safari,Affiliate,Apparel,Hoodie,459.83,3,0.07,22.04,1304.97,Cancelled,Asia
-2023-05-29,ORD-20235,USR-8323,Desktop,Safari,Paid Social,Electronics,Speaker,210.84,1,0.03,5.54,210.05,Shipped,South America
-2023-08-29,ORD-20236,USR-9009,Desktop,Safari,Affiliate,Accessories,Mouse,163.45,2,0.03,8.91,326.0,Cancelled,Europe
-2023-10-19,ORD-20237,USR-1174,Desktop,Firefox,Paid Social,Electronics,Speaker,376.09,2,0.14,22.12,668.99,Shipped,Europe
-2023-03-31,ORD-20238,USR-9622,Tablet,Safari,Direct,Apparel,T-Shirt,436.09,3,0.04,14.51,1270.45,Shipped,North America
-2023-05-01,ORD-20239,USR-1051,Mobile,Chrome,Direct,Electronics,Smartwatch,409.43,1,0.2,9.43,336.97,Cancelled,Europe
-2023-06-23,ORD-20240,USR-2121,Desktop,Chrome,Organic,Apparel,Hoodie,490.76,1,0.15,22.49,439.64,Cancelled,Asia
-2023-03-16,ORD-20241,USR-6498,Tablet,Chrome,Organic,Accessories,Keyboard,386.26,1,0.04,16.97,387.78,Cancelled,Asia
-2023-07-15,ORD-20242,USR-4150,Tablet,Firefox,Organic,Accessories,Webcam,85.0,1,0.04,11.25,92.85,Shipped,North America
-2023-03-17,ORD-20243,USR-4315,Mobile,Chrome,Organic,Electronics,Smartwatch,57.24,1,0.11,8.63,59.57,Cancelled,South America
-2023-08-12,ORD-20244,USR-4203,Tablet,Edge,Affiliate,Apparel,Jeans,385.19,1,0.17,17.5,337.21,Delivered,Asia
-2023-09-07,ORD-20245,USR-9584,Tablet,Firefox,Affiliate,Electronics,Headphones,152.51,3,0.14,11.41,404.89,Cancelled,South America
-2023-05-01,ORD-20246,USR-6687,Desktop,Safari,Organic,Accessories,Webcam,337.92,1,0.1,21.67,325.8,Shipped,Asia
-2023-08-22,ORD-20247,USR-3243,Desktop,Edge,Affiliate,Accessories,Mouse,345.74,2,0.0,8.5,699.98,Shipped,Europe
-2023-03-18,ORD-20248,USR-1999,Tablet,Chrome,Paid Social,Electronics,Speaker,292.96,3,0.05,9.57,844.51,Delivered,North America
-2023-04-18,ORD-20249,USR-2766,Tablet,Edge,Organic,Accessories,Webcam,43.06,1,0.18,13.97,49.28,Delivered,North America
-2023-06-21,ORD-20250,USR-7318,Desktop,Safari,Direct,Electronics,Headphones,364.38,1,0.13,15.92,332.93,Cancelled,Europe
-2023-04-08,ORD-20251,USR-4938,Tablet,Firefox,Paid Social,Accessories,Mouse,190.41,1,0.18,10.74,166.88,Cancelled,Asia
-2023-08-16,ORD-20252,USR-1733,Tablet,Firefox,Paid Social,Electronics,Headphones,496.22,2,0.2,24.62,818.57,Delivered,Asia
-2023-08-03,ORD-20253,USR-4957,Mobile,Firefox,Organic,Apparel,Jeans,228.43,3,0.18,12.03,573.97,Shipped,South America
-2023-03-27,ORD-20254,USR-7843,Desktop,Firefox,Paid Social,Electronics,Speaker,309.36,2,0.02,7.92,614.27,Cancelled,Asia
-2023-08-16,ORD-20255,USR-1445,Mobile,Edge,Affiliate,Electronics,Speaker,163.41,3,0.02,21.51,501.94,Cancelled,Europe
-2023-12-07,ORD-20256,USR-6324,Mobile,Edge,Direct,Accessories,Webcam,300.46,3,0.16,18.91,776.07,Cancelled,North America
-2023-09-17,ORD-20257,USR-8228,Mobile,Chrome,Affiliate,Electronics,Headphones,249.58,2,0.02,24.51,513.69,Shipped,North America
-2023-08-18,ORD-20258,USR-7800,Tablet,Safari,Affiliate,Accessories,Webcam,110.42,1,0.02,6.79,115.0,Delivered,Asia
-2023-03-08,ORD-20259,USR-1011,Mobile,Edge,Paid Social,Accessories,Mouse,120.85,3,0.02,12.71,368.01,Cancelled,North America
-2023-04-03,ORD-20260,USR-4439,Mobile,Chrome,Paid Social,Apparel,T-Shirt,341.78,1,0.0,6.54,348.32,Cancelled,Asia
-2023-09-05,ORD-20261,USR-9551,Desktop,Safari,Organic,Electronics,Smartwatch,87.64,2,0.07,20.66,183.67,Cancelled,South America
-2023-10-29,ORD-20262,USR-5365,Desktop,Chrome,Organic,Electronics,Smartwatch,167.76,3,0.15,11.18,438.97,Delivered,South America
-2023-04-01,ORD-20263,USR-1145,Desktop,Chrome,Affiliate,Apparel,Jeans,450.22,1,0.04,18.01,450.22,Cancelled,Asia
-2023-01-15,ORD-20264,USR-3020,Tablet,Edge,Affiliate,Accessories,Keyboard,22.92,1,0.1,23.82,44.45,Shipped,Asia
-2023-10-01,ORD-20265,USR-5988,Tablet,Safari,Affiliate,Electronics,Smartwatch,384.8,3,0.18,15.26,961.87,Delivered,South America
-2023-12-01,ORD-20266,USR-9267,Tablet,Firefox,Direct,Accessories,Webcam,475.53,1,0.17,11.02,405.71,Delivered,North America
-2023-02-17,ORD-20267,USR-4615,Tablet,Chrome,Organic,Apparel,T-Shirt,372.41,3,0.12,7.04,990.2,Delivered,Asia
-2023-09-07,ORD-20268,USR-3461,Tablet,Chrome,Paid Social,Electronics,Smartwatch,72.18,2,0.02,24.6,166.07,Cancelled,North America
-2023-02-24,ORD-20269,USR-8504,Tablet,Safari,Direct,Accessories,Mouse,415.23,2,0.17,24.35,713.63,Delivered,North America
-2023-04-18,ORD-20270,USR-4821,Desktop,Edge,Organic,Electronics,Smartwatch,74.59,1,0.12,7.64,73.28,Delivered,Asia
-2023-10-23,ORD-20271,USR-4100,Desktop,Safari,Affiliate,Apparel,Hoodie,374.55,1,0.16,11.3,325.92,Shipped,North America
-2023-12-13,ORD-20272,USR-4362,Desktop,Edge,Paid Social,Apparel,Jeans,394.27,1,0.2,14.1,329.52,Shipped,Asia
-2023-08-16,ORD-20273,USR-3554,Mobile,Firefox,Affiliate,Apparel,T-Shirt,365.5,3,0.1,22.59,1009.44,Shipped,North America
-2023-02-20,ORD-20274,USR-3948,Mobile,Safari,Direct,Apparel,Hoodie,83.71,3,0.03,14.33,257.93,Cancelled,South America
-2023-03-04,ORD-20275,USR-3033,Mobile,Chrome,Affiliate,Apparel,Hoodie,367.46,1,0.12,22.45,345.81,Cancelled,Europe
-2023-03-14,ORD-20276,USR-5723,Mobile,Chrome,Affiliate,Accessories,Mouse,171.43,1,0.03,17.03,183.32,Shipped,Asia
-2023-04-01,ORD-20277,USR-3239,Tablet,Edge,Organic,Accessories,Webcam,257.35,1,0.05,5.24,249.72,Shipped,Asia
-2023-04-13,ORD-20278,USR-4329,Mobile,Safari,Direct,Accessories,Mouse,409.58,3,0.01,11.67,1228.12,Delivered,South America
-2023-11-14,ORD-20279,USR-3140,Tablet,Chrome,Paid Social,Accessories,Keyboard,197.63,1,0.1,18.87,196.74,Delivered,Asia
-2023-10-04,ORD-20280,USR-6448,Mobile,Firefox,Direct,Electronics,Smartwatch,436.18,2,0.09,5.43,799.28,Delivered,South America
-2023-01-13,ORD-20281,USR-1474,Mobile,Edge,Affiliate,Electronics,Headphones,320.86,1,0.08,24.1,319.29,Cancelled,Europe
-2023-05-27,ORD-20282,USR-6381,Desktop,Chrome,Direct,Electronics,Smartwatch,290.19,2,0.12,16.13,526.86,Delivered,South America
-2023-02-25,ORD-20283,USR-8074,Tablet,Firefox,Affiliate,Electronics,Headphones,307.76,1,0.02,7.86,309.46,Delivered,North America
-2023-11-10,ORD-20284,USR-1426,Mobile,Chrome,Direct,Electronics,Smartwatch,306.8,1,0.09,9.13,288.32,Cancelled,North America
-2023-12-07,ORD-20285,USR-1749,Tablet,Firefox,Direct,Apparel,Jeans,259.6,1,0.01,10.32,267.32,Delivered,South America
-2023-10-13,ORD-20286,USR-8121,Mobile,Chrome,Direct,Electronics,Headphones,56.39,1,0.01,21.85,77.68,Cancelled,Europe
-2023-07-31,ORD-20287,USR-5567,Desktop,Chrome,Organic,Apparel,Hoodie,257.29,2,0.14,24.8,467.34,Cancelled,Europe
-2023-08-30,ORD-20288,USR-7401,Desktop,Firefox,Organic,Apparel,Jeans,89.53,1,0.01,15.87,104.5,Delivered,Europe
-2023-12-25,ORD-20289,USR-9741,Mobile,Firefox,Affiliate,Electronics,Speaker,214.99,1,0.02,19.51,230.2,Shipped,North America
-2023-07-25,ORD-20290,USR-1084,Tablet,Edge,Affiliate,Electronics,Smartwatch,397.31,1,0.15,10.9,348.61,Delivered,South America
-2023-07-12,ORD-20291,USR-1299,Tablet,Chrome,Affiliate,Accessories,Webcam,88.52,3,0.01,17.93,280.83,Delivered,Europe
-2023-07-23,ORD-20292,USR-6666,Tablet,Edge,Organic,Accessories,Webcam,416.61,2,0.09,6.35,764.58,Cancelled,North America
-2023-03-10,ORD-20293,USR-1534,Desktop,Chrome,Affiliate,Apparel,Jeans,184.18,2,0.12,17.73,341.89,Shipped,Asia
-2023-06-17,ORD-20294,USR-6964,Mobile,Edge,Affiliate,Electronics,Headphones,397.17,2,0.08,22.25,753.04,Shipped,South America
-2023-12-24,ORD-20295,USR-8435,Tablet,Chrome,Direct,Electronics,Speaker,402.59,2,0.02,9.98,799.06,Delivered,Europe
-2023-10-15,ORD-20296,USR-7781,Desktop,Safari,Affiliate,Accessories,Keyboard,269.76,1,0.07,8.78,259.66,Shipped,South America
-2023-04-02,ORD-20297,USR-6541,Desktop,Edge,Direct,Electronics,Headphones,126.07,3,0.12,21.81,354.63,Delivered,South America
-2023-11-04,ORD-20298,USR-5555,Tablet,Chrome,Direct,Electronics,Speaker,279.58,2,0.13,6.14,492.61,Delivered,Asia
-2023-07-23,ORD-20299,USR-5718,Mobile,Safari,Paid Social,Accessories,Mouse,191.55,3,0.07,6.8,541.22,Cancelled,Asia
-2023-06-09,ORD-20300,USR-3570,Tablet,Firefox,Organic,Electronics,Speaker,28.84,2,0.19,12.48,59.2,Delivered,Europe
-2023-04-06,ORD-20301,USR-6064,Desktop,Firefox,Affiliate,Accessories,Webcam,348.54,3,0.0,19.62,1065.24,Shipped,Asia
-2023-07-02,ORD-20302,USR-4130,Desktop,Chrome,Organic,Accessories,Mouse,46.47,2,0.12,21.61,103.4,Cancelled,Asia
-2023-03-05,ORD-20303,USR-6492,Desktop,Safari,Paid Social,Electronics,Headphones,330.53,3,0.07,22.67,944.85,Cancelled,South America
-2023-06-15,ORD-20304,USR-9358,Tablet,Firefox,Paid Social,Electronics,Headphones,123.76,3,0.18,8.95,313.4,Delivered,Asia
-2023-04-07,ORD-20305,USR-2496,Mobile,Chrome,Direct,Accessories,Keyboard,368.5,2,0.14,17.96,651.78,Delivered,Asia
-2023-04-11,ORD-20306,USR-9769,Mobile,Edge,Direct,Electronics,Smartwatch,227.62,2,0.18,20.96,394.26,Cancelled,North America
-2024-01-01,ORD-20307,USR-6338,Tablet,Safari,Paid Social,Apparel,Hoodie,348.37,2,0.14,7.61,606.81,Shipped,North America
-2023-09-01,ORD-20308,USR-1392,Mobile,Chrome,Organic,Accessories,Webcam,27.19,1,0.14,10.12,33.5,Delivered,Europe
-2023-09-27,ORD-20309,USR-7166,Tablet,Firefox,Organic,Accessories,Mouse,457.16,1,0.06,13.2,442.93,Shipped,Europe
-2023-01-21,ORD-20310,USR-8470,Desktop,Firefox,Direct,Accessories,Mouse,474.35,3,0.14,18.86,1242.68,Delivered,North America
-2023-10-08,ORD-20311,USR-5206,Desktop,Chrome,Paid Social,Electronics,Smartwatch,444.82,1,0.0,5.24,450.06,Shipped,South America
-2023-03-21,ORD-20312,USR-9513,Mobile,Firefox,Paid Social,Electronics,Headphones,345.71,1,0.19,22.76,302.79,Delivered,South America
-2023-10-10,ORD-20313,USR-9919,Mobile,Firefox,Paid Social,Apparel,T-Shirt,295.28,2,0.1,18.51,550.01,Shipped,Europe
-2023-09-29,ORD-20314,USR-5476,Desktop,Chrome,Paid Social,Accessories,Mouse,368.08,2,0.08,8.91,686.18,Delivered,Asia
-2023-08-11,ORD-20315,USR-1485,Mobile,Firefox,Organic,Apparel,Hoodie,258.21,3,0.06,23.43,751.58,Delivered,South America
-2023-09-30,ORD-20316,USR-3783,Tablet,Firefox,Direct,Electronics,Headphones,176.35,1,0.02,6.13,178.95,Cancelled,Asia
-2023-01-29,ORD-20317,USR-1577,Tablet,Edge,Affiliate,Apparel,Hoodie,429.71,3,0.01,24.09,1300.33,Shipped,Europe
-2023-10-30,ORD-20318,USR-9525,Desktop,Chrome,Paid Social,Electronics,Headphones,419.65,1,0.08,10.31,396.39,Delivered,Asia
-2023-05-03,ORD-20319,USR-7713,Mobile,Edge,Paid Social,Apparel,T-Shirt,263.71,3,0.12,5.12,701.31,Cancelled,South America
-2023-12-30,ORD-20320,USR-8520,Desktop,Chrome,Direct,Apparel,T-Shirt,458.76,3,0.09,15.43,1267.84,Delivered,North America
-2023-01-20,ORD-20321,USR-9760,Tablet,Safari,Affiliate,Electronics,Headphones,337.92,2,0.11,5.01,606.51,Delivered,Europe
-2023-08-11,ORD-20322,USR-1905,Desktop,Edge,Organic,Accessories,Webcam,353.03,1,0.01,13.41,362.91,Delivered,Asia
-2023-06-04,ORD-20323,USR-1076,Desktop,Chrome,Paid Social,Apparel,Hoodie,343.83,2,0.03,14.9,681.93,Cancelled,Asia
-2023-06-13,ORD-20324,USR-1705,Desktop,Safari,Affiliate,Accessories,Mouse,338.36,3,0.17,8.65,851.17,Delivered,South America
-2023-06-06,ORD-20325,USR-4177,Mobile,Edge,Paid Social,Accessories,Webcam,309.21,3,0.02,19.65,928.73,Shipped,Europe
-2023-12-23,ORD-20326,USR-4096,Tablet,Firefox,Direct,Electronics,Headphones,167.62,3,0.15,8.51,435.94,Cancelled,Europe
-2023-09-14,ORD-20327,USR-9800,Mobile,Edge,Affiliate,Apparel,Jeans,396.22,3,0.04,14.09,1155.2,Cancelled,Europe
-2023-09-08,ORD-20328,USR-9749,Desktop,Safari,Affiliate,Accessories,Webcam,463.13,3,0.08,13.62,1291.86,Shipped,Asia
-2023-11-26,ORD-20329,USR-8493,Mobile,Firefox,Organic,Apparel,T-Shirt,287.28,2,0.02,24.66,587.73,Delivered,Europe
-2023-05-17,ORD-20330,USR-3985,Mobile,Edge,Paid Social,Apparel,Hoodie,147.99,2,0.13,23.6,281.1,Delivered,North America
-2023-08-17,ORD-20331,USR-3306,Tablet,Edge,Affiliate,Electronics,Speaker,164.12,1,0.17,5.19,141.41,Delivered,South America
-2023-09-02,ORD-20332,USR-7560,Tablet,Firefox,Organic,Electronics,Headphones,461.58,1,0.09,5.04,425.08,Delivered,North America
-2023-07-25,ORD-20333,USR-9237,Mobile,Chrome,Paid Social,Electronics,Smartwatch,387.77,2,0.08,6.5,720.0,Shipped,Europe
-2023-12-17,ORD-20334,USR-1150,Mobile,Chrome,Paid Social,Accessories,Webcam,86.79,2,0.09,20.04,178.0,Delivered,Europe
-2023-07-26,ORD-20335,USR-9483,Mobile,Safari,Affiliate,Electronics,Smartwatch,496.48,1,0.09,16.57,468.37,Cancelled,Europe
-2023-09-30,ORD-20336,USR-1396,Desktop,Chrome,Affiliate,Apparel,T-Shirt,268.48,3,0.1,16.2,741.1,Delivered,South America
-2023-01-20,ORD-20337,USR-6018,Mobile,Firefox,Direct,Accessories,Webcam,385.41,1,0.1,24.11,370.98,Shipped,South America
-2023-10-09,ORD-20338,USR-1337,Tablet,Chrome,Paid Social,Electronics,Headphones,226.25,3,0.18,10.9,567.48,Delivered,Asia
-2023-06-18,ORD-20339,USR-7233,Tablet,Safari,Affiliate,Electronics,Speaker,285.86,3,0.01,10.27,859.27,Delivered,Asia
-2023-03-03,ORD-20340,USR-6670,Tablet,Edge,Affiliate,Electronics,Speaker,439.46,1,0.06,5.08,418.17,Cancelled,South America
-2023-11-15,ORD-20341,USR-3226,Tablet,Firefox,Direct,Accessories,Webcam,102.16,2,0.06,13.5,205.56,Cancelled,North America
-2023-02-14,ORD-20342,USR-7387,Tablet,Chrome,Affiliate,Apparel,Jeans,153.22,1,0.09,24.58,164.01,Shipped,North America
-2023-01-04,ORD-20343,USR-1026,Mobile,Firefox,Affiliate,Apparel,T-Shirt,169.19,3,0.18,23.09,439.3,Delivered,Asia
-2023-01-16,ORD-20344,USR-4285,Desktop,Chrome,Paid Social,Accessories,Webcam,199.88,3,0.13,5.84,527.53,Delivered,South America
-2023-11-08,ORD-20345,USR-9988,Desktop,Safari,Direct,Accessories,Mouse,79.57,1,0.01,14.57,93.34,Shipped,North America
-2023-12-30,ORD-20346,USR-1923,Tablet,Chrome,Direct,Electronics,Headphones,165.46,1,0.03,10.89,171.39,Delivered,South America
-2023-12-20,ORD-20347,USR-6272,Desktop,Safari,Direct,Apparel,Hoodie,167.14,2,0.03,6.54,330.79,Delivered,Europe
-2023-06-17,ORD-20348,USR-8793,Mobile,Safari,Affiliate,Accessories,Webcam,430.51,3,0.1,24.2,1186.58,Cancelled,Europe
-2023-09-07,ORD-20349,USR-6878,Desktop,Chrome,Affiliate,Accessories,Webcam,192.37,1,0.03,9.65,196.25,Shipped,South America
-2023-09-11,ORD-20350,USR-3279,Mobile,Edge,Direct,Electronics,Smartwatch,109.36,2,0.08,13.01,214.23,Delivered,North America
-2023-09-16,ORD-20351,USR-5960,Desktop,Edge,Direct,Electronics,Headphones,262.77,2,0.17,7.97,444.17,Delivered,Asia
-2023-08-14,ORD-20352,USR-7412,Desktop,Firefox,Paid Social,Electronics,Speaker,390.59,2,0.05,13.87,755.99,Shipped,South America
-2023-06-06,ORD-20353,USR-9243,Tablet,Chrome,Organic,Apparel,Hoodie,165.85,2,0.03,23.89,345.64,Shipped,Asia
-2023-12-26,ORD-20354,USR-3015,Tablet,Edge,Paid Social,Apparel,Jeans,263.71,2,0.1,12.01,486.69,Delivered,North America
-2023-05-05,ORD-20355,USR-1753,Tablet,Chrome,Organic,Electronics,Smartwatch,179.92,3,0.11,17.88,498.27,Cancelled,Europe
-2023-02-25,ORD-20356,USR-6484,Desktop,Edge,Organic,Apparel,T-Shirt,126.12,1,0.12,8.38,119.37,Cancelled,South America
-2023-04-17,ORD-20357,USR-9563,Mobile,Safari,Paid Social,Electronics,Headphones,367.8,1,0.18,22.09,323.69,Delivered,Europe
-2023-10-04,ORD-20358,USR-1392,Tablet,Edge,Direct,Accessories,Webcam,434.97,1,0.18,22.33,379.01,Delivered,Asia
-2023-02-21,ORD-20359,USR-8972,Mobile,Chrome,Paid Social,Electronics,Speaker,96.68,1,0.11,13.73,99.78,Cancelled,South America
-2023-04-15,ORD-20360,USR-1135,Desktop,Firefox,Paid Social,Accessories,Keyboard,42.44,2,0.12,23.28,97.97,Shipped,Asia
-2023-03-17,ORD-20361,USR-5170,Desktop,Firefox,Paid Social,Accessories,Mouse,353.07,2,0.17,16.13,602.23,Shipped,Asia
-2023-06-27,ORD-20362,USR-6873,Mobile,Safari,Direct,Accessories,Mouse,151.61,3,0.09,20.11,434.01,Cancelled,Asia
-2023-02-18,ORD-20363,USR-4624,Desktop,Edge,Affiliate,Electronics,Smartwatch,210.86,3,0.03,12.43,626.03,Delivered,South America
-2023-04-26,ORD-20364,USR-4527,Desktop,Edge,Direct,Apparel,Hoodie,464.29,3,0.04,13.16,1350.32,Cancelled,South America
-2023-08-12,ORD-20365,USR-5640,Desktop,Chrome,Affiliate,Electronics,Speaker,489.04,1,0.08,20.27,470.19,Delivered,Europe
-2023-08-05,ORD-20366,USR-9497,Desktop,Edge,Organic,Electronics,Speaker,150.11,1,0.14,22.47,151.56,Delivered,South America
-2023-02-04,ORD-20367,USR-4027,Tablet,Safari,Direct,Accessories,Mouse,149.69,1,0.2,6.71,126.46,Shipped,South America
-2023-07-20,ORD-20368,USR-3457,Desktop,Safari,Affiliate,Apparel,T-Shirt,259.52,1,0.14,8.87,232.06,Shipped,North America
-2023-12-14,ORD-20369,USR-5239,Mobile,Firefox,Direct,Apparel,Hoodie,462.89,1,0.17,15.34,399.54,Delivered,South America
-2023-05-06,ORD-20370,USR-4926,Mobile,Firefox,Affiliate,Apparel,T-Shirt,494.06,2,0.13,22.39,882.05,Delivered,Asia
-2023-11-29,ORD-20371,USR-4928,Mobile,Chrome,Organic,Apparel,Hoodie,147.37,2,0.17,11.16,255.79,Cancelled,Europe
-2023-05-28,ORD-20372,USR-1966,Tablet,Safari,Organic,Electronics,Smartwatch,12.58,3,0.1,18.69,52.66,Delivered,Europe
-2023-02-09,ORD-20373,USR-3055,Desktop,Edge,Direct,Electronics,Headphones,256.5,2,0.15,19.17,455.22,Delivered,Asia
-2023-06-09,ORD-20374,USR-9114,Desktop,Safari,Paid Social,Apparel,Hoodie,170.33,1,0.12,14.36,164.25,Delivered,Asia
-2023-03-29,ORD-20375,USR-8706,Tablet,Chrome,Affiliate,Electronics,Headphones,275.15,1,0.15,23.05,256.93,Cancelled,South America
-2023-02-21,ORD-20376,USR-7997,Desktop,Firefox,Paid Social,Electronics,Headphones,174.44,2,0.15,7.77,304.32,Delivered,Asia
-2023-03-05,ORD-20377,USR-7189,Tablet,Firefox,Direct,Accessories,Mouse,284.07,2,0.1,22.62,533.95,Cancelled,Asia
-2023-12-03,ORD-20378,USR-8645,Desktop,Firefox,Direct,Apparel,T-Shirt,228.94,2,0.01,23.1,476.4,Cancelled,North America
-2023-01-18,ORD-20379,USR-1296,Desktop,Chrome,Direct,Apparel,Hoodie,210.93,3,0.06,16.75,611.57,Delivered,North America
-2023-03-16,ORD-20380,USR-4333,Mobile,Chrome,Organic,Apparel,Hoodie,332.57,1,0.11,9.11,305.1,Cancelled,Asia
-2023-05-09,ORD-20381,USR-8375,Mobile,Firefox,Direct,Electronics,Smartwatch,496.94,2,0.1,15.28,909.77,Delivered,North America
-2023-01-30,ORD-20382,USR-8015,Mobile,Safari,Affiliate,Electronics,Headphones,333.14,1,0.16,18.04,297.88,Delivered,Europe
-2023-01-16,ORD-20383,USR-1671,Desktop,Chrome,Direct,Accessories,Mouse,70.33,2,0.18,22.11,137.45,Cancelled,South America
-2023-10-02,ORD-20384,USR-9314,Mobile,Firefox,Direct,Electronics,Headphones,196.54,2,0.06,5.55,375.05,Shipped,Asia
-2023-04-25,ORD-20385,USR-3523,Tablet,Edge,Direct,Accessories,Mouse,335.04,3,0.02,22.14,1007.16,Delivered,Europe
-2023-03-26,ORD-20386,USR-8787,Tablet,Chrome,Direct,Apparel,Jeans,491.69,2,0.2,7.98,794.68,Shipped,South America
-2024-01-01,ORD-20387,USR-4749,Mobile,Firefox,Affiliate,Electronics,Speaker,311.22,1,0.07,16.89,306.32,Delivered,Asia
-2023-10-07,ORD-20388,USR-5736,Desktop,Chrome,Paid Social,Apparel,Jeans,390.01,3,0.13,11.24,1029.17,Shipped,Europe
-2023-07-18,ORD-20389,USR-9504,Desktop,Chrome,Affiliate,Apparel,Hoodie,340.75,1,0.1,6.44,313.12,Delivered,South America
-2023-09-24,ORD-20390,USR-3613,Desktop,Firefox,Direct,Apparel,Jeans,479.41,3,0.09,6.66,1315.45,Delivered,Asia
-2023-08-24,ORD-20391,USR-5434,Mobile,Firefox,Direct,Electronics,Headphones,265.95,3,0.04,17.85,783.79,Shipped,South America
-2023-01-21,ORD-20392,USR-4558,Tablet,Firefox,Paid Social,Apparel,Hoodie,350.26,1,0.08,6.51,328.75,Delivered,South America
-2023-12-02,ORD-20393,USR-5086,Mobile,Chrome,Paid Social,Accessories,Mouse,297.1,1,0.02,16.83,307.99,Cancelled,Europe
-2023-09-28,ORD-20394,USR-6785,Mobile,Chrome,Affiliate,Electronics,Headphones,45.48,2,0.15,13.31,90.63,Shipped,Europe
-2023-05-02,ORD-20395,USR-4944,Mobile,Edge,Direct,Electronics,Speaker,486.29,2,0.09,12.23,897.28,Delivered,North America
-2023-04-09,ORD-20396,USR-4672,Tablet,Firefox,Affiliate,Electronics,Smartwatch,446.05,1,0.07,15.44,430.27,Delivered,North America
-2023-11-05,ORD-20397,USR-6454,Desktop,Firefox,Organic,Accessories,Mouse,349.16,1,0.07,21.23,345.95,Delivered,South America
-2023-04-11,ORD-20398,USR-7013,Mobile,Firefox,Organic,Accessories,Mouse,345.52,3,0.03,17.76,1023.22,Delivered,Asia
-2023-07-10,ORD-20399,USR-6070,Desktop,Edge,Organic,Accessories,Mouse,28.09,3,0.16,14.34,85.13,Shipped,Europe
-2023-10-17,ORD-20400,USR-9752,Tablet,Edge,Organic,Electronics,Headphones,275.14,3,0.01,7.62,824.79,Delivered,Asia
-2023-02-27,ORD-20401,USR-4918,Tablet,Chrome,Affiliate,Apparel,Hoodie,306.66,1,0.01,8.09,311.68,Delivered,Asia
-2023-04-02,ORD-20402,USR-5182,Desktop,Firefox,Paid Social,Electronics,Headphones,282.34,3,0.11,16.92,770.77,Shipped,North America
-2023-02-10,ORD-20403,USR-8852,Desktop,Chrome,Organic,Apparel,Hoodie,335.88,1,0.17,23.03,301.81,Cancelled,Europe
-2023-03-27,ORD-20404,USR-8000,Mobile,Chrome,Organic,Accessories,Keyboard,453.03,1,0.06,16.73,442.58,Delivered,Asia
-2023-11-27,ORD-20405,USR-4307,Mobile,Edge,Paid Social,Apparel,Jeans,365.13,1,0.15,8.59,318.95,Delivered,North America
-2023-08-27,ORD-20406,USR-4762,Mobile,Safari,Organic,Accessories,Webcam,236.85,3,0.09,14.1,660.7,Delivered,Europe
-2023-02-17,ORD-20407,USR-2978,Mobile,Edge,Direct,Apparel,Jeans,47.69,1,0.18,17.33,56.44,Delivered,Asia
-2023-06-24,ORD-20408,USR-3050,Mobile,Safari,Paid Social,Electronics,Smartwatch,189.79,1,0.14,7.77,170.99,Delivered,South America
-2023-08-02,ORD-20409,USR-5803,Desktop,Chrome,Paid Social,Accessories,Keyboard,184.17,1,0.03,19.5,198.14,Delivered,Europe
-2023-10-29,ORD-20410,USR-6886,Tablet,Safari,Paid Social,Accessories,Webcam,315.89,3,0.12,14.84,848.79,Shipped,Asia
-2023-02-27,ORD-20411,USR-8951,Tablet,Safari,Affiliate,Electronics,Headphones,98.09,1,0.09,7.48,96.74,Delivered,Asia
-2023-07-04,ORD-20412,USR-6484,Tablet,Chrome,Organic,Electronics,Smartwatch,285.17,3,0.09,18.86,797.37,Shipped,Asia
-2023-07-16,ORD-20413,USR-5385,Tablet,Safari,Direct,Accessories,Webcam,17.7,1,0.07,8.89,25.35,Shipped,Asia
-2023-02-11,ORD-20414,USR-3762,Desktop,Firefox,Paid Social,Apparel,Hoodie,276.4,1,0.14,12.38,250.08,Delivered,South America
-2023-09-06,ORD-20415,USR-3603,Tablet,Safari,Direct,Apparel,Jeans,326.74,3,0.06,19.37,940.78,Shipped,South America
-2023-08-13,ORD-20416,USR-3519,Tablet,Chrome,Paid Social,Electronics,Speaker,68.98,2,0.07,7.25,135.55,Shipped,South America
-2023-02-16,ORD-20417,USR-9333,Mobile,Chrome,Organic,Electronics,Speaker,465.08,2,0.13,18.44,827.68,Shipped,Asia
-2023-02-26,ORD-20418,USR-7225,Desktop,Chrome,Affiliate,Electronics,Speaker,148.59,1,0.01,15.73,162.83,Shipped,Europe
-2023-06-19,ORD-20419,USR-5588,Mobile,Safari,Paid Social,Electronics,Headphones,100.1,2,0.11,15.68,193.86,Cancelled,North America
-2023-06-05,ORD-20420,USR-7425,Desktop,Edge,Organic,Accessories,Mouse,294.52,3,0.18,15.41,739.93,Cancelled,Asia
-2023-12-20,ORD-20421,USR-6265,Desktop,Edge,Direct,Accessories,Mouse,41.73,1,0.14,22.53,58.42,Shipped,South America
-2023-04-16,ORD-20422,USR-2809,Tablet,Safari,Paid Social,Apparel,Jeans,432.08,2,0.12,12.25,772.71,Delivered,North America
-2023-07-01,ORD-20423,USR-9690,Tablet,Safari,Affiliate,Electronics,Headphones,288.95,1,0.14,9.14,257.64,Delivered,South America
-2023-04-11,ORD-20424,USR-8246,Tablet,Chrome,Organic,Accessories,Keyboard,115.41,3,0.13,19.69,320.91,Shipped,North America
-2023-02-20,ORD-20425,USR-9227,Tablet,Edge,Affiliate,Electronics,Headphones,288.98,1,0.04,5.2,282.62,Cancelled,North America
-2023-11-29,ORD-20426,USR-5839,Mobile,Edge,Paid Social,Electronics,Speaker,325.49,2,0.11,22.48,601.85,Delivered,Asia
-2023-06-14,ORD-20427,USR-4514,Desktop,Edge,Organic,Apparel,Jeans,351.75,3,0.17,13.83,889.69,Cancelled,Europe
-2023-10-09,ORD-20428,USR-8492,Desktop,Firefox,Paid Social,Apparel,Jeans,332.96,3,0.1,13.08,912.07,Shipped,South America
-2023-09-29,ORD-20429,USR-3126,Desktop,Safari,Paid Social,Accessories,Mouse,252.63,1,0.06,9.63,247.1,Shipped,South America
-2023-02-20,ORD-20430,USR-1564,Desktop,Firefox,Direct,Electronics,Speaker,458.93,2,0.19,21.44,764.91,Cancelled,South America
-2023-02-28,ORD-20431,USR-4748,Tablet,Firefox,Organic,Electronics,Headphones,251.42,1,0.15,12.62,226.33,Cancelled,South America
-2023-06-20,ORD-20432,USR-6433,Tablet,Firefox,Organic,Electronics,Headphones,214.21,2,0.03,23.35,438.92,Cancelled,South America
-2023-01-04,ORD-20433,USR-8506,Desktop,Chrome,Direct,Accessories,Webcam,52.65,3,0.14,6.37,142.21,Shipped,North America
-2023-11-24,ORD-20434,USR-1744,Tablet,Edge,Organic,Apparel,T-Shirt,190.83,2,0.01,24.24,402.08,Delivered,South America
-2023-04-20,ORD-20435,USR-9500,Mobile,Firefox,Direct,Electronics,Speaker,310.82,1,0.14,8.54,275.85,Shipped,South America
-2023-07-03,ORD-20436,USR-8685,Desktop,Chrome,Paid Social,Apparel,Hoodie,467.92,1,0.14,11.51,413.92,Delivered,South America
-2023-01-18,ORD-20437,USR-7317,Desktop,Edge,Organic,Apparel,Jeans,96.35,1,0.08,10.86,99.5,Shipped,Asia
-2023-10-17,ORD-20438,USR-1361,Tablet,Chrome,Direct,Accessories,Keyboard,216.33,3,0.18,5.25,537.42,Cancelled,Asia
-2023-09-13,ORD-20439,USR-6094,Desktop,Edge,Organic,Apparel,T-Shirt,25.28,3,0.14,13.36,78.58,Cancelled,Europe
-2023-12-03,ORD-20440,USR-5982,Desktop,Safari,Direct,Apparel,Jeans,53.61,1,0.09,12.07,60.86,Delivered,South America
-2023-11-03,ORD-20441,USR-2268,Mobile,Edge,Affiliate,Accessories,Webcam,226.96,1,0.11,21.56,223.55,Cancelled,South America
-2023-07-19,ORD-20442,USR-7915,Tablet,Edge,Paid Social,Apparel,Jeans,144.7,3,0.15,22.46,391.44,Delivered,Asia
-2023-10-13,ORD-20443,USR-2005,Mobile,Edge,Paid Social,Accessories,Webcam,131.37,1,0.19,22.21,128.62,Shipped,South America
-2023-01-04,ORD-20444,USR-1961,Mobile,Firefox,Paid Social,Accessories,Webcam,413.09,2,0.08,7.59,767.68,Delivered,South America
-2023-11-28,ORD-20445,USR-7430,Desktop,Chrome,Organic,Accessories,Mouse,467.09,1,0.04,20.78,469.19,Delivered,Europe
-2023-01-24,ORD-20446,USR-4538,Desktop,Edge,Affiliate,Accessories,Mouse,487.96,1,0.15,9.08,423.85,Shipped,South America
-2023-07-03,ORD-20447,USR-6130,Mobile,Safari,Organic,Apparel,Hoodie,311.62,1,0.19,8.14,260.55,Cancelled,South America
-2023-12-08,ORD-20448,USR-7925,Tablet,Edge,Paid Social,Electronics,Speaker,311.37,2,0.05,9.14,600.74,Cancelled,Asia
-2023-06-18,ORD-20449,USR-4060,Tablet,Chrome,Paid Social,Accessories,Webcam,473.77,3,0.15,23.19,1231.3,Cancelled,South America
-2023-01-11,ORD-20450,USR-9929,Desktop,Safari,Paid Social,Apparel,T-Shirt,262.72,3,0.02,18.15,790.55,Shipped,Europe
-2023-07-23,ORD-20451,USR-5407,Desktop,Chrome,Organic,Electronics,Headphones,498.8,1,0.0,12.51,511.31,Shipped,Asia
-2023-05-13,ORD-20452,USR-3634,Desktop,Edge,Affiliate,Accessories,Mouse,256.49,3,0.14,7.84,669.58,Delivered,North America
-2023-05-04,ORD-20453,USR-9909,Desktop,Firefox,Affiliate,Accessories,Mouse,322.49,3,0.18,14.27,807.6,Delivered,South America
-2023-01-27,ORD-20454,USR-8207,Mobile,Firefox,Affiliate,Apparel,T-Shirt,485.44,1,0.05,8.17,469.34,Delivered,North America
-2023-06-08,ORD-20455,USR-1952,Desktop,Firefox,Organic,Accessories,Keyboard,164.54,3,0.02,15.35,499.1,Cancelled,Asia
-2023-11-20,ORD-20456,USR-3292,Tablet,Chrome,Paid Social,Apparel,T-Shirt,394.91,2,0.14,11.0,690.25,Delivered,Asia
-2023-06-06,ORD-20457,USR-6568,Tablet,Chrome,Affiliate,Accessories,Mouse,172.93,2,0.07,21.6,343.25,Delivered,Europe
-2023-11-16,ORD-20458,USR-1591,Desktop,Chrome,Organic,Accessories,Mouse,364.45,3,0.1,8.53,992.54,Cancelled,Europe
-2023-08-28,ORD-20459,USR-5429,Desktop,Edge,Organic,Apparel,T-Shirt,284.94,2,0.13,14.73,510.53,Delivered,Europe
-2023-05-07,ORD-20460,USR-3130,Mobile,Chrome,Direct,Apparel,T-Shirt,169.34,3,0.1,12.3,469.52,Delivered,Asia
-2023-04-07,ORD-20461,USR-9623,Desktop,Safari,Affiliate,Electronics,Headphones,345.31,2,0.08,17.75,653.12,Cancelled,North America
-2023-02-12,ORD-20462,USR-9959,Tablet,Safari,Paid Social,Apparel,Hoodie,118.39,2,0.08,22.67,240.51,Delivered,North America
-2023-05-31,ORD-20463,USR-4239,Desktop,Firefox,Affiliate,Accessories,Keyboard,96.5,3,0.19,24.99,259.49,Delivered,Europe
-2023-08-01,ORD-20464,USR-9180,Mobile,Edge,Affiliate,Electronics,Headphones,229.1,1,0.01,13.83,240.64,Delivered,South America
-2023-06-15,ORD-20465,USR-2054,Tablet,Chrome,Paid Social,Apparel,T-Shirt,429.77,2,0.04,14.0,839.16,Delivered,South America
-2023-04-06,ORD-20466,USR-6200,Mobile,Edge,Paid Social,Apparel,Jeans,118.7,3,0.13,17.28,327.09,Delivered,Europe
-2023-12-15,ORD-20467,USR-4771,Tablet,Safari,Direct,Apparel,Jeans,115.84,1,0.16,5.95,103.26,Delivered,Asia
-2023-04-05,ORD-20468,USR-8283,Tablet,Edge,Direct,Electronics,Smartwatch,218.63,3,0.07,19.62,629.6,Shipped,Europe
-2023-06-26,ORD-20469,USR-7481,Desktop,Chrome,Organic,Apparel,Hoodie,336.12,3,0.09,8.45,926.06,Cancelled,North America
-2023-12-15,ORD-20470,USR-5386,Tablet,Chrome,Paid Social,Electronics,Speaker,130.33,2,0.12,13.53,242.91,Shipped,Asia
-2023-05-03,ORD-20471,USR-2173,Tablet,Firefox,Direct,Apparel,Jeans,167.41,3,0.17,18.05,434.9,Delivered,South America
-2023-12-15,ORD-20472,USR-4304,Mobile,Chrome,Direct,Apparel,T-Shirt,206.15,3,0.09,22.14,584.93,Cancelled,Europe
-2023-11-23,ORD-20473,USR-1661,Mobile,Firefox,Paid Social,Electronics,Smartwatch,378.43,1,0.09,9.18,353.55,Shipped,Asia
-2023-08-29,ORD-20474,USR-2437,Desktop,Chrome,Direct,Electronics,Smartwatch,305.78,3,0.07,16.02,869.15,Shipped,Europe
-2023-09-17,ORD-20475,USR-4654,Desktop,Safari,Affiliate,Accessories,Mouse,35.77,2,0.2,7.26,64.49,Shipped,South America
-2023-07-19,ORD-20476,USR-4455,Mobile,Firefox,Organic,Electronics,Headphones,164.95,1,0.06,23.98,179.03,Delivered,South America
-2023-01-18,ORD-20477,USR-4362,Mobile,Chrome,Paid Social,Apparel,Hoodie,222.55,3,0.11,9.7,603.91,Cancelled,Asia
-2023-09-15,ORD-20478,USR-5472,Tablet,Edge,Direct,Apparel,T-Shirt,369.8,2,0.07,12.53,700.36,Delivered,South America
-2023-11-06,ORD-20479,USR-9637,Desktop,Edge,Direct,Electronics,Smartwatch,269.97,2,0.01,9.54,544.08,Delivered,Europe
-2023-06-03,ORD-20480,USR-3863,Tablet,Firefox,Organic,Apparel,Hoodie,367.12,1,0.07,10.97,352.39,Delivered,Asia
-2023-01-10,ORD-20481,USR-8620,Mobile,Edge,Paid Social,Apparel,T-Shirt,322.77,1,0.04,11.43,321.29,Delivered,North America
-2023-08-04,ORD-20482,USR-6352,Mobile,Chrome,Affiliate,Electronics,Headphones,412.94,1,0.18,23.16,361.77,Cancelled,Europe
-2023-10-11,ORD-20483,USR-5598,Tablet,Safari,Affiliate,Electronics,Headphones,426.71,1,0.1,16.34,400.38,Delivered,Asia
-2023-08-13,ORD-20484,USR-1842,Mobile,Chrome,Paid Social,Apparel,T-Shirt,385.56,3,0.11,9.37,1038.82,Cancelled,North America
-2023-08-07,ORD-20485,USR-3383,Desktop,Chrome,Paid Social,Accessories,Mouse,295.14,1,0.05,10.23,290.61,Shipped,Asia
-2023-11-26,ORD-20486,USR-4537,Tablet,Chrome,Paid Social,Electronics,Headphones,215.34,3,0.13,9.04,571.08,Cancelled,Europe
-2023-05-28,ORD-20487,USR-5832,Desktop,Firefox,Direct,Electronics,Headphones,134.0,1,0.19,17.9,126.44,Shipped,Asia
-2023-10-29,ORD-20488,USR-9700,Mobile,Chrome,Organic,Electronics,Smartwatch,223.11,2,0.02,16.87,454.17,Shipped,Europe
-2023-04-09,ORD-20489,USR-7743,Desktop,Edge,Paid Social,Apparel,Jeans,353.8,2,0.05,9.54,681.76,Delivered,Asia
-2023-11-20,ORD-20490,USR-8542,Desktop,Firefox,Paid Social,Accessories,Mouse,466.92,3,0.14,20.4,1225.05,Shipped,Asia
-2023-11-22,ORD-20491,USR-6784,Mobile,Edge,Direct,Electronics,Speaker,270.98,1,0.06,11.94,266.66,Shipped,South America
-2023-08-24,ORD-20492,USR-2855,Tablet,Chrome,Affiliate,Apparel,T-Shirt,130.61,3,0.01,19.37,407.28,Delivered,North America
-2023-03-14,ORD-20493,USR-7866,Desktop,Firefox,Direct,Accessories,Mouse,378.35,3,0.13,13.81,1001.3,Shipped,North America
-2023-04-12,ORD-20494,USR-3761,Desktop,Chrome,Organic,Apparel,T-Shirt,455.18,3,0.03,24.84,1349.41,Delivered,Europe
-2023-08-15,ORD-20495,USR-1287,Desktop,Chrome,Affiliate,Electronics,Speaker,101.87,3,0.13,17.0,282.88,Shipped,North America
-2023-06-13,ORD-20496,USR-5527,Tablet,Edge,Organic,Apparel,T-Shirt,451.28,1,0.13,9.17,401.78,Cancelled,Asia
-2023-09-10,ORD-20497,USR-3012,Tablet,Chrome,Affiliate,Accessories,Keyboard,260.15,1,0.14,11.07,234.8,Shipped,Europe
-2023-04-16,ORD-20498,USR-5959,Mobile,Safari,Affiliate,Electronics,Smartwatch,151.96,1,0.03,8.91,156.31,Shipped,Asia
-2023-06-12,ORD-20499,USR-6183,Desktop,Safari,Affiliate,Electronics,Headphones,286.8,1,0.16,22.42,263.33,Shipped,Europe
-2023-04-27,ORD-20500,USR-5233,Mobile,Safari,Direct,Apparel,T-Shirt,330.76,3,0.08,10.28,923.18,Cancelled,North America
-2023-06-26,ORD-20501,USR-3465,Mobile,Safari,Paid Social,Electronics,Headphones,72.93,3,0.14,9.09,197.25,Delivered,Europe
-2023-02-21,ORD-20502,USR-4385,Mobile,Safari,Direct,Electronics,Speaker,478.19,1,0.04,18.26,477.32,Cancelled,North America
-2023-10-03,ORD-20503,USR-2555,Tablet,Edge,Organic,Electronics,Speaker,27.96,2,0.02,9.95,64.75,Shipped,South America
-2023-06-26,ORD-20504,USR-1509,Desktop,Safari,Organic,Electronics,Headphones,144.18,1,0.09,17.35,148.55,Delivered,North America
-2023-10-03,ORD-20505,USR-6048,Tablet,Chrome,Paid Social,Accessories,Keyboard,440.96,1,0.11,22.93,415.38,Delivered,North America
-2023-07-28,ORD-20506,USR-2800,Tablet,Firefox,Organic,Electronics,Smartwatch,309.17,2,0.16,7.28,526.69,Delivered,South America
-2023-11-19,ORD-20507,USR-1462,Mobile,Safari,Affiliate,Apparel,Jeans,90.99,2,0.17,6.15,157.19,Shipped,Asia
-2023-10-11,ORD-20508,USR-6356,Tablet,Edge,Paid Social,Apparel,T-Shirt,380.9,2,0.19,23.83,640.89,Shipped,North America
-2023-12-18,ORD-20509,USR-8613,Desktop,Safari,Organic,Electronics,Speaker,259.84,2,0.12,17.81,475.13,Delivered,North America
-2023-12-05,ORD-20510,USR-4936,Tablet,Firefox,Direct,Electronics,Smartwatch,281.14,3,0.06,16.43,809.24,Delivered,Europe
-2023-06-11,ORD-20511,USR-6803,Desktop,Edge,Organic,Electronics,Smartwatch,432.34,1,0.06,19.1,425.5,Delivered,Europe
-2023-05-07,ORD-20512,USR-7620,Tablet,Safari,Direct,Accessories,Webcam,465.73,1,0.19,8.97,386.21,Shipped,Europe
-2023-09-12,ORD-20513,USR-1313,Tablet,Firefox,Affiliate,Apparel,Hoodie,346.16,3,0.02,22.87,1040.58,Cancelled,Asia
-2023-12-20,ORD-20514,USR-9759,Tablet,Safari,Organic,Accessories,Keyboard,251.74,3,0.19,6.12,617.85,Cancelled,Europe
-2023-11-02,ORD-20515,USR-7185,Desktop,Safari,Organic,Electronics,Headphones,187.33,3,0.18,10.12,470.95,Delivered,North America
-2023-03-03,ORD-20516,USR-7219,Tablet,Firefox,Direct,Accessories,Mouse,246.51,3,0.13,21.36,664.75,Delivered,Europe
-2023-07-29,ORD-20517,USR-4446,Mobile,Firefox,Direct,Accessories,Mouse,254.09,1,0.05,22.4,263.79,Shipped,Asia
-2023-07-03,ORD-20518,USR-1848,Desktop,Firefox,Affiliate,Apparel,T-Shirt,427.11,3,0.15,10.56,1099.69,Delivered,Asia
-2023-10-20,ORD-20519,USR-2446,Mobile,Safari,Affiliate,Apparel,Jeans,325.52,3,0.06,13.2,931.17,Shipped,Asia
-2023-12-16,ORD-20520,USR-4416,Desktop,Firefox,Affiliate,Electronics,Speaker,437.21,1,0.09,14.69,412.55,Delivered,Europe
-2023-07-18,ORD-20521,USR-5897,Desktop,Chrome,Paid Social,Electronics,Headphones,359.57,3,0.0,20.89,1099.6,Delivered,Europe
-2023-05-01,ORD-20522,USR-2020,Tablet,Chrome,Paid Social,Electronics,Headphones,341.05,3,0.08,11.95,953.25,Cancelled,Europe
-2023-07-16,ORD-20523,USR-3962,Mobile,Edge,Direct,Accessories,Webcam,72.23,1,0.1,23.37,88.38,Shipped,Europe
-2023-10-14,ORD-20524,USR-3881,Mobile,Chrome,Paid Social,Electronics,Speaker,218.69,1,0.16,16.96,200.66,Cancelled,Asia
-2023-06-28,ORD-20525,USR-2305,Desktop,Edge,Direct,Electronics,Headphones,227.06,2,0.15,16.9,402.9,Shipped,South America
-2023-10-28,ORD-20526,USR-3052,Desktop,Safari,Direct,Accessories,Mouse,190.82,3,0.08,15.01,541.67,Delivered,South America
-2023-04-21,ORD-20527,USR-7170,Mobile,Safari,Direct,Apparel,T-Shirt,231.03,3,0.14,5.01,601.07,Delivered,Europe
-2023-03-21,ORD-20528,USR-1047,Mobile,Chrome,Direct,Apparel,Jeans,472.3,1,0.06,14.94,458.9,Cancelled,Asia
-2023-12-08,ORD-20529,USR-2819,Mobile,Firefox,Affiliate,Accessories,Webcam,105.09,3,0.07,20.19,313.39,Shipped,North America
-2023-01-08,ORD-20530,USR-6674,Mobile,Firefox,Affiliate,Accessories,Keyboard,379.77,3,0.1,8.23,1033.61,Delivered,South America
-2023-01-21,ORD-20531,USR-2462,Mobile,Safari,Organic,Accessories,Webcam,361.37,3,0.17,7.24,907.05,Delivered,North America
-2023-02-24,ORD-20532,USR-2094,Desktop,Edge,Organic,Electronics,Smartwatch,241.62,2,0.05,24.52,483.6,Cancelled,Europe
-2023-01-01,ORD-20533,USR-2953,Mobile,Chrome,Direct,Accessories,Mouse,68.29,3,0.13,20.02,198.26,Cancelled,Europe
-2023-07-28,ORD-20534,USR-3435,Desktop,Edge,Paid Social,Accessories,Mouse,177.27,1,0.11,14.05,171.82,Delivered,North America
-2023-06-23,ORD-20535,USR-7784,Tablet,Firefox,Organic,Apparel,Hoodie,88.46,3,0.11,22.33,258.52,Cancelled,South America
-2023-10-24,ORD-20536,USR-3352,Tablet,Safari,Paid Social,Electronics,Speaker,370.17,3,0.07,21.44,1054.21,Delivered,South America
-2023-01-20,ORD-20537,USR-2888,Desktop,Firefox,Organic,Apparel,T-Shirt,347.02,1,0.19,22.23,303.32,Delivered,Asia
-2023-08-29,ORD-20538,USR-6288,Mobile,Edge,Direct,Electronics,Speaker,471.79,3,0.05,22.97,1367.57,Shipped,Asia
-2023-07-18,ORD-20539,USR-3427,Tablet,Edge,Organic,Electronics,Speaker,115.16,2,0.09,18.63,228.22,Cancelled,Asia
-2023-11-12,ORD-20540,USR-7536,Tablet,Chrome,Affiliate,Accessories,Webcam,445.1,3,0.12,24.38,1199.44,Shipped,South America
-2023-05-10,ORD-20541,USR-3125,Desktop,Safari,Organic,Electronics,Speaker,20.01,2,0.14,6.38,40.8,Shipped,Asia
-2023-06-23,ORD-20542,USR-2691,Mobile,Edge,Organic,Apparel,Jeans,35.99,1,0.11,10.96,42.99,Shipped,Asia
-2023-06-25,ORD-20543,USR-8151,Desktop,Safari,Affiliate,Apparel,T-Shirt,381.89,2,0.18,13.56,639.86,Delivered,North America
-2023-12-15,ORD-20544,USR-4364,Tablet,Edge,Direct,Electronics,Headphones,425.01,3,0.1,11.68,1159.21,Delivered,North America
-2023-11-29,ORD-20545,USR-8056,Desktop,Chrome,Affiliate,Apparel,T-Shirt,136.57,2,0.1,15.96,261.79,Shipped,North America
-2023-11-01,ORD-20546,USR-4580,Desktop,Firefox,Direct,Apparel,Hoodie,232.22,1,0.17,20.66,213.4,Shipped,Asia
-2023-05-01,ORD-20547,USR-9286,Mobile,Edge,Affiliate,Apparel,Jeans,100.46,1,0.15,18.21,103.6,Shipped,Europe
-2023-06-09,ORD-20548,USR-9532,Tablet,Safari,Direct,Apparel,Jeans,22.3,1,0.15,12.21,31.17,Delivered,Asia
-2023-12-16,ORD-20549,USR-3545,Tablet,Chrome,Direct,Apparel,T-Shirt,34.11,3,0.13,6.41,95.44,Delivered,Europe
+Order_ID,Order_Date,Ship_Date,Customer_ID,Segment,Country,City,Category,Sub_Category,Product_Name,Sales,Quantity,Discount,Profit,Shipping_Cost
+ORD-10000,2024-10-16,2024-10-18,CID-1000,Consumer,Canada,Vancouver,Technology,Laptops,Dell XPS 15,1500,1,0,296.43,5.48
+ORD-10000,2024-10-16,2024-10-18,CID-1000,Consumer,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,300,1,0,57.09,15.74
+ORD-10000,2024-10-16,2024-10-18,CID-1000,Consumer,Canada,Vancouver,Technology,Accessories,Wireless Mouse,100,2,0,16.23,9.17
+ORD-10001,2023-01-07,2023-01-10,CID-1001,Home Office,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,500,2,0,36.59,6.45
+ORD-10001,2023-01-07,2023-01-10,CID-1001,Home Office,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,360,3,0.1,81.58,15.95
+ORD-10001,2023-01-07,2023-01-10,CID-1001,Home Office,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,180,2,0,33.84,17.44
+ORD-10002,2024-09-25,2024-10-01,CID-1002,Home Office,United States,New York,Technology,Laptops,Dell XPS 15,3000,2,0,791.49,18.0
+ORD-10002,2024-09-25,2024-10-01,CID-1002,Home Office,United States,New York,Technology,Accessories,27in 4K Monitor,600,2,0.1,48.96,10.33
+ORD-10002,2024-09-25,2024-10-01,CID-1002,Home Office,United States,New York,Technology,Accessories,Wireless Mouse,150,3,0,30.34,7.57
+ORD-10003,2023-09-08,2023-09-11,CID-1003,Corporate,United Kingdom,Manchester,Furniture,Tables,Standing Desk,1200,3,0,265.38,17.64
+ORD-10004,2023-02-27,2023-03-03,CID-1004,Consumer,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0.1,69.63,12.49
+ORD-10004,2023-02-27,2023-03-03,CID-1004,Consumer,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,360,3,0.2,24.69,7.09
+ORD-10004,2023-02-27,2023-03-03,CID-1004,Consumer,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,270,3,0.1,57.53,11.43
+ORD-10005,2024-08-20,2024-08-27,CID-1005,Corporate,United States,New York,Office Supplies,Paper,Copy Paper A4,15,1,0,1.32,7.4
+ORD-10005,2024-08-20,2024-08-27,CID-1005,Corporate,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,3.51,13.94
+ORD-10005,2024-08-20,2024-08-27,CID-1005,Corporate,United States,New York,Office Supplies,Binders,3-Ring Binder,24,2,0,5.28,6.72
+ORD-10006,2024-07-03,2024-07-08,CID-1006,Home Office,United Kingdom,London,Furniture,Chairs,Gaming Chair,250,1,0.1,65.92,16.43
+ORD-10006,2024-07-03,2024-07-08,CID-1006,Home Office,United Kingdom,London,Technology,Accessories,Mechanical Keyboard,120,1,0.1,28.13,12.61
+ORD-10006,2024-07-03,2024-07-08,CID-1006,Home Office,United Kingdom,London,Technology,Accessories,Gaming Headset,180,2,0,33.27,16.68
+ORD-10007,2024-06-27,2024-06-28,CID-1007,Home Office,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,600,2,0,38.69,18.17
+ORD-10008,2023-03-29,2023-04-06,CID-1008,Consumer,Canada,Toronto,Technology,Laptops,Dell XPS 15,4500,3,0,523.19,18.09
+ORD-10008,2023-03-29,2023-04-06,CID-1008,Consumer,Canada,Toronto,Technology,Accessories,27in 4K Monitor,300,1,0,68.47,10.98
+ORD-10008,2023-03-29,2023-04-06,CID-1008,Consumer,Canada,Toronto,Technology,Accessories,Wireless Mouse,100,2,0.2,21.99,11.77
+ORD-10009,2023-09-11,2023-09-15,CID-1009,Consumer,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,15,1,0,1.02,14.47
+ORD-10009,2023-09-11,2023-09-15,CID-1009,Consumer,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.1,0.49,8.57
+ORD-10009,2023-09-11,2023-09-15,CID-1009,Consumer,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,12,1,0,2.77,18.24
+ORD-10010,2024-08-13,2024-08-21,CID-1010,Consumer,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,3000,2,0.1,420.92,12.01
+ORD-10010,2024-08-13,2024-08-21,CID-1010,Consumer,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,900,3,0,58.64,15.92
+ORD-10010,2024-08-13,2024-08-21,CID-1010,Consumer,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,50,1,0,4.89,13.04
+ORD-10011,2023-05-24,2023-05-31,CID-1011,Consumer,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,900,3,0,56.38,19.99
+ORD-10011,2023-05-24,2023-05-31,CID-1011,Consumer,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,50,1,0,4.58,12.28
+ORD-10012,2023-08-07,2023-08-14,CID-1012,Consumer,United States,Los Angeles,Technology,Laptops,Dell XPS 15,3000,2,0.1,420.53,19.36
+ORD-10012,2023-08-07,2023-08-14,CID-1012,Consumer,United States,Los Angeles,Technology,Accessories,Wireless Mouse,150,3,0.2,10.64,9.45
+ORD-10013,2023-03-01,2023-03-11,CID-1013,Home Office,Canada,Toronto,Technology,Phones,iPhone 15,3000,3,0.2,421.71,17.79
+ORD-10014,2023-06-11,2023-06-12,CID-1014,Home Office,United States,New York,Technology,Laptops,Dell XPS 15,1500,1,0.2,95.97,18.35
+ORD-10014,2023-06-11,2023-06-12,CID-1014,Home Office,United States,New York,Technology,Accessories,27in 4K Monitor,900,3,0,184.36,11.29
+ORD-10014,2023-06-11,2023-06-12,CID-1014,Home Office,United States,New York,Technology,Accessories,Wireless Mouse,150,3,0.1,38.3,8.06
+ORD-10015,2023-11-18,2023-11-22,CID-1015,Corporate,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,30,2,0,1.57,14.32
+ORD-10015,2023-11-18,2023-11-22,CID-1015,Corporate,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,1.48,12.59
+ORD-10015,2023-11-18,2023-11-22,CID-1015,Corporate,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,24,2,0,6.48,10.54
+ORD-10016,2023-06-11,2023-06-19,CID-1016,Home Office,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.1,2.04,6.55
+ORD-10016,2023-06-11,2023-06-19,CID-1016,Home Office,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,24,2,0,6.54,16.14
+ORD-10017,2023-06-09,2023-06-14,CID-1017,Corporate,Canada,Toronto,Technology,Phones,iPhone 15,3000,3,0.1,476.15,8.77
+ORD-10018,2023-02-22,2023-02-24,CID-1018,Home Office,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,1500,1,0.1,122.03,11.63
+ORD-10018,2023-02-22,2023-02-24,CID-1018,Home Office,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,900,3,0,70.17,19.18
+ORD-10018,2023-02-22,2023-02-24,CID-1018,Home Office,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,50,1,0,12.93,13.74
+ORD-10019,2023-06-01,2023-06-08,CID-1019,Consumer,United States,Los Angeles,Technology,Accessories,Gaming Headset,180,2,0,39.69,15.0
+ORD-10020,2023-12-29,2024-01-07,CID-1020,Corporate,Canada,Toronto,Furniture,Tables,Standing Desk,400,1,0,108.14,5.37
+ORD-10021,2023-12-07,2023-12-14,CID-1021,Home Office,Canada,Toronto,Furniture,Chairs,Gaming Chair,250,1,0.2,53.61,17.88
+ORD-10021,2023-12-07,2023-12-14,CID-1021,Home Office,Canada,Toronto,Technology,Accessories,Mechanical Keyboard,240,2,0.1,27.28,16.93
+ORD-10021,2023-12-07,2023-12-14,CID-1021,Home Office,Canada,Toronto,Technology,Accessories,Gaming Headset,90,1,0,13.47,9.18
+ORD-10022,2023-03-13,2023-03-18,CID-1022,Corporate,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,30,2,0,2.37,19.56
+ORD-10022,2023-03-13,2023-03-18,CID-1022,Corporate,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,1.23,11.52
+ORD-10022,2023-03-13,2023-03-18,CID-1022,Corporate,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,24,2,0.2,3.87,12.67
+ORD-10023,2024-01-30,2024-02-09,CID-1023,Consumer,United Kingdom,London,Technology,Phones,iPhone 15,3000,3,0,423.17,6.05
+ORD-10024,2024-11-11,2024-11-17,CID-1024,Home Office,United Kingdom,London,Technology,Phones,iPhone 15,2000,2,0.2,210.47,15.46
+ORD-10025,2024-07-21,2024-07-24,CID-1025,Consumer,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.2,2.39,5.01
+ORD-10025,2024-07-21,2024-07-24,CID-1025,Consumer,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,24,2,0.1,3.59,11.63
+ORD-10026,2023-08-07,2023-08-16,CID-1026,Corporate,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,45,3,0.1,2.97,19.28
+ORD-10026,2023-08-07,2023-08-16,CID-1026,Corporate,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,4.03,7.21
+ORD-10026,2023-08-07,2023-08-16,CID-1026,Corporate,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,24,2,0,3.93,18.29
+ORD-10027,2024-08-12,2024-08-16,CID-1027,Home Office,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,45,3,0,12.29,17.91
+ORD-10027,2024-08-12,2024-08-16,CID-1027,Home Office,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,1.5,19.37
+ORD-10027,2024-08-12,2024-08-16,CID-1027,Home Office,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,12,1,0,3.35,6.82
+ORD-10028,2023-05-17,2023-05-25,CID-1028,Home Office,Canada,Vancouver,Furniture,Tables,Standing Desk,1200,3,0.2,247.34,13.22
+ORD-10029,2023-06-12,2023-06-20,CID-1029,Corporate,United Kingdom,London,Technology,Phones,iPhone 15,3000,3,0.2,496.05,9.12
+ORD-10030,2023-03-21,2023-03-26,CID-1030,Consumer,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,250,1,0,26.95,15.41
+ORD-10030,2023-03-21,2023-03-26,CID-1030,Consumer,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,120,1,0.2,14.58,13.14
+ORD-10030,2023-03-21,2023-03-26,CID-1030,Consumer,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,90,1,0.2,10.61,16.55
+ORD-10031,2024-12-13,2024-12-14,CID-1031,Home Office,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,3000,2,0.2,442.93,16.02
+ORD-10031,2024-12-13,2024-12-14,CID-1031,Home Office,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,300,1,0.2,25.17,11.54
+ORD-10031,2024-12-13,2024-12-14,CID-1031,Home Office,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,100,2,0.2,18.48,17.61
+ORD-10032,2023-05-11,2023-05-21,CID-1032,Home Office,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0.2,1.01,11.93
+ORD-10032,2023-05-11,2023-05-21,CID-1032,Home Office,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,1.48,9.9
+ORD-10032,2023-05-11,2023-05-21,CID-1032,Home Office,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,24,2,0.1,5.14,17.48
+ORD-10033,2023-09-16,2023-09-18,CID-1033,Corporate,United States,New York,Furniture,Tables,Standing Desk,1200,3,0,294.37,14.78
+ORD-10034,2023-02-01,2023-02-05,CID-1034,Consumer,United States,New York,Technology,Laptops,Dell XPS 15,1500,1,0,249.39,8.84
+ORD-10034,2023-02-01,2023-02-05,CID-1034,Consumer,United States,New York,Technology,Accessories,27in 4K Monitor,900,3,0,220.0,7.46
+ORD-10034,2023-02-01,2023-02-05,CID-1034,Consumer,United States,New York,Technology,Accessories,Wireless Mouse,150,3,0,42.33,13.64
+ORD-10035,2024-01-20,2024-01-27,CID-1035,Home Office,United States,New York,Office Supplies,Paper,Copy Paper A4,15,1,0,3.36,9.52
+ORD-10035,2024-01-20,2024-01-27,CID-1035,Home Office,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,1.09,11.43
+ORD-10035,2024-01-20,2024-01-27,CID-1035,Home Office,United States,New York,Office Supplies,Binders,3-Ring Binder,36,3,0.1,1.72,11.3
+ORD-10036,2024-05-16,2024-05-18,CID-1036,Corporate,United Kingdom,Manchester,Technology,Phones,iPhone 15,3000,3,0.1,550.74,18.79
+ORD-10037,2024-05-10,2024-05-18,CID-1037,Corporate,Canada,Vancouver,Furniture,Chairs,Gaming Chair,250,1,0.1,60.84,8.66
+ORD-10037,2024-05-10,2024-05-18,CID-1037,Corporate,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,360,3,0.2,38.62,12.41
+ORD-10037,2024-05-10,2024-05-18,CID-1037,Corporate,Canada,Vancouver,Technology,Accessories,Gaming Headset,180,2,0,24.97,8.88
+ORD-10038,2023-10-14,2023-10-24,CID-1038,Home Office,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,15,1,0.2,2.07,16.37
+ORD-10038,2023-10-14,2023-10-24,CID-1038,Home Office,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,3.11,5.26
+ORD-10038,2023-10-14,2023-10-24,CID-1038,Home Office,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,24,2,0,3.04,13.72
+ORD-10039,2024-04-29,2024-05-08,CID-1039,Home Office,United Kingdom,Manchester,Furniture,Tables,Standing Desk,800,2,0.2,75.35,8.77
+ORD-10040,2023-05-04,2023-05-08,CID-1040,Corporate,United States,New York,Technology,Laptops,Dell XPS 15,3000,2,0.1,796.84,17.49
+ORD-10040,2023-05-04,2023-05-08,CID-1040,Corporate,United States,New York,Technology,Accessories,27in 4K Monitor,600,2,0,75.34,15.62
+ORD-10040,2023-05-04,2023-05-08,CID-1040,Corporate,United States,New York,Technology,Accessories,Wireless Mouse,50,1,0,9.42,15.46
+ORD-10041,2023-05-10,2023-05-18,CID-1041,Consumer,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0,1.7,17.93
+ORD-10041,2023-05-10,2023-05-18,CID-1041,Consumer,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.2,1.11,13.66
+ORD-10041,2023-05-10,2023-05-18,CID-1041,Consumer,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,12,1,0,3.03,19.24
+ORD-10042,2023-03-29,2023-04-02,CID-1042,Consumer,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,15,1,0.2,1.95,11.64
+ORD-10042,2023-03-29,2023-04-02,CID-1042,Consumer,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,2.77,5.9
+ORD-10043,2023-04-12,2023-04-16,CID-1043,Home Office,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0,1.34,11.13
+ORD-10043,2023-04-12,2023-04-16,CID-1043,Home Office,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,0.84,9.32
+ORD-10043,2023-04-12,2023-04-16,CID-1043,Home Office,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,24,2,0,5.32,18.86
+ORD-10044,2024-10-02,2024-10-12,CID-1044,Home Office,United States,Los Angeles,Technology,Laptops,Dell XPS 15,1500,1,0.1,346.49,6.07
+ORD-10044,2024-10-02,2024-10-12,CID-1044,Home Office,United States,Los Angeles,Technology,Accessories,27in 4K Monitor,600,2,0.1,86.29,12.03
+ORD-10044,2024-10-02,2024-10-12,CID-1044,Home Office,United States,Los Angeles,Technology,Accessories,Wireless Mouse,100,2,0.1,15.76,12.41
+ORD-10045,2023-03-24,2023-04-03,CID-1045,Consumer,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,15,1,0,4.5,15.08
+ORD-10045,2023-03-24,2023-04-03,CID-1045,Consumer,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,1.34,14.77
+ORD-10046,2023-07-05,2023-07-15,CID-1046,Corporate,Canada,Vancouver,Furniture,Tables,Standing Desk,800,2,0.1,93.79,6.57
+ORD-10047,2023-06-14,2023-06-20,CID-1047,Corporate,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,360,3,0,58.93,9.72
+ORD-10047,2023-06-14,2023-06-20,CID-1047,Corporate,Canada,Vancouver,Technology,Accessories,Gaming Headset,180,2,0,38.59,13.14
+ORD-10048,2024-02-28,2024-02-29,CID-1048,Consumer,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,30,2,0,3.03,13.24
+ORD-10048,2024-02-28,2024-02-29,CID-1048,Consumer,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,36,3,0.2,2.31,19.6
+ORD-10049,2024-09-15,2024-09-19,CID-1049,Home Office,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0,4.47,18.69
+ORD-10049,2024-09-15,2024-09-19,CID-1049,Home Office,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,1.4,15.75
+ORD-10049,2024-09-15,2024-09-19,CID-1049,Home Office,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,24,2,0.2,4.97,19.7
+ORD-10050,2023-09-07,2023-09-15,CID-1050,Home Office,United States,Los Angeles,Technology,Laptops,Dell XPS 15,4500,3,0,1197.03,9.14
+ORD-10050,2023-09-07,2023-09-15,CID-1050,Home Office,United States,Los Angeles,Technology,Accessories,27in 4K Monitor,600,2,0.1,153.12,12.62
+ORD-10050,2023-09-07,2023-09-15,CID-1050,Home Office,United States,Los Angeles,Technology,Accessories,Wireless Mouse,100,2,0.1,23.34,13.7
+ORD-10051,2024-11-06,2024-11-14,CID-1051,Consumer,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0.2,98.3,9.83
+ORD-10051,2024-11-06,2024-11-14,CID-1051,Consumer,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,360,3,0,69.46,8.5
+ORD-10051,2024-11-06,2024-11-14,CID-1051,Consumer,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,90,1,0.1,19.13,15.58
+ORD-10052,2024-01-26,2024-02-02,CID-1052,Home Office,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,45,3,0.1,10.83,18.11
+ORD-10052,2024-01-26,2024-02-02,CID-1052,Home Office,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,1.03,7.16
+ORD-10052,2024-01-26,2024-02-02,CID-1052,Home Office,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,12,1,0,2.01,19.54
+ORD-10053,2023-12-13,2023-12-23,CID-1053,Home Office,United Kingdom,London,Furniture,Tables,Standing Desk,1200,3,0.2,276.99,14.4
+ORD-10054,2024-05-14,2024-05-23,CID-1054,Consumer,Canada,Toronto,Technology,Laptops,Dell XPS 15,3000,2,0,710.07,11.51
+ORD-10054,2024-05-14,2024-05-23,CID-1054,Consumer,Canada,Toronto,Technology,Accessories,27in 4K Monitor,900,3,0,144.83,15.41
+ORD-10055,2023-02-17,2023-02-23,CID-1055,Consumer,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0.2,114.89,16.89
+ORD-10055,2023-02-17,2023-02-23,CID-1055,Consumer,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,120,1,0.2,19.67,8.61
+ORD-10056,2023-05-27,2023-05-31,CID-1056,Corporate,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,30,2,0.1,5.92,7.37
+ORD-10056,2023-05-27,2023-05-31,CID-1056,Corporate,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,3.02,11.36
+ORD-10056,2023-05-27,2023-05-31,CID-1056,Corporate,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,24,2,0,7.2,17.8
+ORD-10057,2023-04-20,2023-04-24,CID-1057,Corporate,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,2.28,13.49
+ORD-10057,2023-04-20,2023-04-24,CID-1057,Corporate,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,36,3,0,10.0,16.18
+ORD-10058,2023-10-21,2023-10-25,CID-1058,Home Office,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,45,3,0,9.32,18.55
+ORD-10058,2023-10-21,2023-10-25,CID-1058,Home Office,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.2,0.75,10.47
+ORD-10058,2023-10-21,2023-10-25,CID-1058,Home Office,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,24,2,0.1,5.12,7.63
+ORD-10059,2023-05-16,2023-05-25,CID-1059,Corporate,Canada,Vancouver,Technology,Phones,iPhone 15,2000,2,0.1,425.95,10.08
+ORD-10060,2023-04-28,2023-05-06,CID-1060,Consumer,United States,New York,Furniture,Tables,Standing Desk,800,2,0.1,52.25,10.92
+ORD-10061,2023-09-28,2023-10-07,CID-1061,Consumer,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,45,3,0.2,9.2,19.1
+ORD-10061,2023-09-28,2023-10-07,CID-1061,Consumer,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.2,0.36,18.26
+ORD-10061,2023-09-28,2023-10-07,CID-1061,Consumer,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,36,3,0,7.63,14.53
+ORD-10062,2024-04-20,2024-04-25,CID-1062,Home Office,United Kingdom,London,Technology,Accessories,27in 4K Monitor,600,2,0,44.58,18.31
+ORD-10062,2024-04-20,2024-04-25,CID-1062,Home Office,United Kingdom,London,Technology,Accessories,Wireless Mouse,100,2,0.1,19.59,16.15
+ORD-10063,2024-07-07,2024-07-14,CID-1063,Home Office,Canada,Toronto,Furniture,Tables,Standing Desk,800,2,0.2,182.25,9.2
+ORD-10064,2024-12-07,2024-12-13,CID-1064,Consumer,United Kingdom,Manchester,Furniture,Tables,Standing Desk,400,1,0.1,67.0,19.67
+ORD-10066,2024-04-10,2024-04-12,CID-1066,Home Office,United States,New York,Technology,Laptops,Dell XPS 15,1500,1,0,100.73,16.48
+ORD-10066,2024-04-10,2024-04-12,CID-1066,Home Office,United States,New York,Technology,Accessories,27in 4K Monitor,300,1,0,39.64,7.21
+ORD-10067,2023-01-03,2023-01-08,CID-1067,Consumer,United States,Los Angeles,Technology,Phones,iPhone 15,1000,1,0,53.72,16.85
+ORD-10068,2023-09-01,2023-09-11,CID-1068,Corporate,United States,New York,Furniture,Chairs,Gaming Chair,500,2,0,118.21,12.14
+ORD-10068,2023-09-01,2023-09-11,CID-1068,Corporate,United States,New York,Technology,Accessories,Mechanical Keyboard,360,3,0,58.68,8.32
+ORD-10068,2023-09-01,2023-09-11,CID-1068,Corporate,United States,New York,Technology,Accessories,Gaming Headset,270,3,0.1,39.98,19.46
+ORD-10069,2023-03-04,2023-03-12,CID-1069,Corporate,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.1,1.45,5.99
+ORD-10069,2023-03-04,2023-03-12,CID-1069,Corporate,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,36,3,0.1,4.71,13.96
+ORD-10070,2023-10-29,2023-11-06,CID-1070,Home Office,Canada,Vancouver,Technology,Laptops,Dell XPS 15,4500,3,0,708.83,18.32
+ORD-10070,2023-10-29,2023-11-06,CID-1070,Home Office,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,600,2,0.2,73.92,6.43
+ORD-10070,2023-10-29,2023-11-06,CID-1070,Home Office,Canada,Vancouver,Technology,Accessories,Wireless Mouse,150,3,0.1,19.38,7.29
+ORD-10071,2024-04-30,2024-05-02,CID-1071,Consumer,United States,New York,Furniture,Chairs,Gaming Chair,500,2,0,94.55,13.8
+ORD-10071,2024-04-30,2024-05-02,CID-1071,Consumer,United States,New York,Technology,Accessories,Mechanical Keyboard,240,2,0,36.65,18.1
+ORD-10072,2024-03-09,2024-03-10,CID-1072,Corporate,Canada,Vancouver,Furniture,Chairs,Gaming Chair,250,1,0,53.55,8.36
+ORD-10072,2024-03-09,2024-03-10,CID-1072,Corporate,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,360,3,0.1,25.51,9.18
+ORD-10072,2024-03-09,2024-03-10,CID-1072,Corporate,Canada,Vancouver,Technology,Accessories,Gaming Headset,180,2,0,36.4,14.87
+ORD-10073,2024-12-11,2024-12-16,CID-1073,Consumer,United States,Los Angeles,Technology,Phones,iPhone 15,2000,2,0.1,92.75,18.05
+ORD-10074,2024-08-02,2024-08-09,CID-1074,Consumer,United States,New York,Technology,Laptops,Dell XPS 15,3000,2,0.2,392.19,7.36
+ORD-10074,2024-08-02,2024-08-09,CID-1074,Consumer,United States,New York,Technology,Accessories,27in 4K Monitor,600,2,0,162.5,7.33
+ORD-10074,2024-08-02,2024-08-09,CID-1074,Consumer,United States,New York,Technology,Accessories,Wireless Mouse,50,1,0,5.9,14.93
+ORD-10075,2024-05-12,2024-05-22,CID-1075,Corporate,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,3000,2,0.2,186.53,15.17
+ORD-10075,2024-05-12,2024-05-22,CID-1075,Corporate,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,900,3,0.1,49.7,10.93
+ORD-10075,2024-05-12,2024-05-22,CID-1075,Corporate,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,50,1,0,6.27,8.17
+ORD-10076,2023-05-21,2023-05-26,CID-1076,Corporate,United Kingdom,London,Technology,Laptops,Dell XPS 15,1500,1,0,217.58,15.56
+ORD-10076,2023-05-21,2023-05-26,CID-1076,Corporate,United Kingdom,London,Technology,Accessories,27in 4K Monitor,900,3,0.1,55.1,17.93
+ORD-10076,2023-05-21,2023-05-26,CID-1076,Corporate,United Kingdom,London,Technology,Accessories,Wireless Mouse,50,1,0.2,11.21,17.93
+ORD-10077,2024-08-12,2024-08-19,CID-1077,Home Office,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,500,2,0,125.17,14.27
+ORD-10077,2024-08-12,2024-08-19,CID-1077,Home Office,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,240,2,0,38.2,6.59
+ORD-10077,2024-08-12,2024-08-19,CID-1077,Home Office,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,180,2,0,26.81,9.65
+ORD-10078,2023-12-14,2023-12-18,CID-1078,Corporate,United States,New York,Office Supplies,Paper,Copy Paper A4,45,3,0,12.44,10.24
+ORD-10078,2023-12-14,2023-12-18,CID-1078,Corporate,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,2.62,7.2
+ORD-10078,2023-12-14,2023-12-18,CID-1078,Corporate,United States,New York,Office Supplies,Binders,3-Ring Binder,36,3,0,8.64,14.83
+ORD-10079,2023-07-01,2023-07-09,CID-1079,Corporate,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,45,3,0.1,10.78,14.41
+ORD-10079,2023-07-01,2023-07-09,CID-1079,Corporate,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.2,1.03,9.54
+ORD-10079,2023-07-01,2023-07-09,CID-1079,Corporate,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,12,1,0.1,1.91,9.66
+ORD-10080,2024-04-07,2024-04-08,CID-1080,Consumer,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,1500,1,0.2,198.81,13.31
+ORD-10080,2024-04-07,2024-04-08,CID-1080,Consumer,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,300,1,0.2,66.54,13.57
+ORD-10080,2024-04-07,2024-04-08,CID-1080,Consumer,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,150,3,0.2,21.04,19.37
+ORD-10081,2024-04-06,2024-04-08,CID-1081,Corporate,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,15,1,0.2,3.57,12.86
+ORD-10081,2024-04-06,2024-04-08,CID-1081,Corporate,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,4.02,10.81
+ORD-10081,2024-04-06,2024-04-08,CID-1081,Corporate,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,36,3,0,8.9,14.71
+ORD-10082,2023-03-09,2023-03-15,CID-1082,Consumer,Canada,Vancouver,Furniture,Chairs,Gaming Chair,750,3,0,100.01,13.74
+ORD-10082,2023-03-09,2023-03-15,CID-1082,Consumer,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,240,2,0.1,63.06,15.48
+ORD-10082,2023-03-09,2023-03-15,CID-1082,Consumer,Canada,Vancouver,Technology,Accessories,Gaming Headset,270,3,0,34.4,10.65
+ORD-10083,2023-12-03,2023-12-06,CID-1083,Home Office,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,30,2,0,4.22,7.7
+ORD-10083,2023-12-03,2023-12-06,CID-1083,Home Office,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,1.71,7.06
+ORD-10083,2023-12-03,2023-12-06,CID-1083,Home Office,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,12,1,0,2.59,18.15
+ORD-10084,2024-09-24,2024-09-27,CID-1084,Home Office,United Kingdom,London,Technology,Laptops,Dell XPS 15,4500,3,0,1036.33,5.66
+ORD-10084,2024-09-24,2024-09-27,CID-1084,Home Office,United Kingdom,London,Technology,Accessories,27in 4K Monitor,900,3,0,263.16,14.16
+ORD-10084,2024-09-24,2024-09-27,CID-1084,Home Office,United Kingdom,London,Technology,Accessories,Wireless Mouse,100,2,0,18.35,9.64
+ORD-10085,2024-04-25,2024-04-29,CID-1085,Corporate,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,30,2,0.2,7.0,17.25
+ORD-10085,2024-04-25,2024-04-29,CID-1085,Corporate,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.1,0.45,12.21
+ORD-10085,2024-04-25,2024-04-29,CID-1085,Corporate,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,12,1,0,1.46,16.45
+ORD-10086,2023-10-07,2023-10-15,CID-1086,Home Office,United States,Los Angeles,Technology,Accessories,27in 4K Monitor,600,2,0,92.23,10.95
+ORD-10086,2023-10-07,2023-10-15,CID-1086,Home Office,United States,Los Angeles,Technology,Accessories,Wireless Mouse,100,2,0,14.37,5.42
+ORD-10087,2023-04-12,2023-04-18,CID-1087,Consumer,United States,New York,Furniture,Chairs,Gaming Chair,750,3,0,179.78,12.04
+ORD-10087,2023-04-12,2023-04-18,CID-1087,Consumer,United States,New York,Technology,Accessories,Mechanical Keyboard,120,1,0,13.68,17.52
+ORD-10087,2023-04-12,2023-04-18,CID-1087,Consumer,United States,New York,Technology,Accessories,Gaming Headset,270,3,0.2,16.8,9.32
+ORD-10088,2023-11-05,2023-11-07,CID-1088,Consumer,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0,3.89,12.5
+ORD-10088,2023-11-05,2023-11-07,CID-1088,Consumer,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,5.51,9.37
+ORD-10088,2023-11-05,2023-11-07,CID-1088,Consumer,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,24,2,0,4.62,7.81
+ORD-10089,2024-11-15,2024-11-17,CID-1089,Home Office,United Kingdom,London,Furniture,Tables,Standing Desk,1200,3,0,177.14,12.05
+ORD-10090,2024-10-12,2024-10-19,CID-1090,Corporate,United Kingdom,London,Furniture,Chairs,Gaming Chair,250,1,0,60.72,16.03
+ORD-10090,2024-10-12,2024-10-19,CID-1090,Corporate,United Kingdom,London,Technology,Accessories,Mechanical Keyboard,120,1,0.1,20.14,17.2
+ORD-10090,2024-10-12,2024-10-19,CID-1090,Corporate,United Kingdom,London,Technology,Accessories,Gaming Headset,270,3,0.2,63.76,12.18
+ORD-10091,2023-07-06,2023-07-09,CID-1091,Consumer,Canada,Vancouver,Technology,Laptops,Dell XPS 15,1500,1,0,193.35,9.65
+ORD-10091,2023-07-06,2023-07-09,CID-1091,Consumer,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,900,3,0.2,81.6,16.3
+ORD-10091,2023-07-06,2023-07-09,CID-1091,Consumer,Canada,Vancouver,Technology,Accessories,Wireless Mouse,100,2,0,26.64,9.98
+ORD-10092,2023-05-08,2023-05-14,CID-1092,Corporate,United Kingdom,Manchester,Furniture,Tables,Standing Desk,400,1,0.2,71.37,10.51
+ORD-10093,2024-06-15,2024-06-20,CID-1093,Consumer,Canada,Vancouver,Technology,Laptops,Dell XPS 15,1500,1,0.1,175.91,6.2
+ORD-10093,2024-06-15,2024-06-20,CID-1093,Consumer,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,600,2,0.2,96.31,11.39
+ORD-10093,2024-06-15,2024-06-20,CID-1093,Consumer,Canada,Vancouver,Technology,Accessories,Wireless Mouse,100,2,0.2,4.85,18.05
+ORD-10094,2023-12-28,2024-01-07,CID-1094,Corporate,United Kingdom,London,Technology,Laptops,Dell XPS 15,3000,2,0,864.59,7.14
+ORD-10094,2023-12-28,2024-01-07,CID-1094,Corporate,United Kingdom,London,Technology,Accessories,27in 4K Monitor,600,2,0,48.93,8.54
+ORD-10094,2023-12-28,2024-01-07,CID-1094,Corporate,United Kingdom,London,Technology,Accessories,Wireless Mouse,100,2,0.2,22.99,5.49
+ORD-10095,2023-06-07,2023-06-15,CID-1095,Corporate,United Kingdom,Manchester,Technology,Phones,iPhone 15,3000,3,0.1,403.67,14.74
+ORD-10096,2023-09-13,2023-09-15,CID-1096,Consumer,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,45,3,0,5.19,8.9
+ORD-10096,2023-09-13,2023-09-15,CID-1096,Consumer,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.1,4.83,19.98
+ORD-10096,2023-09-13,2023-09-15,CID-1096,Consumer,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,12,1,0,1.96,18.48
+ORD-10097,2024-03-31,2024-04-02,CID-1097,Home Office,United Kingdom,Manchester,Technology,Phones,iPhone 15,2000,2,0.1,473.11,15.68
+ORD-10098,2024-12-18,2024-12-21,CID-1098,Corporate,Canada,Toronto,Technology,Laptops,Dell XPS 15,1500,1,0,371.39,5.39
+ORD-10098,2024-12-18,2024-12-21,CID-1098,Corporate,Canada,Toronto,Technology,Accessories,27in 4K Monitor,600,2,0.2,120.44,13.27
+ORD-10098,2024-12-18,2024-12-21,CID-1098,Corporate,Canada,Toronto,Technology,Accessories,Wireless Mouse,50,1,0,6.37,19.99
+ORD-10099,2024-05-05,2024-05-14,CID-1099,Corporate,United Kingdom,London,Technology,Laptops,Dell XPS 15,1500,1,0.2,199.75,12.76
+ORD-10099,2024-05-05,2024-05-14,CID-1099,Corporate,United Kingdom,London,Technology,Accessories,27in 4K Monitor,900,3,0,217.75,6.94
+ORD-10099,2024-05-05,2024-05-14,CID-1099,Corporate,United Kingdom,London,Technology,Accessories,Wireless Mouse,50,1,0,8.98,9.56
+ORD-10100,2023-06-15,2023-06-21,CID-1100,Home Office,United States,Los Angeles,Furniture,Tables,Standing Desk,800,2,0,90.12,14.53
+ORD-10101,2024-07-18,2024-07-23,CID-1101,Consumer,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,45,3,0,8.91,13.71
+ORD-10101,2024-07-18,2024-07-23,CID-1101,Consumer,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.1,5.63,13.45
+ORD-10101,2024-07-18,2024-07-23,CID-1101,Consumer,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,12,1,0,0.74,14.62
+ORD-10102,2024-08-13,2024-08-18,CID-1102,Home Office,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,45,3,0.1,8.52,9.53
+ORD-10102,2024-08-13,2024-08-18,CID-1102,Home Office,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,2.39,6.09
+ORD-10102,2024-08-13,2024-08-18,CID-1102,Home Office,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,24,2,0.2,3.28,8.06
+ORD-10103,2024-09-13,2024-09-16,CID-1103,Corporate,Canada,Vancouver,Technology,Phones,iPhone 15,2000,2,0,480.33,12.72
+ORD-10104,2023-04-19,2023-04-25,CID-1104,Consumer,United Kingdom,London,Furniture,Chairs,Gaming Chair,250,1,0,30.64,10.76
+ORD-10104,2023-04-19,2023-04-25,CID-1104,Consumer,United Kingdom,London,Technology,Accessories,Mechanical Keyboard,120,1,0,30.4,19.01
+ORD-10104,2023-04-19,2023-04-25,CID-1104,Consumer,United Kingdom,London,Technology,Accessories,Gaming Headset,90,1,0,15.71,12.72
+ORD-10105,2024-05-25,2024-05-30,CID-1105,Corporate,United States,New York,Furniture,Tables,Standing Desk,400,1,0,78.33,5.73
+ORD-10106,2023-10-16,2023-10-24,CID-1106,Home Office,Canada,Vancouver,Furniture,Chairs,Gaming Chair,250,1,0.2,16.7,8.97
+ORD-10106,2023-10-16,2023-10-24,CID-1106,Home Office,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,240,2,0.1,13.24,5.77
+ORD-10106,2023-10-16,2023-10-24,CID-1106,Home Office,Canada,Vancouver,Technology,Accessories,Gaming Headset,180,2,0.1,11.08,12.56
+ORD-10107,2024-07-17,2024-07-22,CID-1107,Home Office,Canada,Toronto,Technology,Laptops,Dell XPS 15,3000,2,0.1,511.54,10.48
+ORD-10107,2024-07-17,2024-07-22,CID-1107,Home Office,Canada,Toronto,Technology,Accessories,27in 4K Monitor,900,3,0.2,126.01,5.68
+ORD-10107,2024-07-17,2024-07-22,CID-1107,Home Office,Canada,Toronto,Technology,Accessories,Wireless Mouse,100,2,0.2,14.39,7.23
+ORD-10108,2024-06-11,2024-06-14,CID-1108,Corporate,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,600,2,0.1,95.49,12.65
+ORD-10108,2024-06-11,2024-06-14,CID-1108,Corporate,Canada,Vancouver,Technology,Accessories,Wireless Mouse,150,3,0.1,22.78,5.25
+ORD-10109,2023-12-06,2023-12-08,CID-1109,Corporate,Canada,Vancouver,Technology,Phones,iPhone 15,3000,3,0,597.68,8.98
+ORD-10110,2024-11-02,2024-11-12,CID-1110,Home Office,United States,New York,Office Supplies,Paper,Copy Paper A4,45,3,0.2,3.13,15.21
+ORD-10110,2024-11-02,2024-11-12,CID-1110,Home Office,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,2.34,11.62
+ORD-10110,2024-11-02,2024-11-12,CID-1110,Home Office,United States,New York,Office Supplies,Binders,3-Ring Binder,24,2,0,3.66,16.62
+ORD-10111,2024-04-27,2024-04-28,CID-1111,Home Office,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,4.16,11.89
+ORD-10111,2024-04-27,2024-04-28,CID-1111,Home Office,United States,New York,Office Supplies,Binders,3-Ring Binder,36,3,0.1,7.09,18.01
+ORD-10112,2024-11-28,2024-12-03,CID-1112,Home Office,United Kingdom,London,Furniture,Tables,Standing Desk,800,2,0,228.3,19.73
+ORD-10113,2023-10-23,2023-10-27,CID-1113,Home Office,Canada,Vancouver,Furniture,Chairs,Gaming Chair,750,3,0.1,82.31,13.6
+ORD-10113,2023-10-23,2023-10-27,CID-1113,Home Office,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,240,2,0.1,62.35,17.07
+ORD-10113,2023-10-23,2023-10-27,CID-1113,Home Office,Canada,Vancouver,Technology,Accessories,Gaming Headset,180,2,0,24.59,11.64
+ORD-10114,2023-09-20,2023-09-28,CID-1114,Consumer,United States,Los Angeles,Furniture,Tables,Standing Desk,400,1,0,81.57,13.8
+ORD-10115,2023-09-06,2023-09-07,CID-1115,Home Office,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,30,2,0.1,6.19,6.51
+ORD-10115,2023-09-06,2023-09-07,CID-1115,Home Office,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,1.21,19.03
+ORD-10115,2023-09-06,2023-09-07,CID-1115,Home Office,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,24,2,0,5.74,9.31
+ORD-10116,2023-10-20,2023-10-21,CID-1116,Consumer,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,15,1,0,2.32,17.56
+ORD-10116,2023-10-20,2023-10-21,CID-1116,Consumer,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,24,2,0.2,1.85,16.24
+ORD-10117,2023-10-24,2023-10-25,CID-1117,Consumer,United Kingdom,London,Furniture,Tables,Standing Desk,800,2,0.2,174.28,7.01
+ORD-10118,2024-05-31,2024-06-08,CID-1118,Corporate,United States,New York,Furniture,Chairs,Gaming Chair,750,3,0.1,155.01,5.21
+ORD-10118,2024-05-31,2024-06-08,CID-1118,Corporate,United States,New York,Technology,Accessories,Mechanical Keyboard,240,2,0,22.53,17.84
+ORD-10118,2024-05-31,2024-06-08,CID-1118,Corporate,United States,New York,Technology,Accessories,Gaming Headset,180,2,0.1,11.61,15.04
+ORD-10119,2023-07-09,2023-07-12,CID-1119,Corporate,United Kingdom,London,Technology,Laptops,Dell XPS 15,3000,2,0.1,778.97,9.53
+ORD-10119,2023-07-09,2023-07-12,CID-1119,Corporate,United Kingdom,London,Technology,Accessories,27in 4K Monitor,300,1,0.1,57.62,15.39
+ORD-10119,2023-07-09,2023-07-12,CID-1119,Corporate,United Kingdom,London,Technology,Accessories,Wireless Mouse,50,1,0.2,5.07,11.08
+ORD-10120,2024-05-29,2024-06-03,CID-1120,Home Office,United States,Los Angeles,Furniture,Chairs,Gaming Chair,250,1,0.2,17.66,16.22
+ORD-10120,2024-05-29,2024-06-03,CID-1120,Home Office,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,240,2,0.2,45.95,17.03
+ORD-10120,2024-05-29,2024-06-03,CID-1120,Home Office,United States,Los Angeles,Technology,Accessories,Gaming Headset,90,1,0,16.32,12.92
+ORD-10122,2023-07-27,2023-08-06,CID-1122,Home Office,United States,New York,Furniture,Chairs,Gaming Chair,250,1,0,57.31,12.33
+ORD-10122,2023-07-27,2023-08-06,CID-1122,Home Office,United States,New York,Technology,Accessories,Mechanical Keyboard,240,2,0,39.21,12.7
+ORD-10122,2023-07-27,2023-08-06,CID-1122,Home Office,United States,New York,Technology,Accessories,Gaming Headset,90,1,0.2,15.71,9.62
+ORD-10123,2023-01-23,2023-01-30,CID-1123,Corporate,United States,New York,Office Supplies,Paper,Copy Paper A4,30,2,0,5.56,5.9
+ORD-10123,2023-01-23,2023-01-30,CID-1123,Corporate,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,1.95,7.7
+ORD-10123,2023-01-23,2023-01-30,CID-1123,Corporate,United States,New York,Office Supplies,Binders,3-Ring Binder,36,3,0.2,4.14,18.37
+ORD-10124,2024-04-04,2024-04-11,CID-1124,Corporate,United States,New York,Office Supplies,Paper,Copy Paper A4,15,1,0.2,2.19,15.92
+ORD-10124,2024-04-04,2024-04-11,CID-1124,Corporate,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,2.36,11.95
+ORD-10124,2024-04-04,2024-04-11,CID-1124,Corporate,United States,New York,Office Supplies,Binders,3-Ring Binder,24,2,0.2,4.91,8.71
+ORD-10125,2023-12-21,2023-12-24,CID-1125,Corporate,United States,New York,Technology,Laptops,Dell XPS 15,4500,3,0,495.75,6.01
+ORD-10125,2023-12-21,2023-12-24,CID-1125,Corporate,United States,New York,Technology,Accessories,27in 4K Monitor,600,2,0,66.71,5.66
+ORD-10125,2023-12-21,2023-12-24,CID-1125,Corporate,United States,New York,Technology,Accessories,Wireless Mouse,150,3,0,35.79,16.64
+ORD-10126,2023-05-24,2023-06-02,CID-1126,Corporate,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,30,2,0,3.76,7.15
+ORD-10126,2023-05-24,2023-06-02,CID-1126,Corporate,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.2,0.8,5.91
+ORD-10128,2024-11-18,2024-11-25,CID-1128,Home Office,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,250,1,0.2,22.05,8.38
+ORD-10128,2024-11-18,2024-11-25,CID-1128,Home Office,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,120,1,0.2,26.75,13.44
+ORD-10129,2024-07-24,2024-08-02,CID-1129,Consumer,United Kingdom,London,Furniture,Chairs,Gaming Chair,250,1,0.2,52.36,6.39
+ORD-10129,2024-07-24,2024-08-02,CID-1129,Consumer,United Kingdom,London,Technology,Accessories,Mechanical Keyboard,120,1,0,14.05,15.11
+ORD-10129,2024-07-24,2024-08-02,CID-1129,Consumer,United Kingdom,London,Technology,Accessories,Gaming Headset,90,1,0,22.6,13.81
+ORD-10130,2024-11-18,2024-11-27,CID-1130,Consumer,United Kingdom,London,Furniture,Tables,Standing Desk,400,1,0,113.72,19.43
+ORD-10131,2023-05-01,2023-05-09,CID-1131,Consumer,Canada,Toronto,Furniture,Chairs,Gaming Chair,500,2,0.1,65.32,13.0
+ORD-10131,2023-05-01,2023-05-09,CID-1131,Consumer,Canada,Toronto,Technology,Accessories,Mechanical Keyboard,240,2,0.1,38.49,12.46
+ORD-10131,2023-05-01,2023-05-09,CID-1131,Consumer,Canada,Toronto,Technology,Accessories,Gaming Headset,270,3,0.2,51.93,9.8
+ORD-10132,2023-07-28,2023-08-03,CID-1132,Corporate,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,15,1,0,1.73,19.02
+ORD-10132,2023-07-28,2023-08-03,CID-1132,Corporate,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,1.27,9.95
+ORD-10132,2023-07-28,2023-08-03,CID-1132,Corporate,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,12,1,0.2,1.8,19.15
+ORD-10133,2023-12-12,2023-12-17,CID-1133,Corporate,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,30,2,0,2.55,13.2
+ORD-10133,2023-12-12,2023-12-17,CID-1133,Corporate,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,4.34,17.59
+ORD-10133,2023-12-12,2023-12-17,CID-1133,Corporate,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,36,3,0,8.68,11.19
+ORD-10134,2024-10-07,2024-10-11,CID-1134,Consumer,Canada,Toronto,Technology,Laptops,Dell XPS 15,3000,2,0,613.38,15.0
+ORD-10134,2024-10-07,2024-10-11,CID-1134,Consumer,Canada,Toronto,Technology,Accessories,27in 4K Monitor,600,2,0.2,25.89,12.98
+ORD-10134,2024-10-07,2024-10-11,CID-1134,Consumer,Canada,Toronto,Technology,Accessories,Wireless Mouse,50,1,0.1,8.28,9.3
+ORD-10135,2024-05-29,2024-06-05,CID-1135,Consumer,United States,New York,Office Supplies,Paper,Copy Paper A4,45,3,0.1,10.28,9.01
+ORD-10135,2024-05-29,2024-06-05,CID-1135,Consumer,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.2,2.11,8.65
+ORD-10135,2024-05-29,2024-06-05,CID-1135,Consumer,United States,New York,Office Supplies,Binders,3-Ring Binder,24,2,0,5.12,17.87
+ORD-10136,2023-02-02,2023-02-04,CID-1136,Corporate,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,15,1,0,1.06,17.68
+ORD-10136,2023-02-02,2023-02-04,CID-1136,Corporate,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,4.38,18.79
+ORD-10136,2023-02-02,2023-02-04,CID-1136,Corporate,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,36,3,0.2,3.39,18.86
+ORD-10137,2024-12-01,2024-12-06,CID-1137,Home Office,Canada,Toronto,Technology,Laptops,Dell XPS 15,1500,1,0,295.14,16.28
+ORD-10137,2024-12-01,2024-12-06,CID-1137,Home Office,Canada,Toronto,Technology,Accessories,27in 4K Monitor,600,2,0,74.89,13.46
+ORD-10137,2024-12-01,2024-12-06,CID-1137,Home Office,Canada,Toronto,Technology,Accessories,Wireless Mouse,100,2,0.1,13.14,16.1
+ORD-10138,2024-12-06,2024-12-08,CID-1138,Home Office,Canada,Vancouver,Technology,Laptops,Dell XPS 15,1500,1,0.1,271.74,14.21
+ORD-10138,2024-12-06,2024-12-08,CID-1138,Home Office,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,600,2,0,125.12,16.75
+ORD-10138,2024-12-06,2024-12-08,CID-1138,Home Office,Canada,Vancouver,Technology,Accessories,Wireless Mouse,50,1,0.1,8.47,10.63
+ORD-10139,2023-07-10,2023-07-20,CID-1139,Home Office,United Kingdom,London,Technology,Phones,iPhone 15,1000,1,0,70.51,7.31
+ORD-10140,2024-12-29,2025-01-01,CID-1140,Home Office,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,500,2,0.2,55.99,9.05
+ORD-10140,2024-12-29,2025-01-01,CID-1140,Home Office,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,120,1,0.2,15.57,13.32
+ORD-10140,2024-12-29,2025-01-01,CID-1140,Home Office,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,90,1,0,12.46,6.4
+ORD-10141,2024-09-04,2024-09-10,CID-1141,Corporate,United States,Los Angeles,Furniture,Chairs,Gaming Chair,750,3,0,144.74,7.54
+ORD-10141,2024-09-04,2024-09-10,CID-1141,Corporate,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,120,1,0.1,13.53,12.4
+ORD-10141,2024-09-04,2024-09-10,CID-1141,Corporate,United States,Los Angeles,Technology,Accessories,Gaming Headset,180,2,0.1,25.15,12.26
+ORD-10142,2023-03-20,2023-03-26,CID-1142,Corporate,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0,1.89,19.23
+ORD-10142,2023-03-20,2023-03-26,CID-1142,Corporate,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,4.82,9.94
+ORD-10142,2023-03-20,2023-03-26,CID-1142,Corporate,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,36,3,0,4.5,14.05
+ORD-10144,2023-10-26,2023-11-03,CID-1144,Home Office,United States,Los Angeles,Furniture,Chairs,Gaming Chair,500,2,0.1,35.31,13.46
+ORD-10144,2023-10-26,2023-11-03,CID-1144,Home Office,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,360,3,0,79.35,13.25
+ORD-10145,2024-04-17,2024-04-21,CID-1145,Corporate,United Kingdom,London,Technology,Phones,iPhone 15,2000,2,0.2,135.67,9.54
+ORD-10146,2023-09-16,2023-09-19,CID-1146,Home Office,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,600,2,0.2,89.24,16.86
+ORD-10146,2023-09-16,2023-09-19,CID-1146,Home Office,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,150,3,0,11.6,8.72
+ORD-10147,2024-11-11,2024-11-17,CID-1147,Consumer,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,45,3,0.2,10.5,9.97
+ORD-10147,2024-11-11,2024-11-17,CID-1147,Consumer,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,0.6,8.33
+ORD-10147,2024-11-11,2024-11-17,CID-1147,Consumer,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,36,3,0,5.81,10.87
+ORD-10148,2024-11-26,2024-12-06,CID-1148,Home Office,Canada,Toronto,Furniture,Chairs,Gaming Chair,250,1,0.1,34.65,19.43
+ORD-10148,2024-11-26,2024-12-06,CID-1148,Home Office,Canada,Toronto,Technology,Accessories,Mechanical Keyboard,360,3,0,49.35,10.15
+ORD-10148,2024-11-26,2024-12-06,CID-1148,Home Office,Canada,Toronto,Technology,Accessories,Gaming Headset,270,3,0.2,29.61,6.46
+ORD-10149,2024-12-14,2024-12-22,CID-1149,Corporate,United States,Los Angeles,Technology,Laptops,Dell XPS 15,1500,1,0.1,286.19,15.16
+ORD-10149,2024-12-14,2024-12-22,CID-1149,Corporate,United States,Los Angeles,Technology,Accessories,27in 4K Monitor,900,3,0,161.1,13.28
+ORD-10149,2024-12-14,2024-12-22,CID-1149,Corporate,United States,Los Angeles,Technology,Accessories,Wireless Mouse,100,2,0.2,8.64,11.08
+ORD-10150,2023-07-08,2023-07-11,CID-1150,Home Office,Canada,Vancouver,Furniture,Chairs,Gaming Chair,250,1,0.2,39.61,10.83
+ORD-10150,2023-07-08,2023-07-11,CID-1150,Home Office,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,120,1,0.1,25.71,17.13
+ORD-10150,2023-07-08,2023-07-11,CID-1150,Home Office,Canada,Vancouver,Technology,Accessories,Gaming Headset,90,1,0,12.73,7.96
+ORD-10151,2023-04-27,2023-05-02,CID-1151,Home Office,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,45,3,0,6.16,17.68
+ORD-10151,2023-04-27,2023-05-02,CID-1151,Home Office,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.1,6.04,13.85
+ORD-10151,2023-04-27,2023-05-02,CID-1151,Home Office,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,24,2,0,2.63,6.75
+ORD-10152,2024-01-18,2024-01-21,CID-1152,Home Office,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,30,2,0,5.15,13.06
+ORD-10153,2023-06-27,2023-07-06,CID-1153,Consumer,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,3000,2,0,799.14,19.28
+ORD-10153,2023-06-27,2023-07-06,CID-1153,Consumer,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,300,1,0.2,69.83,12.58
+ORD-10153,2023-06-27,2023-07-06,CID-1153,Consumer,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,150,3,0.2,18.47,17.6
+ORD-10154,2024-05-15,2024-05-18,CID-1154,Consumer,Canada,Toronto,Technology,Phones,iPhone 15,1000,1,0.1,95.59,9.33
+ORD-10155,2024-04-13,2024-04-23,CID-1155,Home Office,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,45,3,0.1,7.51,16.35
+ORD-10155,2024-04-13,2024-04-23,CID-1155,Home Office,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,4.76,6.54
+ORD-10155,2024-04-13,2024-04-23,CID-1155,Home Office,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,12,1,0.1,2.9,5.48
+ORD-10156,2023-09-27,2023-10-03,CID-1156,Consumer,United Kingdom,London,Technology,Phones,iPhone 15,3000,3,0.1,716.21,14.15
+ORD-10157,2024-03-14,2024-03-17,CID-1157,Home Office,United States,New York,Technology,Phones,iPhone 15,3000,3,0.1,494.29,13.95
+ORD-10158,2023-06-22,2023-06-28,CID-1158,Home Office,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,2.01,16.25
+ORD-10158,2023-06-22,2023-06-28,CID-1158,Home Office,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,12,1,0.1,2.88,6.9
+ORD-10159,2023-05-16,2023-05-20,CID-1159,Consumer,Canada,Vancouver,Technology,Phones,iPhone 15,3000,3,0.2,413.68,13.66
+ORD-10160,2023-10-03,2023-10-10,CID-1160,Corporate,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,15,1,0.2,2.15,9.17
+ORD-10160,2023-10-03,2023-10-10,CID-1160,Corporate,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,24,2,0.1,4.22,18.03
+ORD-10161,2023-04-06,2023-04-14,CID-1161,Home Office,Canada,Vancouver,Furniture,Tables,Standing Desk,800,2,0,233.63,17.37
+ORD-10162,2024-05-21,2024-05-26,CID-1162,Corporate,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,30,2,0.1,7.39,16.43
+ORD-10162,2024-05-21,2024-05-26,CID-1162,Corporate,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,1.04,18.94
+ORD-10162,2024-05-21,2024-05-26,CID-1162,Corporate,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,24,2,0,7.15,11.42
+ORD-10163,2024-12-06,2024-12-09,CID-1163,Home Office,United Kingdom,London,Furniture,Tables,Standing Desk,400,1,0.1,40.54,10.58
+ORD-10164,2024-10-26,2024-10-29,CID-1164,Consumer,United Kingdom,Manchester,Technology,Phones,iPhone 15,2000,2,0,451.85,5.02
+ORD-10165,2024-05-03,2024-05-05,CID-1165,Consumer,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,15,1,0.1,3.43,19.82
+ORD-10165,2024-05-03,2024-05-05,CID-1165,Consumer,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0.2,0.43,10.75
+ORD-10165,2024-05-03,2024-05-05,CID-1165,Consumer,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,12,1,0,1.54,18.21
+ORD-10166,2023-05-21,2023-05-28,CID-1166,Consumer,Canada,Toronto,Technology,Laptops,Dell XPS 15,4500,3,0,720.11,15.84
+ORD-10166,2023-05-21,2023-05-28,CID-1166,Consumer,Canada,Toronto,Technology,Accessories,27in 4K Monitor,300,1,0.2,48.96,11.64
+ORD-10166,2023-05-21,2023-05-28,CID-1166,Consumer,Canada,Toronto,Technology,Accessories,Wireless Mouse,50,1,0,11.91,13.84
+ORD-10167,2024-01-29,2024-02-04,CID-1167,Corporate,United Kingdom,London,Technology,Laptops,Dell XPS 15,1500,1,0.1,330.4,15.36
+ORD-10167,2024-01-29,2024-02-04,CID-1167,Corporate,United Kingdom,London,Technology,Accessories,27in 4K Monitor,900,3,0.1,82.1,14.1
+ORD-10167,2024-01-29,2024-02-04,CID-1167,Corporate,United Kingdom,London,Technology,Accessories,Wireless Mouse,100,2,0.1,19.04,16.76
+ORD-10168,2023-09-03,2023-09-11,CID-1168,Corporate,United States,New York,Office Supplies,Paper,Copy Paper A4,45,3,0,13.35,19.01
+ORD-10168,2023-09-03,2023-09-11,CID-1168,Corporate,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,2.71,15.24
+ORD-10168,2023-09-03,2023-09-11,CID-1168,Corporate,United States,New York,Office Supplies,Binders,3-Ring Binder,12,1,0,2.36,5.21
+ORD-10169,2023-08-09,2023-08-10,CID-1169,Consumer,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,30,2,0.2,5.41,6.24
+ORD-10169,2023-08-09,2023-08-10,CID-1169,Consumer,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,2.86,9.65
+ORD-10169,2023-08-09,2023-08-10,CID-1169,Consumer,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,12,1,0,2.21,10.86
+ORD-10170,2024-10-11,2024-10-13,CID-1170,Corporate,Canada,Vancouver,Technology,Phones,iPhone 15,1000,1,0,71.55,11.52
+ORD-10171,2024-04-09,2024-04-19,CID-1171,Home Office,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0,0.8,7.06
+ORD-10171,2024-04-09,2024-04-19,CID-1171,Home Office,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,2.6,16.74
+ORD-10171,2024-04-09,2024-04-19,CID-1171,Home Office,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,12,1,0.1,0.88,16.72
+ORD-10172,2023-10-03,2023-10-05,CID-1172,Consumer,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0,130.53,12.66
+ORD-10172,2023-10-03,2023-10-05,CID-1172,Consumer,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,360,3,0,51.09,8.83
+ORD-10172,2023-10-03,2023-10-05,CID-1172,Consumer,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,270,3,0,28.92,12.63
+ORD-10173,2023-02-15,2023-02-16,CID-1173,Consumer,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,120,1,0.2,10.19,8.72
+ORD-10174,2023-11-24,2023-11-29,CID-1174,Consumer,Canada,Vancouver,Technology,Laptops,Dell XPS 15,1500,1,0,158.69,12.74
+ORD-10174,2023-11-24,2023-11-29,CID-1174,Consumer,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,600,2,0,161.55,17.99
+ORD-10174,2023-11-24,2023-11-29,CID-1174,Consumer,Canada,Vancouver,Technology,Accessories,Wireless Mouse,100,2,0.1,6.44,11.85
+ORD-10175,2024-01-13,2024-01-17,CID-1175,Corporate,Canada,Vancouver,Technology,Phones,iPhone 15,2000,2,0.2,479.11,16.64
+ORD-10176,2024-07-13,2024-07-17,CID-1176,Consumer,United States,Los Angeles,Technology,Laptops,Dell XPS 15,4500,3,0,1294.86,5.02
+ORD-10176,2024-07-13,2024-07-17,CID-1176,Consumer,United States,Los Angeles,Technology,Accessories,27in 4K Monitor,900,3,0.1,61.55,12.95
+ORD-10176,2024-07-13,2024-07-17,CID-1176,Consumer,United States,Los Angeles,Technology,Accessories,Wireless Mouse,100,2,0,29.31,7.14
+ORD-10177,2023-10-14,2023-10-16,CID-1177,Consumer,United States,Los Angeles,Technology,Phones,iPhone 15,3000,3,0,585.58,12.58
+ORD-10178,2024-10-14,2024-10-21,CID-1178,Consumer,Canada,Toronto,Technology,Accessories,Mechanical Keyboard,240,2,0.1,60.81,10.89
+ORD-10178,2024-10-14,2024-10-21,CID-1178,Consumer,Canada,Toronto,Technology,Accessories,Gaming Headset,180,2,0.1,26.44,8.5
+ORD-10179,2023-07-27,2023-07-30,CID-1179,Home Office,United States,New York,Technology,Laptops,Dell XPS 15,3000,2,0.2,192.44,10.37
+ORD-10179,2023-07-27,2023-07-30,CID-1179,Home Office,United States,New York,Technology,Accessories,27in 4K Monitor,600,2,0.1,89.55,17.79
+ORD-10179,2023-07-27,2023-07-30,CID-1179,Home Office,United States,New York,Technology,Accessories,Wireless Mouse,150,3,0.1,34.64,15.45
+ORD-10181,2024-02-10,2024-02-19,CID-1181,Consumer,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,240,2,0.2,36.29,13.25
+ORD-10181,2024-02-10,2024-02-19,CID-1181,Consumer,Canada,Vancouver,Technology,Accessories,Gaming Headset,90,1,0,7.23,5.93
+ORD-10182,2023-08-16,2023-08-19,CID-1182,Consumer,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.1,6.03,6.12
+ORD-10183,2023-07-22,2023-07-30,CID-1183,Consumer,United States,Los Angeles,Technology,Accessories,27in 4K Monitor,900,3,0.2,183.9,10.92
+ORD-10183,2023-07-22,2023-07-30,CID-1183,Consumer,United States,Los Angeles,Technology,Accessories,Wireless Mouse,150,3,0.2,11.18,8.22
+ORD-10184,2023-07-11,2023-07-16,CID-1184,Corporate,United Kingdom,London,Technology,Laptops,Dell XPS 15,1500,1,0.1,235.88,18.24
+ORD-10184,2023-07-11,2023-07-16,CID-1184,Corporate,United Kingdom,London,Technology,Accessories,27in 4K Monitor,300,1,0.1,39.35,11.29
+ORD-10184,2023-07-11,2023-07-16,CID-1184,Corporate,United Kingdom,London,Technology,Accessories,Wireless Mouse,150,3,0,31.15,17.03
+ORD-10185,2023-01-20,2023-01-27,CID-1185,Home Office,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,45,3,0.1,5.96,7.7
+ORD-10185,2023-01-20,2023-01-27,CID-1185,Home Office,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,2.19,16.68
+ORD-10185,2023-01-20,2023-01-27,CID-1185,Home Office,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,24,2,0.1,5.22,19.99
+ORD-10186,2023-06-13,2023-06-15,CID-1186,Consumer,Canada,Toronto,Furniture,Chairs,Gaming Chair,750,3,0,180.76,19.22
+ORD-10186,2023-06-13,2023-06-15,CID-1186,Consumer,Canada,Toronto,Technology,Accessories,Mechanical Keyboard,240,2,0.1,61.3,19.87
+ORD-10186,2023-06-13,2023-06-15,CID-1186,Consumer,Canada,Toronto,Technology,Accessories,Gaming Headset,90,1,0.1,20.38,15.46
+ORD-10187,2024-08-28,2024-08-29,CID-1187,Home Office,Canada,Vancouver,Furniture,Tables,Standing Desk,1200,3,0,311.01,17.16
+ORD-10188,2024-05-19,2024-05-28,CID-1188,Corporate,United States,Los Angeles,Technology,Laptops,Dell XPS 15,4500,3,0,247.42,12.17
+ORD-10188,2024-05-19,2024-05-28,CID-1188,Corporate,United States,Los Angeles,Technology,Accessories,27in 4K Monitor,900,3,0,226.45,10.11
+ORD-10188,2024-05-19,2024-05-28,CID-1188,Corporate,United States,Los Angeles,Technology,Accessories,Wireless Mouse,100,2,0,5.55,13.8
+ORD-10189,2023-05-26,2023-05-28,CID-1189,Home Office,United Kingdom,London,Technology,Accessories,Mechanical Keyboard,120,1,0.1,13.55,7.05
+ORD-10189,2023-05-26,2023-05-28,CID-1189,Home Office,United Kingdom,London,Technology,Accessories,Gaming Headset,180,2,0.2,30.57,7.61
+ORD-10190,2024-07-29,2024-08-08,CID-1190,Corporate,United States,New York,Furniture,Chairs,Gaming Chair,500,2,0,47.21,5.03
+ORD-10190,2024-07-29,2024-08-08,CID-1190,Corporate,United States,New York,Technology,Accessories,Mechanical Keyboard,360,3,0.2,75.65,16.56
+ORD-10190,2024-07-29,2024-08-08,CID-1190,Corporate,United States,New York,Technology,Accessories,Gaming Headset,90,1,0.1,22.7,19.51
+ORD-10191,2023-08-15,2023-08-25,CID-1191,Consumer,United Kingdom,London,Furniture,Chairs,Gaming Chair,500,2,0.1,41.39,18.28
+ORD-10191,2023-08-15,2023-08-25,CID-1191,Consumer,United Kingdom,London,Technology,Accessories,Mechanical Keyboard,360,3,0.1,52.38,8.98
+ORD-10191,2023-08-15,2023-08-25,CID-1191,Consumer,United Kingdom,London,Technology,Accessories,Gaming Headset,90,1,0.1,9.25,6.62
+ORD-10192,2023-01-02,2023-01-03,CID-1192,Corporate,United Kingdom,Manchester,Furniture,Tables,Standing Desk,800,2,0.2,88.2,10.63
+ORD-10193,2024-05-05,2024-05-15,CID-1193,Home Office,Canada,Toronto,Technology,Laptops,Dell XPS 15,1500,1,0.1,74.28,8.92
+ORD-10193,2024-05-05,2024-05-15,CID-1193,Home Office,Canada,Toronto,Technology,Accessories,27in 4K Monitor,600,2,0,163.19,7.41
+ORD-10193,2024-05-05,2024-05-15,CID-1193,Home Office,Canada,Toronto,Technology,Accessories,Wireless Mouse,50,1,0.1,8.93,14.2
+ORD-10194,2024-05-09,2024-05-10,CID-1194,Corporate,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,15,1,0,1.99,19.62
+ORD-10194,2024-05-09,2024-05-10,CID-1194,Corporate,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.1,4.65,9.46
+ORD-10194,2024-05-09,2024-05-10,CID-1194,Corporate,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,24,2,0.2,1.7,10.41
+ORD-10195,2024-03-13,2024-03-15,CID-1195,Corporate,Canada,Vancouver,Technology,Laptops,Dell XPS 15,1500,1,0.1,397.26,12.1
+ORD-10195,2024-03-13,2024-03-15,CID-1195,Corporate,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,600,2,0.2,82.69,14.92
+ORD-10195,2024-03-13,2024-03-15,CID-1195,Corporate,Canada,Vancouver,Technology,Accessories,Wireless Mouse,150,3,0.2,11.55,18.28
+ORD-10196,2024-01-14,2024-01-17,CID-1196,Corporate,United States,Los Angeles,Furniture,Chairs,Gaming Chair,500,2,0,43.89,15.45
+ORD-10196,2024-01-14,2024-01-17,CID-1196,Corporate,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,360,3,0.1,81.66,11.21
+ORD-10196,2024-01-14,2024-01-17,CID-1196,Corporate,United States,Los Angeles,Technology,Accessories,Gaming Headset,90,1,0,23.42,17.28
+ORD-10197,2024-03-04,2024-03-13,CID-1197,Home Office,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,45,3,0,7.9,18.51
+ORD-10197,2024-03-04,2024-03-13,CID-1197,Home Office,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,1.92,16.36
+ORD-10197,2024-03-04,2024-03-13,CID-1197,Home Office,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,12,1,0,3.03,6.89
+ORD-10198,2024-03-09,2024-03-11,CID-1198,Home Office,United Kingdom,London,Furniture,Tables,Standing Desk,1200,3,0.1,140.33,15.91
+ORD-10199,2023-03-10,2023-03-12,CID-1199,Corporate,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,45,3,0.2,10.05,5.19
+ORD-10199,2023-03-10,2023-03-12,CID-1199,Corporate,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,1.5,7.24
+ORD-10199,2023-03-10,2023-03-12,CID-1199,Corporate,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,36,3,0,10.12,13.44
+ORD-10200,2023-04-14,2023-04-19,CID-1200,Home Office,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0.2,35.62,9.13
+ORD-10200,2023-04-14,2023-04-19,CID-1200,Home Office,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,360,3,0.2,17.19,18.34
+ORD-10200,2023-04-14,2023-04-19,CID-1200,Home Office,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,90,1,0,21.28,18.81
+ORD-10201,2024-01-17,2024-01-18,CID-1201,Corporate,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0,219.84,8.42
+ORD-10201,2024-01-17,2024-01-18,CID-1201,Corporate,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,360,3,0.2,70.13,9.81
+ORD-10201,2024-01-17,2024-01-18,CID-1201,Corporate,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,270,3,0,26.19,8.17
+ORD-10202,2024-02-21,2024-02-29,CID-1202,Home Office,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,30,2,0.2,2.01,17.77
+ORD-10202,2024-02-21,2024-02-29,CID-1202,Home Office,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,8,1,0,0.79,17.49
+ORD-10202,2024-02-21,2024-02-29,CID-1202,Home Office,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,12,1,0,1.97,18.77
+ORD-10203,2024-12-22,2024-12-26,CID-1203,Corporate,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,15,1,0,1.66,12.33
+ORD-10203,2024-12-22,2024-12-26,CID-1203,Corporate,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,1.96,17.56
+ORD-10203,2024-12-22,2024-12-26,CID-1203,Corporate,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,36,3,0,4.37,10.8
+ORD-10204,2023-06-16,2023-06-26,CID-1204,Consumer,United States,New York,Office Supplies,Paper,Copy Paper A4,30,2,0,7.98,19.51
+ORD-10204,2023-06-16,2023-06-26,CID-1204,Consumer,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,3.39,14.02
+ORD-10204,2023-06-16,2023-06-26,CID-1204,Consumer,United States,New York,Office Supplies,Binders,3-Ring Binder,24,2,0.1,4.93,15.64
+ORD-10205,2023-10-09,2023-10-16,CID-1205,Corporate,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0.2,117.67,5.11
+ORD-10206,2024-01-19,2024-01-28,CID-1206,Home Office,Canada,Vancouver,Furniture,Chairs,Gaming Chair,250,1,0.1,66.85,14.61
+ORD-10206,2024-01-19,2024-01-28,CID-1206,Home Office,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,240,2,0.1,20.97,12.76
+ORD-10206,2024-01-19,2024-01-28,CID-1206,Home Office,Canada,Vancouver,Technology,Accessories,Gaming Headset,90,1,0.2,15.49,15.21
+ORD-10207,2023-01-27,2023-02-04,CID-1207,Corporate,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,750,3,0,101.84,15.7
+ORD-10207,2023-01-27,2023-02-04,CID-1207,Corporate,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,360,3,0.2,79.67,15.08
+ORD-10207,2023-01-27,2023-02-04,CID-1207,Corporate,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,90,1,0,11.11,12.06
+ORD-10208,2023-09-22,2023-10-01,CID-1208,Consumer,Canada,Vancouver,Office Supplies,Paper,Copy Paper A4,15,1,0.1,2.09,18.3
+ORD-10208,2023-09-22,2023-10-01,CID-1208,Consumer,Canada,Vancouver,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.1,3.58,6.77
+ORD-10208,2023-09-22,2023-10-01,CID-1208,Consumer,Canada,Vancouver,Office Supplies,Binders,3-Ring Binder,36,3,0,6.05,7.92
+ORD-10209,2023-05-03,2023-05-10,CID-1209,Home Office,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,1500,1,0,203.5,19.81
+ORD-10209,2023-05-03,2023-05-10,CID-1209,Home Office,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,600,2,0,77.46,15.74
+ORD-10209,2023-05-03,2023-05-10,CID-1209,Home Office,United Kingdom,Manchester,Technology,Accessories,Wireless Mouse,100,2,0.1,18.7,7.65
+ORD-10210,2024-10-11,2024-10-12,CID-1210,Consumer,United Kingdom,Manchester,Technology,Laptops,Dell XPS 15,4500,3,0,775.77,16.45
+ORD-10210,2024-10-11,2024-10-12,CID-1210,Consumer,United Kingdom,Manchester,Technology,Accessories,27in 4K Monitor,900,3,0.2,150.03,11.05
+ORD-10212,2023-11-26,2023-12-05,CID-1212,Consumer,United States,New York,Office Supplies,Paper,Copy Paper A4,45,3,0.1,5.18,6.54
+ORD-10212,2023-11-26,2023-12-05,CID-1212,Consumer,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,1.06,5.69
+ORD-10213,2024-04-11,2024-04-20,CID-1213,Home Office,Canada,Vancouver,Furniture,Chairs,Gaming Chair,250,1,0.1,67.28,12.35
+ORD-10213,2024-04-11,2024-04-20,CID-1213,Home Office,Canada,Vancouver,Technology,Accessories,Mechanical Keyboard,120,1,0.2,5.26,8.36
+ORD-10214,2023-08-05,2023-08-06,CID-1214,Home Office,Canada,Toronto,Technology,Laptops,Dell XPS 15,1500,1,0.2,322.96,8.84
+ORD-10214,2023-08-05,2023-08-06,CID-1214,Home Office,Canada,Toronto,Technology,Accessories,27in 4K Monitor,300,1,0,64.65,14.8
+ORD-10214,2023-08-05,2023-08-06,CID-1214,Home Office,Canada,Toronto,Technology,Accessories,Wireless Mouse,150,3,0,23.13,10.7
+ORD-10215,2024-07-14,2024-07-19,CID-1215,Corporate,Canada,Toronto,Technology,Laptops,Dell XPS 15,1500,1,0.1,209.54,6.51
+ORD-10215,2024-07-14,2024-07-19,CID-1215,Corporate,Canada,Toronto,Technology,Accessories,27in 4K Monitor,900,3,0,139.24,18.48
+ORD-10215,2024-07-14,2024-07-19,CID-1215,Corporate,Canada,Toronto,Technology,Accessories,Wireless Mouse,150,3,0,18.1,16.77
+ORD-10217,2024-01-02,2024-01-09,CID-1217,Corporate,United States,New York,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0.1,1.56,5.19
+ORD-10217,2024-01-02,2024-01-09,CID-1217,Corporate,United States,New York,Office Supplies,Binders,3-Ring Binder,12,1,0.2,0.84,6.35
+ORD-10218,2024-06-07,2024-06-09,CID-1218,Home Office,Canada,Toronto,Furniture,Tables,Standing Desk,800,2,0.1,83.54,5.75
+ORD-10219,2023-06-28,2023-06-29,CID-1219,Corporate,United Kingdom,Manchester,Furniture,Chairs,Gaming Chair,250,1,0,65.75,14.95
+ORD-10219,2023-06-28,2023-06-29,CID-1219,Corporate,United Kingdom,Manchester,Technology,Accessories,Mechanical Keyboard,240,2,0.2,55.44,9.02
+ORD-10219,2023-06-28,2023-06-29,CID-1219,Corporate,United Kingdom,Manchester,Technology,Accessories,Gaming Headset,180,2,0.1,15.51,11.01
+ORD-10220,2024-04-12,2024-04-17,CID-1220,Corporate,Canada,Vancouver,Technology,Phones,iPhone 15,1000,1,0,83.13,15.9
+ORD-10221,2023-06-13,2023-06-15,CID-1221,Corporate,Canada,Vancouver,Technology,Phones,iPhone 15,1000,1,0.2,195.83,14.17
+ORD-10222,2024-12-01,2024-12-04,CID-1222,Corporate,United Kingdom,London,Furniture,Tables,Standing Desk,400,1,0.1,76.95,5.19
+ORD-10223,2024-11-25,2024-12-04,CID-1223,Home Office,Canada,Toronto,Furniture,Tables,Standing Desk,800,2,0,126.57,15.9
+ORD-10224,2024-05-08,2024-05-14,CID-1224,Home Office,Canada,Vancouver,Technology,Laptops,Dell XPS 15,4500,3,0,238.1,19.02
+ORD-10224,2024-05-08,2024-05-14,CID-1224,Home Office,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,600,2,0.2,128.33,6.12
+ORD-10224,2024-05-08,2024-05-14,CID-1224,Home Office,Canada,Vancouver,Technology,Accessories,Wireless Mouse,50,1,0.1,13.16,5.76
+ORD-10225,2023-08-17,2023-08-26,CID-1225,Home Office,United Kingdom,Manchester,Technology,Phones,iPhone 15,2000,2,0.2,115.21,12.48
+ORD-10226,2023-11-20,2023-11-22,CID-1226,Corporate,Canada,Toronto,Technology,Laptops,Dell XPS 15,4500,3,0,1154.15,16.88
+ORD-10226,2023-11-20,2023-11-22,CID-1226,Corporate,Canada,Toronto,Technology,Accessories,Wireless Mouse,150,3,0,32.05,11.84
+ORD-10227,2023-12-16,2023-12-22,CID-1227,Consumer,United States,Los Angeles,Furniture,Chairs,Gaming Chair,750,3,0.2,137.5,10.45
+ORD-10227,2023-12-16,2023-12-22,CID-1227,Consumer,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,120,1,0,6.07,10.33
+ORD-10227,2023-12-16,2023-12-22,CID-1227,Consumer,United States,Los Angeles,Technology,Accessories,Gaming Headset,180,2,0.1,36.53,5.69
+ORD-10228,2023-06-18,2023-06-26,CID-1228,Consumer,Canada,Vancouver,Technology,Laptops,Dell XPS 15,1500,1,0,423.83,10.89
+ORD-10228,2023-06-18,2023-06-26,CID-1228,Consumer,Canada,Vancouver,Technology,Accessories,27in 4K Monitor,300,1,0.1,20.77,11.22
+ORD-10229,2024-11-19,2024-11-29,CID-1229,Consumer,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,2.92,5.73
+ORD-10230,2024-08-22,2024-08-30,CID-1230,Home Office,United States,New York,Technology,Phones,iPhone 15,2000,2,0.1,316.85,10.77
+ORD-10231,2024-09-15,2024-09-19,CID-1231,Corporate,United Kingdom,Manchester,Furniture,Tables,Standing Desk,400,1,0,61.27,15.5
+ORD-10233,2024-10-09,2024-10-13,CID-1233,Consumer,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,4.22,15.41
+ORD-10233,2024-10-09,2024-10-13,CID-1233,Consumer,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,12,1,0.1,2.06,13.74
+ORD-10234,2024-11-14,2024-11-21,CID-1234,Home Office,Canada,Vancouver,Furniture,Tables,Standing Desk,400,1,0,22.53,7.18
+ORD-10235,2024-11-17,2024-11-18,CID-1235,Consumer,United Kingdom,London,Furniture,Tables,Standing Desk,400,1,0,89.06,9.43
+ORD-10236,2024-07-08,2024-07-09,CID-1236,Corporate,United Kingdom,London,Office Supplies,Paper,Copy Paper A4,45,3,0,10.6,13.42
+ORD-10236,2024-07-08,2024-07-09,CID-1236,Corporate,United Kingdom,London,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.1,4.82,5.7
+ORD-10236,2024-07-08,2024-07-09,CID-1236,Corporate,United Kingdom,London,Office Supplies,Binders,3-Ring Binder,24,2,0.1,6.3,5.81
+ORD-10237,2023-09-15,2023-09-19,CID-1237,Home Office,United Kingdom,London,Furniture,Tables,Standing Desk,1200,3,0.1,257.88,13.2
+ORD-10238,2024-09-09,2024-09-13,CID-1238,Home Office,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,120,1,0,17.32,11.43
+ORD-10238,2024-09-09,2024-09-13,CID-1238,Home Office,United States,Los Angeles,Technology,Accessories,Gaming Headset,90,1,0,17.64,8.83
+ORD-10239,2023-12-05,2023-12-13,CID-1239,Home Office,United States,New York,Technology,Laptops,Dell XPS 15,1500,1,0.1,233.06,13.59
+ORD-10239,2023-12-05,2023-12-13,CID-1239,Home Office,United States,New York,Technology,Accessories,27in 4K Monitor,900,3,0.1,146.89,19.35
+ORD-10239,2023-12-05,2023-12-13,CID-1239,Home Office,United States,New York,Technology,Accessories,Wireless Mouse,150,3,0,23.1,13.06
+ORD-10240,2023-04-05,2023-04-11,CID-1240,Consumer,United States,Los Angeles,Furniture,Chairs,Gaming Chair,750,3,0.2,179.49,17.36
+ORD-10240,2023-04-05,2023-04-11,CID-1240,Consumer,United States,Los Angeles,Technology,Accessories,Gaming Headset,270,3,0.1,39.22,18.57
+ORD-10241,2024-09-20,2024-09-30,CID-1241,Consumer,United States,Los Angeles,Furniture,Chairs,Gaming Chair,250,1,0.2,22.83,15.86
+ORD-10241,2024-09-20,2024-09-30,CID-1241,Consumer,United States,Los Angeles,Technology,Accessories,Mechanical Keyboard,360,3,0.1,57.86,12.63
+ORD-10241,2024-09-20,2024-09-30,CID-1241,Consumer,United States,Los Angeles,Technology,Accessories,Gaming Headset,180,2,0,23.41,6.24
+ORD-10242,2023-04-09,2023-04-12,CID-1242,Home Office,Canada,Toronto,Office Supplies,Paper,Copy Paper A4,45,3,0,11.98,11.36
+ORD-10242,2023-04-09,2023-04-12,CID-1242,Home Office,Canada,Toronto,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0.2,4.06,19.1
+ORD-10242,2023-04-09,2023-04-12,CID-1242,Home Office,Canada,Toronto,Office Supplies,Binders,3-Ring Binder,12,1,0,1.98,9.98
+ORD-10243,2023-03-31,2023-04-02,CID-1243,Consumer,United States,Los Angeles,Office Supplies,Paper,Copy Paper A4,15,1,0.1,2.05,11.77
+ORD-10243,2023-03-31,2023-04-02,CID-1243,Consumer,United States,Los Angeles,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,2.36,6.77
+ORD-10243,2023-03-31,2023-04-02,CID-1243,Consumer,United States,Los Angeles,Office Supplies,Binders,3-Ring Binder,36,3,0,8.6,13.78
+ORD-10244,2024-12-18,2024-12-20,CID-1244,Corporate,Canada,Toronto,Furniture,Chairs,Gaming Chair,750,3,0,90.28,18.9
+ORD-10244,2024-12-18,2024-12-20,CID-1244,Corporate,Canada,Toronto,Technology,Accessories,Mechanical Keyboard,360,3,0,60.66,13.0
+ORD-10244,2024-12-18,2024-12-20,CID-1244,Corporate,Canada,Toronto,Technology,Accessories,Gaming Headset,180,2,0.1,46.99,7.16
+ORD-10245,2024-11-24,2024-11-30,CID-1245,Consumer,Canada,Toronto,Technology,Laptops,Dell XPS 15,4500,3,0.2,663.44,19.2
+ORD-10245,2024-11-24,2024-11-30,CID-1245,Consumer,Canada,Toronto,Technology,Accessories,27in 4K Monitor,900,3,0.1,83.38,18.58
+ORD-10245,2024-11-24,2024-11-30,CID-1245,Consumer,Canada,Toronto,Technology,Accessories,Wireless Mouse,50,1,0,4.8,14.25
+ORD-10247,2024-07-16,2024-07-24,CID-1247,Home Office,Canada,Toronto,Furniture,Chairs,Gaming Chair,250,1,0,57.85,12.31
+ORD-10247,2024-07-16,2024-07-24,CID-1247,Home Office,Canada,Toronto,Technology,Accessories,Mechanical Keyboard,120,1,0,9.0,14.29
+ORD-10248,2023-11-22,2023-11-30,CID-1248,Corporate,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,45,3,0.1,10.2,19.38
+ORD-10248,2023-11-22,2023-11-30,CID-1248,Corporate,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,16,2,0,3.94,15.68
+ORD-10248,2023-11-22,2023-11-30,CID-1248,Corporate,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,24,2,0.1,1.81,15.99
+ORD-10249,2024-05-06,2024-05-14,CID-1249,Corporate,United Kingdom,Manchester,Office Supplies,Paper,Copy Paper A4,45,3,0,11.72,17.88
+ORD-10249,2024-05-06,2024-05-14,CID-1249,Corporate,United Kingdom,Manchester,Office Supplies,Art Supplies,Ballpoint Pens,24,3,0,2.78,18.3
+ORD-10249,2024-05-06,2024-05-14,CID-1249,Corporate,United Kingdom,Manchester,Office Supplies,Binders,3-Ring Binder,12,1,0,3.15,14.47
