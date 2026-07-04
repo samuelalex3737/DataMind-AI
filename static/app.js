@@ -229,8 +229,10 @@ window.startAnalysis = async function(datasetInfo) {
     document.getElementById('mobile-nav').style.display = 'flex';
   }
   
-  // Clear chat history when a new dataset is loaded — DataMind must never bleed context
+  // Clear chat history and init context when a new dataset is loaded
   window.chatHistory = [];
+  window.appContext = { charts: [], insights: '', recommendations: '', forecast: '' };
+  
   const msgBox = document.getElementById('dm-messages');
   if (msgBox) {
     msgBox.innerHTML = '';
@@ -736,6 +738,16 @@ async function generateChartInsight(chart, chartDivId) {
     if (!response.ok) throw new Error('API failed');
     const data = await response.json();
     box.innerHTML = `<p style="margin:0; font-size: 0.9rem; color: var(--text); line-height: 1.5;"><strong>Insight:</strong> ${data.response}</p>`;
+    
+    // Store in appContext for AI chatbot
+    window.appContext = window.appContext || { charts: [] };
+    if (!window.appContext.charts) window.appContext.charts = [];
+    window.appContext.charts.push({
+      title: chart.title,
+      type: chart.chart_type,
+      top_values: condensedData,
+      insight: data.response
+    });
   } catch (err) {
     let fallbackText = "This chart visualises key patterns in the dataset. ";
     try {
@@ -1036,6 +1048,7 @@ async function loadForecast() {
   if (insightDiv) {
     insightDiv.style.display = 'flex';
     insightDiv.querySelector('span').textContent = commentary;
+    if (window.appContext) window.appContext.forecast = commentary;
   }
 }
 
@@ -1069,6 +1082,7 @@ async function loadInsights(retryCount = 0) {
       });
       html += `</ul>`;
       panel.innerHTML = html;
+      if (window.appContext) window.appContext.insights = data.response;
       return;
     }
     throw new Error('No response content');
@@ -1190,10 +1204,14 @@ async function loadInsights(retryCount = 0) {
       window.chatHistory = window.chatHistory || [];
       window.chatHistory.push({ role: 'user', content: text });
       
+      // Inject appContext into the dataset_summary payload
+      let enrichedSummary = DataEngine.eda_results || {};
+      enrichedSummary.appContext = window.appContext || {};
+
       const res = await fetch(`/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: window.chatHistory, dataset_summary: DataEngine.eda_results })
+        body: JSON.stringify({ messages: window.chatHistory, dataset_summary: enrichedSummary })
       });
       const data = await res.json();
       
@@ -1286,7 +1304,7 @@ async function runWhatIf() {
     resultDiv.innerHTML = `
       <strong>${targetCol}</strong>: ${orig} → <span style="color:${color};font-weight:700">${proj}</span>
       <span style="color:${color};font-size:0.85rem;margin-left:8px">${arrow} ${diffPct}%</span>
-      <span style="color:var(--text-muted);font-size:0.8rem;margin-left:8px">(r=${pearson.toFixed(2)})</span>
+      <span style="color:${color};font-size:0.8rem;margin-left:8px">(r=${pearson.toFixed(2)})</span>
       <div id="whatif-ai-commentary" style="margin-top: 12px; font-size: 0.9rem; padding-left: 12px; border-left: 2px solid var(--primary);">
          <span class="skeleton-text" style="width:100%"></span>
       </div>
@@ -1335,10 +1353,15 @@ async function runWhatIf() {
       const commBox = document.getElementById('whatif-ai-commentary');
       if (commBox && data.response) {
         commBox.innerHTML = `<strong>AI Insight:</strong> ${data.response}`;
+        if (window.appContext) window.appContext.whatif = data.response;
       }
     }).catch(e => {
        const commBox = document.getElementById('whatif-ai-commentary');
-       if (commBox) commBox.innerHTML = `<strong>Insight:</strong> Adjusting ${adjustCol} drives a ${diffPct}% shift in ${targetCol} due to their correlation.`;
+       if (commBox) {
+         let fb = `Adjusting ${adjustCol} drives a ${diffPct}% shift in ${targetCol} due to their correlation.`;
+         commBox.innerHTML = `<strong>Insight:</strong> ${fb}`;
+         if (window.appContext) window.appContext.whatif = fb;
+       }
     });
 
   } catch (e) {
@@ -1610,6 +1633,7 @@ async function loadRecommendations() {
       });
       html += `</ul>`;
       panel.innerHTML = html;
+      if (window.appContext) window.appContext.recommendations = data.response;
     } else {
       panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p style="color: var(--text-dim); padding: 12px;">Recommendations could not be generated.</p>`;
     }
