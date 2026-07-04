@@ -1367,7 +1367,25 @@ async function setupWhatIf() {
     section.classList.add('hidden');
     return;
   }
+  let bestTarget = numCols[0];
+  let bestAdjust = numCols[1];
+  let bestCorr = 0;
   
+  let df = DataEngine.clean_data;
+  // Try to find a pair with highest correlation
+  outer: for(let i=0; i<numCols.length; i++) {
+     for(let j=0; j<numCols.length; j++) {
+        if (i===j) continue;
+        let p = Math.abs(ChartsEngine.pearson(ChartsEngine.numVals(df, numCols[i]), ChartsEngine.numVals(df, numCols[j])));
+        if (p > bestCorr) {
+           bestCorr = p;
+           bestTarget = numCols[i];
+           bestAdjust = numCols[j];
+        }
+        if (bestCorr > 0.5) break outer;
+     }
+  }
+
   section.classList.remove('hidden');
   
   const targetSelect = $('#whatif-target');
@@ -1376,11 +1394,11 @@ async function setupWhatIf() {
   let options = numCols.map(c => `<option value="${c}">${c}</option>`).join('');
   if (targetSelect) {
      targetSelect.innerHTML = options;
-     targetSelect.value = numCols[0];
+     targetSelect.value = bestTarget;
   }
   if (adjustSelect) {
      adjustSelect.innerHTML = options;
-     adjustSelect.value = numCols[1];
+     adjustSelect.value = bestAdjust;
   }
 }
 
@@ -1419,10 +1437,9 @@ async function runWhatIf() {
 
     let pearson = ChartsEngine.pearson(targetVals, adjustVals);
 
+    let warningHtml = '';
     if (Math.abs(pearson) < 0.05) {
-      resultDiv.innerHTML = `<span style="color:var(--warning)"><strong>Low Correlation:</strong> These columns have no meaningful relationship (r=${pearson.toFixed(2)}). Adjusting <em>${adjustCol}</em> is unlikely to predictably impact <em>${targetCol}</em>.</span>`;
-      if (document.getElementById('whatif-plotly')) document.getElementById('whatif-plotly').style.display = 'none';
-      return;
+      warningHtml = `<div style="color:var(--warning);font-size:0.85rem;margin-bottom:8px;"><strong>Low Correlation:</strong> These columns have no meaningful relationship (r=${pearson.toFixed(2)}). Adjusting <em>${adjustCol}</em> is unlikely to predictably impact <em>${targetCol}</em>.</div>`;
     }
 
     let origSum = targetVals.reduce((a, b) => a + b, 0);
@@ -1434,13 +1451,14 @@ async function runWhatIf() {
     const diff = projectedSum - origSum;
     const diffPct = origSum ? ((diff / origSum) * 100).toFixed(1) : 0;
     const arrow = diff >= 0 ? '↑' : '↓';
-    const color = diff >= 0 ? 'var(--success)' : 'var(--danger)';
+    const color = diff >= 0 ? 'var(--success)' : (diff < 0 ? 'var(--danger)' : 'var(--text)');
 
     _whatifContext = { adjustCol, adjustPct, targetCol, orig, proj, diffPct, pearson };
 
     resultDiv.innerHTML = `
+      ${warningHtml}
       <strong>${targetCol}</strong>: ${orig} → <span style="color:${color};font-weight:700">${proj}</span>
-      <span style="color:${color};font-size:0.85rem;margin-left:8px">${arrow} ${diffPct}%</span>
+      <span style="color:${color};font-size:0.85rem;margin-left:8px">${arrow} ${Math.abs(diffPct).toFixed(1)}%</span>
       <span style="color:${color};font-size:0.8rem;margin-left:8px">(r=${pearson.toFixed(2)})</span>
       <div id="whatif-ai-commentary" style="margin-top: 12px; font-size: 0.9rem; padding-left: 12px; border-left: 2px solid var(--primary);">
          <span style="color:var(--text-dim);font-style:italic">Click "Run Scenario" for AI analysis.</span>
