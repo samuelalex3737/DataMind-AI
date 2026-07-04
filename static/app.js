@@ -755,7 +755,182 @@ async function loadKPIs() {
 
 async function loadForecast() {
   const panel = $('#forecast-panel');
-  if (panel) panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div><p style="color:var(--text-dim);padding:20px;">Time-series forecasting is only available in the advanced Python backend.</p>`;
+  if (!panel) return;
+  const df = DataEngine.clean_data;
+  const dtypes = DataEngine.dtypes;
+  
+  let dateCols = Object.keys(dtypes).filter(c => dtypes[c] === 'datetime');
+  let numCols = Object.keys(dtypes).filter(c => dtypes[c] === 'numeric');
+  
+  if (dateCols.length === 0 || numCols.length === 0 || df.length < 10) {
+    panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div><p style="color:var(--text-dim);padding:20px;">Not enough time-series data to generate a forecast.</p>`;
+    return;
+  }
+  
+  const dateCol = dateCols[0];
+  const numCol = numCols[0];
+  
+  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div><p style="color:var(--text-dim);padding:10px 20px;">Generating projection...</p>`;
+
+  // 1. Aggregate by month
+  let monthly = {};
+  df.forEach(row => {
+    let dateStr = String(row[dateCol]);
+    let dateObj = new Date(dateStr);
+    if (isNaN(dateObj)) return;
+    let monthKey = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`;
+    let val = Number(row[numCol]);
+    if (!isNaN(val)) {
+      if (!monthly[monthKey]) monthly[monthKey] = 0;
+      monthly[monthKey] += val;
+    }
+  });
+
+  let sortedMonths = Object.keys(monthly).sort();
+  if (sortedMonths.length < 3) {
+    panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div><p style="color:var(--text-dim);padding:20px;">Need at least 3 months of data to forecast.</p>`;
+    return;
+  }
+
+  // 2. Linear Regression over last 12 months
+  let recentMonths = sortedMonths.slice(-12);
+  let xSum = 0, ySum = 0, xxSum = 0, xySum = 0;
+  let n = recentMonths.length;
+  
+  recentMonths.forEach((m, i) => {
+    let x = i;
+    let y = monthly[m];
+    xSum += x;
+    ySum += y;
+    xxSum += x * x;
+    xySum += x * y;
+  });
+  
+  let slope = (n * xySum - xSum * ySum) / (n * xxSum - xSum * xSum);
+  let intercept = (ySum - slope * xSum) / n;
+
+  // 3. Project next 6 months
+  let lastDateStr = sortedMonths[sortedMonths.length - 1];
+  let [lastYear, lastMonth] = lastDateStr.split('-').map(Number);
+  
+  let forecastDates = [];
+  let forecastValues = [];
+  let lowerBound = [];
+  let upperBound = [];
+  
+  for (let i = 1; i <= 6; i++) {
+    lastMonth++;
+    if (lastMonth > 12) {
+      lastMonth = 1;
+      lastYear++;
+    }
+    let mKey = `${lastYear}-${String(lastMonth).padStart(2, '0')}`;
+    forecastDates.push(mKey);
+    
+    let projectedY = intercept + slope * (n - 1 + i);
+    let prevYearMKey = `${lastYear - 1}-${String(lastMonth).padStart(2, '0')}`;
+    if (monthly[prevYearMKey]) {
+      let prevYrAvg = ySum / n;
+      let ratio = monthly[prevYearMKey] / prevYrAvg;
+      ratio = 1 + ((ratio - 1) * 0.5); 
+      projectedY *= ratio;
+    }
+    
+    projectedY = Math.max(0, projectedY);
+    
+    forecastValues.push(projectedY);
+    lowerBound.push(projectedY * 0.85); // -15% CI
+    upperBound.push(projectedY * 1.15); // +15% CI
+  }
+
+  // 4. Render chart
+  let traceActual = {
+    x: sortedMonths,
+    y: sortedMonths.map(m => monthly[m]),
+    name: 'Actual',
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: '#00d2ff', width: 3 },
+    marker: { size: 6 }
+  };
+  
+  let combinedForecastX = [sortedMonths[sortedMonths.length - 1], ...forecastDates];
+  let combinedForecastY = [monthly[sortedMonths[sortedMonths.length - 1]], ...forecastValues];
+  let combinedLower = [monthly[sortedMonths[sortedMonths.length - 1]], ...lowerBound];
+  let combinedUpper = [monthly[sortedMonths[sortedMonths.length - 1]], ...upperBound];
+  
+  let traceForecast = {
+    x: combinedForecastX,
+    y: combinedForecastY,
+    name: 'Forecast',
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: '#ff3366', width: 3, dash: 'dash' },
+    marker: { size: 6 }
+  };
+  
+  let traceUpper = {
+    x: combinedForecastX,
+    y: combinedUpper,
+    type: 'scatter',
+    mode: 'lines',
+    line: { width: 0 },
+    showlegend: false,
+    hoverinfo: 'skip'
+  };
+  
+  let traceLower = {
+    x: combinedForecastX,
+    y: combinedLower,
+    type: 'scatter',
+    mode: 'lines',
+    fill: 'tonexty',
+    fillcolor: 'rgba(255, 51, 102, 0.2)',
+    line: { width: 0 },
+    name: '95% Confidence',
+    hoverinfo: 'skip'
+  };
+
+  let layout = {
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent',
+    font: { color: 'var(--text-dim)' },
+    title: { text: `6-Month Forecast: ${numCol}`, font: { color: 'var(--text)', size: 16 } },
+    xaxis: { gridcolor: 'var(--border)', title: 'Month' },
+    yaxis: { gridcolor: 'var(--border)', title: numCol },
+    margin: { l: 50, r: 20, t: 40, b: 40 },
+    legend: { orientation: 'h', y: -0.2 }
+  };
+
+  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Forecast</h2></div>
+    <div id="forecast-plotly" style="width:100%;height:350px;"></div>
+    <div id="forecast-insight" class="insight-item" style="margin-top:15px;display:none;"><span></span></div>`;
+
+  Plotly.newPlot('forecast-plotly', [traceUpper, traceLower, traceActual, traceForecast], layout, { responsive: true, displaylogo: false });
+
+  // 5. Generate commentary
+  let trend = slope > 0 ? "projected to grow" : "projected to decline";
+  let percentChange = (slope / (ySum / n)) * 100 * 6; // rough 6-mo % change
+  let commentary = `Based on historical trends, ${numCol} is ${trend} over the next 6 months, accounting for recent momentum.`;
+  
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        messages: [{role: 'user', content: `Generate a single short sentence explaining this forecast projection: The target metric ${numCol} has a historical 6-month slope of ${slope.toFixed(2)}, projecting a ${percentChange.toFixed(1)}% change over the next 6 months.`}], 
+        dataset_summary: DataEngine.eda_results 
+      })
+    });
+    const data = await res.json();
+    if (data.response) commentary = data.response;
+  } catch(e) {}
+  
+  const insightDiv = document.getElementById('forecast-insight');
+  if (insightDiv) {
+    insightDiv.style.display = 'flex';
+    insightDiv.querySelector('span').textContent = commentary;
+  }
 }
 
 // ===== INSIGHTS =====
@@ -1020,7 +1195,15 @@ async function exportData(format = 'csv') {
     let filename = '';
     let type = '';
 
-    if (format === 'csv' || format === 'excel') {
+    if (format === 'excel') {
+      const ws = XLSX.utils.json_to_sheet(DataEngine.clean_data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'DataMind Export');
+      const safeName = (DataEngine.datasetName || 'export').replace(/\s+/g, '_');
+      XLSX.writeFile(wb, `datamind_${safeName}.xlsx`);
+      showToast('Excel file downloaded!', 'success');
+      return;
+    } else if (format === 'csv') {
       content = Papa.unparse(DataEngine.clean_data);
       filename = 'datamind_cleaned.csv';
       type = 'text/csv;charset=utf-8;';
@@ -1046,8 +1229,20 @@ async function exportData(format = 'csv') {
   }
 }
 
+window.toggleTheme = function(newTheme) {
+  if (!newTheme) {
+    const current = document.body.getAttribute('data-theme') || 'dark';
+    newTheme = current === 'dark' ? 'light' : 'dark';
+  }
+  document.body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('datamind-theme', newTheme);
+};
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('datamind-theme') || 'dark';
+  document.body.setAttribute('data-theme', savedTheme);
+  
   initUpload();
   initChat();
   initResize();
