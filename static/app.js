@@ -436,32 +436,45 @@ async function loadCharts(customData = null) {
     let catCols  = allCols.filter(c => DataEngine.dtypes[c] === 'object');
     let dateCols = allCols.filter(c => DataEngine.dtypes[c] === 'datetime');
 
-    // ── Detect ID-like columns (>80% unique values) ──
-    let idCols = [];
+    // ── Analyze Cardinality & Date Spans ──
+    let catUniques = {};
     let safeCatCols = [];
+    let idCols = [];
+    
     catCols.forEach(c => {
-      let seen = {};
-      let total = 0;
+      let seen = new Set();
       for (let i = 0; i < Math.min(df.length, 500); i++) {
         let v = df[i][c];
-        if (v !== null && v !== undefined && v !== '') {
-          seen[v] = true;
-          total++;
-        }
+        if (v !== null && v !== undefined && v !== '') seen.add(v);
       }
-      let uniq = Object.keys(seen).length;
-      if (total > 0 && uniq / total > 0.8) {
+      let uniq = seen.size;
+      catUniques[c] = uniq;
+      if (uniq > 0 && uniq / Math.min(df.length, 500) > 0.8) {
         idCols.push(c);
       } else {
         safeCatCols.push(c);
       }
     });
 
-    // Use idCols for customer/order ID analysis, safeCatCols for bar/pie
-    let custCol = idCols.length > 0 ? idCols[0] : null;
-    let productCol = safeCatCols.length > 0 ? safeCatCols[0] : null;
+    safeCatCols.sort((a, b) => catUniques[a] - catUniques[b]);
 
-    // Helper to push if not null with try/catch to prevent pipeline freezes
+    let custCol = idCols.length > 0 ? idCols[0] : null;
+    let productCol = safeCatCols.length > 0 ? safeCatCols[safeCatCols.length - 1] : null;
+
+    // ── Analyze Correlation ──
+    let highlyCorrelatedPairs = [];
+    if (numCols.length >= 2) {
+      for (let i = 0; i < numCols.length; i++) {
+        for (let j = i + 1; j < numCols.length; j++) {
+          let arr1 = ChartsEngine.numVals(df, numCols[i]);
+          let arr2 = ChartsEngine.numVals(df, numCols[j]);
+          let minLen = Math.min(arr1.length, arr2.length);
+          let pearson = ChartsEngine.pearson(arr1.slice(0, minLen), arr2.slice(0, minLen));
+          if (Math.abs(pearson) > 0.3) highlyCorrelatedPairs.push([numCols[i], numCols[j]]);
+        }
+      }
+    }
+
     function safeAdd(chartFunc) { 
       try {
         let result = chartFunc();
@@ -471,39 +484,38 @@ async function loadCharts(customData = null) {
       }
     }
 
-    // ── 1. For each (cat_col, num_col) pair: bar_chart, pie_chart ──
-    let catNumDone = 0;
-    for (let ci = 0; ci < safeCatCols.length && catNumDone < 3; ci++) {
-      for (let ni = 0; ni < numCols.length && catNumDone < 3; ni++) {
+    // 1. Bar Chart
+    for (let ci = 0; ci < Math.min(safeCatCols.length, 2); ci++) {
+      for (let ni = 0; ni < Math.min(numCols.length, 2); ni++) {
         safeAdd(() => ChartsEngine.barChart(df, safeCatCols[ci], numCols[ni]));
-        safeAdd(() => ChartsEngine.pieChart(df, safeCatCols[ci], numCols[ni]));
-        catNumDone++;
       }
     }
 
-    // ── 2. First (cat_col, num_col): doughnut, pareto, treemap ──
-    if (safeCatCols.length > 0 && numCols.length > 0) {
-      safeAdd(() => ChartsEngine.doughnutChart(df, safeCatCols[0], numCols[0]));
-      safeAdd(() => ChartsEngine.paretoChart(df, safeCatCols[0], numCols[0]));
-      safeAdd(() => ChartsEngine.treemapChart(df, safeCatCols[0], numCols[0]));
+    // 2. Pie / Doughnut Chart
+    let pieCat = safeCatCols.find(c => catUniques[c] >= 2 && catUniques[c] <= 7);
+    if (pieCat && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.doughnutChart(df, pieCat, numCols[0]));
     }
 
-    // ── 3. For each (date_col, num_col) pair: line_chart ──
-    let linesDone = 0;
-    for (let di = 0; di < dateCols.length && linesDone < 2; di++) {
-      for (let ni = 0; ni < numCols.length && linesDone < 3; ni++) {
-        safeAdd(() => ChartsEngine.lineChart(df, dateCols[di], numCols[ni]));
-        linesDone++;
-      }
+    // 3. Line Chart / Seasonal Heatmap
+    if (dateCols.length > 0 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.lineChart(df, dateCols[0], numCols[0]));
+      safeAdd(() => ChartsEngine.seasonalHeatmap(df, dateCols[0], numCols[0]));
     }
 
-    // ── 4. First (cat1, cat2, num_col): grouped_bar, stacked_bar ──
+    // 4. Grouped / Stacked Bar
     if (safeCatCols.length >= 2 && numCols.length > 0) {
       safeAdd(() => ChartsEngine.groupedBar(df, safeCatCols[0], safeCatCols[1], numCols[0]));
       safeAdd(() => ChartsEngine.stackedBar(df, safeCatCols[0], safeCatCols[1], numCols[0]));
     }
 
-    // ── 5. First (date_col, num1, num2): double_axis, waterfall ──
+    // 5. Pareto / Treemap
+    if (safeCatCols.length > 0 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.paretoChart(df, safeCatCols[0], numCols[0]));
+      safeAdd(() => ChartsEngine.treemapChart(df, safeCatCols[0], numCols[0]));
+    }
+
+    // 6. Double Axis / Waterfall
     if (dateCols.length > 0 && numCols.length >= 2) {
       safeAdd(() => ChartsEngine.doubleAxisChart(df, dateCols[0], numCols[0], numCols[1]));
     }
@@ -511,66 +523,42 @@ async function loadCharts(customData = null) {
       safeAdd(() => ChartsEngine.waterfallChart(df, dateCols[0], numCols[0]));
     }
 
-    // ── 6. First (cat_col, numCols list): radar ──
-    if (safeCatCols.length > 0 && numCols.length >= 3) {
-      safeAdd(() => ChartsEngine.radarChart(df, safeCatCols[0], numCols.slice(0, 6)));
-    }
-
-    // ── 7. First num_col: histogram ──
-    if (numCols.length > 0) {
-      safeAdd(() => ChartsEngine.histogram(df, numCols[0]));
-    }
-
-    // ── 8. All num_cols: box_plot, heatmap_corr ──
-    if (numCols.length > 0) {
-      safeAdd(() => ChartsEngine.boxPlot(df, numCols));
-    }
-    if (numCols.length >= 2) {
+    // 7. Heatmap Corr
+    if (numCols.length >= 2 && highlyCorrelatedPairs.length > 0) {
       safeAdd(() => ChartsEngine.heatmapCorr(df, numCols));
     }
 
-    // ── 9. First (num_col, cat_col): violin ──
-    if (numCols.length > 0 && safeCatCols.length > 0) {
-      safeAdd(() => ChartsEngine.violinPlot(df, numCols[0], safeCatCols[0]));
+    // 8. Scatter Chart
+    if (highlyCorrelatedPairs.length > 0) {
+      safeAdd(() => ChartsEngine.scatterChart(df, highlyCorrelatedPairs[0][0], highlyCorrelatedPairs[0][1]));
     }
 
-    // ── 10. First (date_col, num_col): seasonal_heatmap ──
-    if (dateCols.length > 0 && numCols.length > 0) {
-      safeAdd(() => ChartsEngine.seasonalHeatmap(df, dateCols[0], numCols[0]));
+    // 9. Histogram / Box Plot
+    if (numCols.length > 0) {
+      safeAdd(() => ChartsEngine.histogram(df, numCols[0]));
+      safeAdd(() => ChartsEngine.boxPlot(df, [numCols[0]]));
     }
 
-    // ── 11. Sunburst: first (parent_col, child_col, num_col) where 2 cat cols ──
+    // 10. Sunburst
     if (safeCatCols.length >= 2 && numCols.length > 0) {
       safeAdd(() => ChartsEngine.sunburstChart(df, safeCatCols[0], safeCatCols[1], numCols[0]));
     }
 
-    // ── 12. RFM: first (cust_col, date_col, value_col) ──
-    if (custCol && dateCols.length > 0 && numCols.length > 0) {
-      safeAdd(() => ChartsEngine.rfmChart(df, custCol, dateCols[0], numCols[0]));
-    } else if (safeCatCols.length > 0 && dateCols.length > 0 && numCols.length > 0) {
-      safeAdd(() => ChartsEngine.rfmChart(df, safeCatCols[0], dateCols[0], numCols[0]));
-    }
-
-    // ── 13. Market Basket: first (cust_col, product_col) ──
+    // 11. Market Basket
     if (custCol && productCol) {
       safeAdd(() => ChartsEngine.marketBasketChart(df, custCol, productCol));
     }
 
-    // ── 14. Cohort Retention: first (cust_col, date_col) ──
-    if (custCol && dateCols.length > 0) {
+    // 12. RFM / Cohort / BCG
+    if (custCol && dateCols.length > 0 && numCols.length > 0) {
+      safeAdd(() => ChartsEngine.rfmChart(df, custCol, dateCols[0], numCols[0]));
       safeAdd(() => ChartsEngine.cohortRetention(df, custCol, dateCols[0]));
     }
-
-    // ── 15. BCG Matrix: first (product_col, value_col, date_col) ──
-    if (productCol && numCols.length > 0 && dateCols.length > 0) {
+    if (productCol && dateCols.length > 0 && numCols.length > 0) {
       safeAdd(() => ChartsEngine.bcgMatrix(df, productCol, numCols[0], dateCols[0]));
     }
 
-    // ── 16. Scatter: first 2 num cols ──
-    if (numCols.length >= 2) {
-      safeAdd(() => ChartsEngine.scatterChart(df, numCols[0], numCols[1]));
-    }
-
+    charts = charts.slice(0, 15);
     renderCharts(charts);
   } catch (e) { console.error('Charts error:', e); showToast('Charts failed to load', 'error'); }
 }
@@ -583,11 +571,9 @@ function renderCharts(charts) {
     return;
   }
 
-  // Remove any existing search bar (prevents duplicates on re-render)
   const existingSearch = document.querySelector('.chart-search-bar');
   if (existingSearch) existingSearch.remove();
 
-  // Add search/filter bar above charts
   const searchBar = document.createElement('div');
   searchBar.className = 'chart-search-bar';
   searchBar.innerHTML = `
@@ -596,7 +582,7 @@ function renderCharts(charts) {
     <span class="chart-count" id="chart-count">${charts.length} charts</span>`;
   grid.parentNode.insertBefore(searchBar, grid);
 
-  window._allCharts = charts; // Store for filtering
+  window._allCharts = charts;
 
   charts.forEach((chart, i) => {
     const card = document.createElement('div');
@@ -622,6 +608,10 @@ function renderCharts(charts) {
           </div>
           <p class="chart-card-caption">${chart.caption || chart.description || ''}</p>
         </div>
+      </div>
+      <div class="chart-insight-box" id="insight-${chartDivId}" style="border-top: 1px solid var(--border); padding: 12px 16px; background: rgba(0, 229, 255, 0.03); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text" style="width: 60%"></div>
       </div>`;
     grid.appendChild(card);
 
@@ -630,22 +620,68 @@ function renderCharts(charts) {
         responsive: true, displayModeBar: true,
         modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d'],
         displaylogo: false,
-        toImageButtonOptions: {
-          format: 'png',
-          filename: chart.title || 'datamind_chart',
-          height: null,
-          width: null,
-          scale: 2
-        },
+        toImageButtonOptions: { format: 'png', filename: chart.title || 'datamind_chart', scale: 2 },
         modeBarButtonsToAdd: [{
           name: 'Fullscreen',
           icon: { width: 24, height: 24, path: 'M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3', transform: 'matrix(1 0 0 1 0 0)' },
           click: function(gd) { expandPlotlyChart(gd.id); }
         }]
       };
-      Plotly.newPlot(chartDivId, chart.plotly_json.data, chart.plotly_json.layout, config);
+      Plotly.newPlot(chartDivId, chart.plotly_json.data, chart.plotly_json.layout, config).then(() => {
+        generateChartInsight(chart, chartDivId);
+      });
     }
   });
+}
+
+async function generateChartInsight(chart, chartDivId) {
+  const box = document.getElementById(`insight-${chartDivId}`);
+  if (!box) return;
+  
+  let condensedData = [];
+  if (chart.plotly_json && chart.plotly_json.data) {
+    chart.plotly_json.data.forEach(trace => {
+      let t = { name: trace.name || 'Data', type: trace.type };
+      if (trace.x && trace.y) {
+        let zipped = trace.x.map((x, i) => ({ x: x, y: trace.y[i] }));
+        if (typeof zipped[0]?.y === 'number') zipped.sort((a,b) => b.y - a.y);
+        t.top_values = zipped.slice(0, 5);
+      } else if (trace.labels && trace.values) {
+        let zipped = trace.labels.map((l, i) => ({ label: l, value: trace.values[i] }));
+        if (typeof zipped[0]?.value === 'number') zipped.sort((a,b) => b.value - a.value);
+        t.top_values = zipped.slice(0, 5);
+      }
+      condensedData.push(t);
+    });
+  }
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [{
+          role: 'user',
+          content: `Chart Title: ${chart.title}\nChart Type: ${chart.chart_type}\nTop Data Points:\n${JSON.stringify(condensedData, null, 2)}`
+        }],
+        dataset_summary: DataEngine.eda_results,
+        action: 'chart_insight'
+      })
+    });
+    
+    if (!response.ok) throw new Error('API failed');
+    const data = await response.json();
+    box.innerHTML = `<p style="margin:0; font-size: 0.9rem; color: var(--text); line-height: 1.5;"><strong>Insight:</strong> ${data.response}</p>`;
+  } catch (err) {
+    let fallbackText = "This chart visualises key patterns in the dataset. ";
+    try {
+       if (condensedData[0] && condensedData[0].top_values && condensedData[0].top_values[0]) {
+           let top = condensedData[0].top_values[0];
+           fallbackText = `The highest recorded value is for ${top.x || top.label} at ${top.y || top.value}.`;
+       }
+    } catch(e){}
+    box.innerHTML = `<p style="margin:0; font-size: 0.9rem; color: var(--text-dim); line-height: 1.5;">${fallbackText}</p>`;
+  }
 }
 
 function downloadChartPNG(divId, title) {
@@ -940,25 +976,45 @@ async function loadForecast() {
 }
 
 // ===== INSIGHTS =====
-async function loadInsights(isRetry = false) {
+async function loadInsights(retryCount = 0) {
   const panel = $('#insights-panel');
-  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div>`;
+  if (retryCount === 0) {
+    panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text" style="width:80%"></div><div class="skeleton skeleton-text" style="width:60%"></div>`;
+  }
+
   try {
     const res = await fetch(`/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{role: 'user', content: 'Generate 3 bullet points of key insights for this dataset.'}], dataset_summary: DataEngine.eda_results })
+      body: JSON.stringify({ 
+        messages: [{role: 'user', content: 'Generate key insights.'}], 
+        dataset_summary: DataEngine.eda_results,
+        action: 'key_insights'
+      })
     });
+    
+    if (!res.ok) throw new Error('API Response not ok');
     const data = await res.json();
+    
     if (data.response) {
-      let html = `<div class="section-header"><h2>Key Insights</h2></div>`;
-      html += `<div class="insight-item"><span>${data.response}</span></div>`;
+      let lines = data.response.split('\n').filter(l => l.trim().length > 0);
+      let html = `<div class="section-header"><h2>Key Insights</h2></div><ul style="padding-left: 20px; color: var(--text); font-size: 0.95rem; line-height: 1.6;">`;
+      lines.forEach(line => {
+        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').replace(/<\/?strong>/g, '').trim();
+        if (cleanLine.length > 5) html += `<li style="margin-bottom: 8px;">${cleanLine}</li>`;
+      });
+      html += `</ul>`;
       panel.innerHTML = html;
-    } else {
-      panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p>Insights could not be generated.</p>`;
+      return;
     }
-  } catch (e) { 
-    panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p>Insights could not be generated.</p>`;
+    throw new Error('No response content');
+  } catch (e) {
+    if (retryCount < 1) {
+      console.warn('Key Insights failed. Retrying in 3 seconds...');
+      setTimeout(() => loadInsights(1), 3000);
+    } else {
+      panel.innerHTML = `<div class="section-header"><h2>Key Insights</h2></div><p style="color: var(--text-dim); padding: 12px;">Unable to generate key insights at this time. The data may be too sparse or the AI API may be unreachable.</p>`;
+    }
   }
 }
 
@@ -1125,7 +1181,7 @@ function updateSliderLabel(val) {
 async function runWhatIf() {
   const targetCol = $('#whatif-target')?.value;
   const adjustCol = $('#whatif-adjust')?.value;
-  const adjustPct = $('#whatif-slider')?.value || 0;
+  const adjustPct = parseFloat($('#whatif-slider')?.value || 0);
 
   if (!targetCol || !adjustCol) {
     showToast('Please select both target and adjust columns', 'error');
@@ -1134,41 +1190,96 @@ async function runWhatIf() {
 
   const resultDiv = $('#whatif-result');
   const chartImg = $('#whatif-chart');
-  resultDiv.textContent = 'Running scenario...';
+  resultDiv.innerHTML = '<span style="color:var(--text-dim)">Running scenario...</span>';
 
   try {
-    const data = { success: false, error: 'What-If analysis requires the advanced Python backend.' };
+    let df = DataEngine.clean_data;
+    let targetVals = ChartsEngine.numVals(df, targetCol);
+    let adjustVals = ChartsEngine.numVals(df, adjustCol);
+    let minLen = Math.min(targetVals.length, adjustVals.length);
+    targetVals = targetVals.slice(0, minLen);
+    adjustVals = adjustVals.slice(0, minLen);
 
-    if (data.success) {
-      const orig = data.original?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || '—';
-      const proj = data.projected?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || '—';
-      const diff = data.projected - data.original;
-      const diffPct = data.original ? ((diff / data.original) * 100).toFixed(1) : 0;
-      const arrow = diff >= 0 ? '↑' : '↓';
-      const color = diff >= 0 ? 'var(--success)' : 'var(--danger)';
+    let pearson = ChartsEngine.pearson(targetVals, adjustVals);
 
-      resultDiv.innerHTML = `
-        <strong>${targetCol}</strong>: ${orig} → <span style="color:${color};font-weight:700">${proj}</span>
-        <span style="color:${color};font-size:0.85rem;margin-left:8px">${arrow} ${diffPct}%</span>
-        <span style="color:var(--text-muted);font-size:0.8rem;margin-left:8px">(when ${adjustCol} changes by ${adjustPct > 0 ? '+' : ''}${adjustPct}%)</span>
-      `;
-
-      if (data.chart_json) {
-        let wiDiv = document.getElementById('whatif-plotly');
-        if (!wiDiv) {
-          wiDiv = document.createElement('div');
-          wiDiv.id = 'whatif-plotly';
-          wiDiv.style.cssText = 'width:100%;height:380px;margin-top:16px;';
-          chartImg.parentNode.insertBefore(wiDiv, chartImg);
-        }
-        Plotly.react('whatif-plotly', data.chart_json.data, data.chart_json.layout, { responsive: true, displaylogo: false });
-        chartImg.classList.add('hidden');
-      }
-    } else {
-      resultDiv.textContent = data.error || 'Scenario failed';
+    if (Math.abs(pearson) < 0.05) {
+      resultDiv.innerHTML = `<span style="color:var(--warning)"><strong>Low Correlation:</strong> These columns have no meaningful relationship (r=${pearson.toFixed(2)}). Adjusting <em>${adjustCol}</em> is unlikely to predictably impact <em>${targetCol}</em>.</span>`;
+      if (document.getElementById('whatif-plotly')) document.getElementById('whatif-plotly').style.display = 'none';
+      return;
     }
+
+    let origSum = targetVals.reduce((a, b) => a + b, 0);
+    // Simplified elasticity projection: % change in Y = % change in X * r
+    let projectedSum = origSum * (1 + ((adjustPct / 100) * pearson));
+
+    const orig = origSum.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    const proj = projectedSum.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    const diff = projectedSum - origSum;
+    const diffPct = origSum ? ((diff / origSum) * 100).toFixed(1) : 0;
+    const arrow = diff >= 0 ? '↑' : '↓';
+    const color = diff >= 0 ? 'var(--success)' : 'var(--danger)';
+
+    resultDiv.innerHTML = `
+      <strong>${targetCol}</strong>: ${orig} → <span style="color:${color};font-weight:700">${proj}</span>
+      <span style="color:${color};font-size:0.85rem;margin-left:8px">${arrow} ${diffPct}%</span>
+      <span style="color:var(--text-muted);font-size:0.8rem;margin-left:8px">(r=${pearson.toFixed(2)})</span>
+      <div id="whatif-ai-commentary" style="margin-top: 12px; font-size: 0.9rem; padding-left: 12px; border-left: 2px solid var(--primary);">
+         <span class="skeleton-text" style="width:100%"></span>
+      </div>
+    `;
+
+    let wiDiv = document.getElementById('whatif-plotly');
+    if (!wiDiv) {
+      wiDiv = document.createElement('div');
+      wiDiv.id = 'whatif-plotly';
+      wiDiv.style.cssText = 'width:100%;height:320px;margin-top:16px;';
+      if (chartImg && chartImg.parentNode) {
+        chartImg.parentNode.insertBefore(wiDiv, chartImg);
+        chartImg.classList.add('hidden');
+      } else {
+        resultDiv.parentNode.appendChild(wiDiv);
+      }
+    }
+    wiDiv.style.display = 'block';
+
+    const trace = {
+      x: ['Current', 'Projected'],
+      y: [origSum, projectedSum],
+      type: 'bar',
+      marker: { color: [ChartsEngine.COLORS[0], color === 'var(--success)' ? ChartsEngine.COLORS[2] : ChartsEngine.COLORS[1]] },
+      text: [orig, proj],
+      textposition: 'auto'
+    };
+    const layout = ChartsEngine.getLayoutBase();
+    layout.title.text = `Impact of ${adjustPct > 0 ? '+' : ''}${adjustPct}% change in ${adjustCol}`;
+    
+    Plotly.react('whatif-plotly', [trace], layout, { responsive: true, displaylogo: false });
+
+    // AI Commentary
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [{
+          role: 'user',
+          content: `Scenario: If ${adjustCol} changes by ${adjustPct}%, ${targetCol} is projected to go from ${orig} to ${proj} (a ${diffPct}% change). The correlation is ${pearson.toFixed(2)}.`
+        }],
+        dataset_summary: DataEngine.eda_results,
+        action: 'what_if_insight'
+      })
+    }).then(r => r.json()).then(data => {
+      const commBox = document.getElementById('whatif-ai-commentary');
+      if (commBox && data.response) {
+        commBox.innerHTML = `<strong>AI Insight:</strong> ${data.response}`;
+      }
+    }).catch(e => {
+       const commBox = document.getElementById('whatif-ai-commentary');
+       if (commBox) commBox.innerHTML = `<strong>Insight:</strong> Adjusting ${adjustCol} drives a ${diffPct}% shift in ${targetCol} due to their correlation.`;
+    });
+
   } catch (e) {
-    resultDiv.textContent = 'Error running scenario';
+    console.error(e);
+    resultDiv.textContent = 'Error running scenario: ' + e.message;
   }
 }
 
@@ -1392,23 +1503,35 @@ function updateQualityGauge(score, breakdown) {
 // ===== BUSINESS RECOMMENDATIONS =====
 async function loadRecommendations() {
   const panel = $('#recommendations-panel');
-  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2></div><div class="skeleton skeleton-text"></div>`;
+  panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text" style="width:80%"></div>`;
   try {
     const res = await fetch(`/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{role: 'user', content: 'Generate 2 business recommendations based on this data.'}], dataset_summary: DataEngine.eda_results })
+      body: JSON.stringify({ 
+        messages: [{role: 'user', content: 'Generate business recommendations.'}], 
+        dataset_summary: DataEngine.eda_results,
+        action: 'recommendations'
+      })
     });
+    
+    if (!res.ok) throw new Error('API Response not ok');
     const data = await res.json();
+    
     if (data.response) {
-      let html = `<div class="section-header"><h2>Business Recommendations</h2></div>`;
-      html += `<div class="insight-item"><span>${data.response}</span></div>`;
+      let lines = data.response.split('\n').filter(l => l.trim().length > 0);
+      let html = `<div class="section-header"><h2>Business Recommendations</h2></div><ul style="padding-left: 20px; color: var(--text); font-size: 0.95rem; line-height: 1.6;">`;
+      lines.forEach(line => {
+        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').replace(/<\/?strong>/g, '').trim();
+        if (cleanLine.length > 5) html += `<li style="margin-bottom: 8px;">${cleanLine}</li>`;
+      });
+      html += `</ul>`;
       panel.innerHTML = html;
     } else {
-      panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p>Recommendations could not be generated.</p>`;
+      panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p style="color: var(--text-dim); padding: 12px;">Recommendations could not be generated.</p>`;
     }
   } catch (e) { 
-    panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p>Recommendations could not be generated.</p>`;
+    panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p style="color: var(--text-dim); padding: 12px;">Recommendations could not be generated.</p>`;
   }
 }
 

@@ -756,9 +756,9 @@ window.ChartsEngine = {
     var pVals = this.unique(df, parentCol).slice(0, 8);
     if (pVals.length < 2) return null;
 
-    var labels = [], parents = [], values = [];
+    var ids = [], labels = [], parents = [], values = [];
     // Add root
-    labels.push('All'); parents.push(''); values.push(0);
+    ids.push('All'); labels.push('All'); parents.push(''); values.push(0);
 
     var parentTotals = {};
     for (var p = 0; p < pVals.length; p++) {
@@ -779,6 +779,7 @@ window.ChartsEngine = {
 
     // Add parents
     for (var pi = 0; pi < pVals.length; pi++) {
+      ids.push('P_' + pVals[pi]);
       labels.push(String(pVals[pi]));
       parents.push('All');
       values.push(parentTotals[pVals[pi]] || 0);
@@ -797,8 +798,9 @@ window.ChartsEngine = {
       children.sort(function(a, b) { return b.val - a.val; });
       children = children.slice(0, 5);
       for (var ch = 0; ch < children.length; ch++) {
+        ids.push('C_' + pVals[pk] + '_' + children[ch].name);
         labels.push(String(children[ch].name));
-        parents.push(String(pVals[pk]));
+        parents.push('P_' + pVals[pk]);
         values.push(children[ch].val);
       }
     }
@@ -807,8 +809,9 @@ window.ChartsEngine = {
 
     var trace = {
       type: 'sunburst',
+      ids: ids,
       labels: labels, parents: parents, values: values,
-      branchvalues: 'total',
+      branchvalues: 'remainder',
       marker: { colors: this.COLORS, line: { color: this.BG, width: 1 } },
       hovertemplate: '<b>%{label}</b><br>Value: %{value:,.0f}<extra></extra>',
       textfont: { color: 'white' }

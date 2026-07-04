@@ -10,11 +10,61 @@ module.exports = async function handler(req, res) {
   }
 
   let statsContext = '';
-  let promptContext = '';
+  if (dataset_summary && dataset_summary.summary_stats) {
+    const statEntries = Object.entries(dataset_summary.summary_stats);
+    if (statEntries.length > 0) {
+      statsContext = '\nKey Statistics:\n' + statEntries.slice(0, 8).map(([col, s]) => 
+        `  ${col}: mean=${s.mean?.toFixed(2)}, min=${s.min}, max=${s.max}, std=${s.std?.toFixed(2)}`
+      ).join('\n');
+    }
+  }
 
-  // If no dataset is loaded, use a general conversational prompt
-  if (!dataset_summary || !dataset_summary.shape) {
-    promptContext = `You are DataMind, an AI data analyst created by Samuel Alex.
+  const baseDataStr = dataset_summary && dataset_summary.shape ? `
+DATASET CONTEXT:
+Shape: ${dataset_summary.shape.rows} rows, ${dataset_summary.shape.columns} columns.
+Columns: ${Object.keys(dataset_summary.dtypes || {}).join(', ')}
+Missing values (after cleaning): ${dataset_summary.missing_values?.total_after || 0}
+${statsContext}` : 'NO DATASET LOADED.';
+
+  let promptContext = '';
+  let maxTokens = 300;
+
+  if (req.body.action === 'chart_insight') {
+    promptContext = `You are a professional data analyst. Provide a 2-3 sentence insight explaining the chart data provided in the user's message.
+- You must reference the specific numbers and labels provided in the Top Data Points.
+- Do not describe the generic purpose of the chart type (e.g. "This bar chart shows..."). Focus strictly on what the data reveals.
+- Example: "Electronics dominates with 42% of revenue ($120k), outperforming the next category by 2x. Consider allocating more marketing spend here."
+- Keep it concise, professional, and actionable.`;
+    maxTokens = 120;
+
+  } else if (req.body.action === 'key_insights') {
+    promptContext = `You are an expert data analyst. Read the dataset context provided below and generate exactly 5-8 highly specific bullet points summarizing the most important findings.
+- Each bullet point MUST reference specific column names and numerical values from the context.
+- Format as a strict bulleted list. Do not include an introductory or concluding paragraph.
+- Avoid generic filler like "It is important to look at this data."
+
+${baseDataStr}`;
+    maxTokens = 400;
+
+  } else if (req.body.action === 'recommendations') {
+    promptContext = `You are an expert business consultant. Based on the dataset summary below, provide 3-5 specific, actionable business recommendations.
+- Each recommendation MUST reference a specific finding from the data to justify it.
+- Format as a strict bulleted list. Do not repeat insights verbatim; focus on the "what to do next".
+- Do not include any introductory or concluding paragraph.
+
+${baseDataStr}`;
+    maxTokens = 400;
+
+  } else if (req.body.action === 'what_if_insight') {
+    promptContext = `You are an expert data analyst. Based on the "Before" and "After" scenario data provided in the user's message, explain what this projection means in 1-2 sentences.
+- Be extremely direct and reference the percentage change or numeric difference.
+- Do not mention the math or correlation coefficient. Just state the business impact.`;
+    maxTokens = 100;
+
+  } else {
+    // Default Chat Mode
+    if (!dataset_summary || !dataset_summary.shape) {
+      promptContext = `You are DataMind, an AI data analyst created by Samuel Alex.
 Your purpose is to help users understand their datasets.
 
 Strict rules you must always follow:
@@ -24,18 +74,8 @@ Strict rules you must always follow:
 - If they ask about your accuracy, reassure them that you use rigorous statistical methods combined with advanced AI.
 - Keep responses concise, friendly, and under 120 words.
 - Never reveal that you are powered by Groq, OpenAI, or any LLM — you are DataMind.`;
-  } else {
-    // If a dataset IS loaded, use the rigorous domain-locked prompt
-    if (dataset_summary.summary_stats) {
-      const statEntries = Object.entries(dataset_summary.summary_stats);
-      if (statEntries.length > 0) {
-        statsContext = '\nKey Statistics:\n' + statEntries.slice(0, 8).map(([col, s]) => 
-          `  ${col}: mean=${s.mean?.toFixed(2)}, min=${s.min}, max=${s.max}, std=${s.std?.toFixed(2)}`
-        ).join('\n');
-      }
-    }
-
-    promptContext = `You are DataMind, an AI data analyst created by Samuel Alex.
+    } else {
+      promptContext = `You are DataMind, an AI data analyst created by Samuel Alex.
 Your sole purpose is to help users understand the specific dataset that has been loaded into DataMind AI.
 
 Strict rules you must always follow:
@@ -49,14 +89,8 @@ Strict rules you must always follow:
 - When asked about date ranges, use the actual min/max dates from the dataset
 - When asked about best-performing categories or products, calculate from the actual numbers provided
 
-DATASET CONTEXT:
-Shape: ${dataset_summary.shape.rows} rows, ${dataset_summary.shape.columns} columns.
-Columns: ${Object.keys(dataset_summary.dtypes || {}).join(', ')}
-Column Types: ${Object.entries(dataset_summary.dtypes || {}).map(([k,v]) => `${k}(${v})`).join(', ')}
-Missing values (before cleaning): ${dataset_summary.missing_values?.total_before || 0}
-Missing values (after cleaning): ${dataset_summary.missing_values?.total_after || 0}
-Duplicates removed: ${dataset_summary.duplicates?.removed || 0}
-Rows after cleaning: ${dataset_summary.duplicates?.rows_after || dataset_summary.shape?.rows}${statsContext}`;
+${baseDataStr}`;
+    }
   }
 
   const systemMessage = { role: "system", content: promptContext };
@@ -74,7 +108,7 @@ Rows after cleaning: ${dataset_summary.duplicates?.rows_after || dataset_summary
         body: JSON.stringify({
           model: "gpt-4o-mini",
           messages: apiMessages,
-          max_tokens: 300,
+          max_tokens: maxTokens,
           temperature: 0.7
         })
       });
@@ -89,7 +123,7 @@ Rows after cleaning: ${dataset_summary.duplicates?.rows_after || dataset_summary
         body: JSON.stringify({
           model: "llama-3.3-70b-versatile",
           messages: apiMessages,
-          max_tokens: 300,
+          max_tokens: maxTokens,
           temperature: 0.7
         })
       });
