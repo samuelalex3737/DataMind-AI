@@ -14,10 +14,12 @@ window.ChartsEngine = {
   // ─── palette ────────────────────────────────────────────
   COLORS: ['#00e5ff','#ff6b6b','#ffd93d','#6bcb77','#4d96ff',
            '#ff922b','#cc5de8','#20c997','#ff6b81','#a8e6cf'],
-  BG:   '#0d0f14',
-  CARD: '#161a24',
-  TEXT: '#e2e8f0',
-  GRID: '#2d3748',
+  
+  // Dynamic color getters to support light/dark mode toggling
+  get BG() { return getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#06080d'; },
+  get CARD() { return getComputedStyle(document.body).getPropertyValue('--card-solid').trim() || '#111520'; },
+  get TEXT() { return getComputedStyle(document.body).getPropertyValue('--text').trim() || '#e2e8f0'; },
+  get GRID() { return getComputedStyle(document.body).getPropertyValue('--border').trim() || '#2d3748'; },
 
   // ─── shared layout ─────────────────────────────────────
   getLayoutBase() {

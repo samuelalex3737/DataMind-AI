@@ -284,16 +284,63 @@ window.startAnalysis = async function(datasetInfo) {
     try {
       let dates = DataEngine.clean_data.map(r => new Date(r[dateCols[0]])).filter(d => !isNaN(d));
       if (dates.length > 0) {
-        let minD = new Date(Math.min(...dates)).toISOString().split('T')[0];
-        let maxD = new Date(Math.max(...dates)).toISOString().split('T')[0];
-        const df = $('#date-from');
-        const dt = $('#date-to');
-        if (df) { df.min = minD; df.max = maxD; }
-        if (dt) { dt.min = minD; dt.max = maxD; }
+        let minD = new Date(Math.min(...dates));
+        let maxD = new Date(Math.max(...dates));
+        
+        let uniqueMonths = new Set();
+        dates.forEach(d => uniqueMonths.add(d.toISOString().substring(0, 7)));
+        let sortedMonths = Array.from(uniqueMonths).sort();
+        
+        const wrapper = $('#date-inputs-wrapper');
+        
+        if (sortedMonths.length <= 36 && sortedMonths.length > 1) {
+          // Use Dropdowns for manageable month ranges
+          let optionsHtml = sortedMonths.map(m => `<option value="${m}">${m}</option>`).join('');
+          wrapper.innerHTML = `
+            <select id="date-from" class="date-input" title="Start Month" style="padding:4px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
+              <option value="">Any</option>
+              ${optionsHtml}
+            </select>
+            <span style="color: var(--text-dim);">to</span>
+            <select id="date-to" class="date-input" title="End Month" style="padding:4px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
+              <option value="">Any</option>
+              ${optionsHtml}
+            </select>
+          `;
+          
+          $('#date-from').addEventListener('change', function() {
+            let startVal = this.value;
+            let endSelect = $('#date-to');
+            let currentEnd = endSelect.value;
+            
+            let validMonths = startVal ? sortedMonths.filter(m => m >= startVal) : sortedMonths;
+            let newOptions = '<option value="">Any</option>' + validMonths.map(m => `<option value="${m}">${m}</option>`).join('');
+            endSelect.innerHTML = newOptions;
+            
+            if (currentEnd && currentEnd < startVal) {
+               endSelect.value = validMonths[validMonths.length - 1]; // Reset to last available
+            } else if (currentEnd && validMonths.includes(currentEnd)) {
+               endSelect.value = currentEnd;
+            }
+          });
+          
+        } else {
+          // Use constrained HTML5 Date Inputs for dense data
+          let minStr = minD.toISOString().split('T')[0];
+          let maxStr = maxD.toISOString().split('T')[0];
+          wrapper.innerHTML = `
+            <input type="date" id="date-from" class="date-input" title="Start Date" min="${minStr}" max="${maxStr}">
+            <span style="color: var(--text-dim);">to</span>
+            <input type="date" id="date-to" class="date-input" title="End Date" min="${minStr}" max="${maxStr}">
+          `;
+        }
       }
-    } catch(e) {}
+    } catch(e) { console.warn('Date filter setup error', e); }
     const filters = $('#date-filters-container');
     if (filters) filters.style.display = 'flex';
+  } else {
+    const filters = $('#date-filters-container');
+    if (filters) filters.style.display = 'none';
   }
 
   // ── Data Quality Score ──
@@ -338,11 +385,28 @@ window.applyDateFilters = async () => {
   if (dateCols.length === 0) return;
   let dCol = dateCols[0];
   
+  let startD = null;
+  if (dFrom) {
+     startD = new Date(dFrom);
+  }
+  
+  let endD = null;
+  if (dTo) {
+     if (dTo.length === 7) { // YYYY-MM
+       endD = new Date(dTo + "-01T00:00:00Z");
+       endD.setUTCMonth(endD.getUTCMonth() + 1);
+       endD = new Date(endD.getTime() - 1);
+     } else {
+       endD = new Date(dTo + "T00:00:00Z");
+       endD.setUTCHours(23, 59, 59, 999);
+     }
+  }
+
   let filtered = DataEngine.clean_data.filter(row => {
     let d = new Date(row[dCol]);
     if (isNaN(d)) return false;
-    if (dFrom && d < new Date(dFrom)) return false;
-    if (dTo && d > new Date(dTo)) return false;
+    if (startD && d < startD) return false;
+    if (endD && d > endD) return false;
     return true;
   });
   
@@ -1353,6 +1417,25 @@ window.toggleTheme = function(newTheme) {
   }
   document.body.setAttribute('data-theme', newTheme);
   localStorage.setItem('datamind-theme', newTheme);
+
+  // Re-render charts to apply new theme colors
+  if (window._allCharts && window._allCharts.length > 0) {
+    // We can just call renderCharts to quickly regenerate all plotly instances
+    // since DataEngine.clean_data hasn't changed.
+    const chartsGrid = document.getElementById('charts-grid');
+    if (chartsGrid) {
+      // Re-run loadCharts to re-generate plotly_json with new theme colors
+      const df = DataEngine.clean_data;
+      if (df && df.length > 0) {
+        // We can just call applyDateFilters if active, or loadCharts
+        if (typeof applyDateFilters === 'function') {
+           applyDateFilters();
+        } else {
+           loadCharts(df);
+        }
+      }
+    }
+  }
 };
 
 // ===== INIT =====
