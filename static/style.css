@@ -346,21 +346,20 @@ button, a, select, .chip, .dataset-card, .upload-zone, .chart-expand-btn { curso
   flex: 0 0 40px; height: 1px; background: var(--border); position: relative; top: -20px;
 }
 
-.landing-footer-links {
+.global-footer {
   text-align: center;
-  margin-top: 24px;
-  font-size: 13px;
-  color: #555577;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
+  margin-top: 32px;
+  padding: 24px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
 }
-.landing-footer-links a {
-  color: #555577;
+.global-footer a {
+  color: var(--text-dim);
   text-decoration: none;
+  font-weight: 600;
   transition: color 0.2s;
 }
-.landing-footer-links a:hover { color: #00d4ff; }
+.global-footer a:hover { color: var(--accent); }
 
 /* ===== DASHBOARD VIEW ===== */
 .dashboard { display: none; padding: 24px; }
