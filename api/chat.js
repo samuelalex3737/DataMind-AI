@@ -78,6 +78,7 @@ ${baseDataStr}`;
 
   } else if (req.body.action === 'what_if_insight') {
     promptContext = `You are an expert data analyst. Based on the "Before" and "After" scenario data provided in the user's message, explain what this projection means in 1-2 sentences.
+- Write it in plain English as if explaining to someone who has never seen data before. No jargon, no technical terms.
 - Be extremely direct and reference the percentage change or numeric difference.
 - Do not mention the math or correlation coefficient. Just state the business impact.`;
     maxTokens = 100;

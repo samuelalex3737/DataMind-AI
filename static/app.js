@@ -700,6 +700,103 @@ function renderCharts(charts) {
   });
 }
 
+function computeProgrammaticInsight(chart, condensedData) {
+  try {
+    let t = chart.chart_type;
+    
+    // Tailored insights for complex charts
+    if (t === 'rfm') {
+      let segments = chart.plotly_json.data[0].labels || chart.plotly_json.data[0].x;
+      let values = chart.plotly_json.data[0].values || chart.plotly_json.data[0].y;
+      if (segments && values) {
+        let maxIdx = values.indexOf(Math.max(...values));
+        return `Your customer base is split into ${segments.length} segments, with '${segments[maxIdx]}' being the largest group.`;
+      }
+    }
+    
+    if (t === 'cohort_retention') {
+       let text = "Cohort retention shows typical drop-off patterns in the first few months.";
+       if (chart.plotly_json.data[0].z) {
+          let z = chart.plotly_json.data[0].z;
+          let m3Vals = z.map(row => row[3]).filter(v => v !== undefined && v !== null && !isNaN(v));
+          if (m3Vals.length > 0) {
+             let avgM3 = m3Vals.reduce((a,b)=>a+b, 0) / m3Vals.length;
+             text = `By month 3, average cohort retention stabilizes around ${(avgM3).toFixed(1)}%.`;
+          }
+       }
+       return text;
+    }
+    
+    if (t === 'bcg_matrix') {
+       let texts = chart.plotly_json.data[0].text;
+       let stars = [];
+       if (texts && chart.plotly_json.data[0].x && chart.plotly_json.data[0].y) {
+          let x = chart.plotly_json.data[0].x;
+          let y = chart.plotly_json.data[0].y;
+          let mx = Math.max(...x) / 2;
+          let my = Math.max(...y) / 2;
+          for(let i=0; i<texts.length; i++) {
+             if (x[i] > mx && y[i] > my) stars.push(texts[i].split('<br>')[0]);
+          }
+       }
+       if (stars.length > 0) return `${stars.slice(0,2).join(' and ')} are your 'Stars', showing high growth and market share.`;
+       return "The BCG Matrix classifies your products based on growth and market share to guide strategy.";
+    }
+    
+    if (t === 'market_basket') {
+       if (chart.plotly_json.data[0].type === 'scatter') {
+          let text = chart.plotly_json.data[0].text;
+          if (text && text.length > 0) {
+             let rule = text[0].replace(/<br>/g, ' ');
+             return `The strongest association rule found is: ${rule}.`;
+          }
+       }
+       return "Market Basket Analysis reveals products that are frequently bought together.";
+    }
+
+    // Standard logic for simple charts
+    if (!condensedData || condensedData.length === 0) return "This chart visualises key patterns in the dataset.";
+    let trace = condensedData[0];
+    if (!trace.top_values || trace.top_values.length === 0) return "This chart visualises key patterns in the dataset.";
+    
+    let top = trace.top_values[0];
+    let topName = top.x || top.label || 'The top item';
+    let topVal = top.y || top.value || 0;
+    
+    let total = 0;
+    trace.top_values.forEach(v => total += (v.y || v.value || 0));
+    
+    let grandTotal = 0;
+    if (chart.plotly_json.data[0].y) {
+       chart.plotly_json.data[0].y.forEach(v => { if (typeof v === 'number') grandTotal += v; });
+    } else if (chart.plotly_json.data[0].values) {
+       chart.plotly_json.data[0].values.forEach(v => { if (typeof v === 'number') grandTotal += v; });
+    }
+    
+    if (grandTotal === 0) grandTotal = total;
+    let pct = grandTotal > 0 ? ((topVal / grandTotal) * 100).toFixed(1) : 0;
+    let formattedVal = typeof topVal === 'number' ? topVal.toLocaleString() : topVal;
+    
+    if (t === 'bar' || t === 'pie' || t === 'donut' || t === 'sunburst' || t === 'waterfall') {
+       if (pct > 0) {
+         return `${topName} leads with ${formattedVal}, representing ${pct}% of the total.`;
+       } else {
+         return `${topName} is the most significant contributor with ${formattedVal}.`;
+       }
+    } else if (t === 'line' || t === 'area') {
+       return `${topName} reached the highest peak at ${formattedVal}.`;
+    } else if (t === 'scatter') {
+       return `There is a significant concentration of data around ${topName} (${formattedVal}).`;
+    } else if (t === 'heatmap') {
+       return `The highest density or correlation is observed at ${topName} with a value of ${formattedVal}.`;
+    }
+    
+    return `${topName} is the most notable data point at ${formattedVal}.`;
+  } catch (e) {
+    return "This chart visualises key patterns in the dataset.";
+  }
+}
+
 async function generateChartInsight(chart, chartDivId) {
   const box = document.getElementById(`insight-${chartDivId}`);
   if (!box) return;
@@ -721,43 +818,18 @@ async function generateChartInsight(chart, chartDivId) {
     });
   }
 
-  try {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [{
-          role: 'user',
-          content: `Chart Title: ${chart.title}\nChart Type: ${chart.chart_type}\nTop Data Points:\n${JSON.stringify(condensedData, null, 2)}`
-        }],
-        dataset_summary: DataEngine.eda_results,
-        action: 'chart_insight'
-      })
-    });
-    
-    if (!response.ok) throw new Error('API failed');
-    const data = await response.json();
-    box.innerHTML = `<p style="margin:0; font-size: 0.9rem; color: var(--text); line-height: 1.5;"><strong>Insight:</strong> ${data.response}</p>`;
-    
-    // Store in appContext for AI chatbot
-    window.appContext = window.appContext || { charts: [] };
-    if (!window.appContext.charts) window.appContext.charts = [];
-    window.appContext.charts.push({
-      title: chart.title,
-      type: chart.chart_type,
-      top_values: condensedData,
-      insight: data.response
-    });
-  } catch (err) {
-    let fallbackText = "This chart visualises key patterns in the dataset. ";
-    try {
-       if (condensedData[0] && condensedData[0].top_values && condensedData[0].top_values[0]) {
-           let top = condensedData[0].top_values[0];
-           fallbackText = `The highest recorded value is for ${top.x || top.label} at ${top.y || top.value}.`;
-       }
-    } catch(e){}
-    box.innerHTML = `<p style="margin:0; font-size: 0.9rem; color: var(--text-dim); line-height: 1.5;">${fallbackText}</p>`;
-  }
+  let insightText = computeProgrammaticInsight(chart, condensedData);
+  box.innerHTML = `<p style="margin:0; font-size: 0.9rem; color: var(--text); line-height: 1.5;"><strong>Insight:</strong> ${insightText}</p>`;
+  
+  // Store in appContext for AI chatbot
+  window.appContext = window.appContext || { charts: [] };
+  if (!window.appContext.charts) window.appContext.charts = [];
+  window.appContext.charts.push({
+    title: chart.title,
+    type: chart.chart_type,
+    top_values: condensedData,
+    insight: insightText
+  });
 }
 
 function downloadChartPNG(divId, title) {
@@ -1031,18 +1103,28 @@ async function loadForecast() {
   let percentChange = (slope / (ySum / n)) * 100 * 6; // rough 6-mo % change
   let commentary = `Based on historical trends, ${numCol} is ${trend} over the next 6 months, accounting for recent momentum.`;
   
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        messages: [{role: 'user', content: `Generate a single short sentence explaining this forecast projection: The target metric ${numCol} has a historical 6-month slope of ${slope.toFixed(2)}, projecting a ${percentChange.toFixed(1)}% change over the next 6 months.`}], 
-        dataset_summary: DataEngine.eda_results 
-      })
-    });
-    const data = await res.json();
-    if (data.response) commentary = data.response;
-  } catch(e) {}
+  const cacheKey = 'dm_forecast_' + (DataEngine.eda_results?.name || 'ds') + '_' + (DataEngine.eda_results?.shape?.rows || 0);
+  const cached = sessionStorage.getItem(cacheKey);
+
+  if (cached) {
+      commentary = cached;
+  } else {
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            messages: [{role: 'user', content: `Generate a single short sentence explaining this forecast projection: The target metric ${numCol} has a historical 6-month slope of ${slope.toFixed(2)}, projecting a ${percentChange.toFixed(1)}% change over the next 6 months.`}], 
+            dataset_summary: DataEngine.eda_results 
+          })
+        });
+        const data = await res.json();
+        if (data.response) {
+            commentary = data.response;
+            sessionStorage.setItem(cacheKey, commentary);
+        }
+      } catch(e) {}
+  }
   
   const insightDiv = document.getElementById('forecast-insight');
   if (insightDiv) {
@@ -1052,9 +1134,39 @@ async function loadForecast() {
   }
 }
 
+// Helper for rendering insights
+function renderInsightsHTML(responseText) {
+  const panel = $('#insights-panel');
+  if (!panel) return;
+  let lines = responseText.split('\n').filter(l => l.trim().length > 0);
+  let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2><p>AI-generated actionable findings</p></div>`;
+  html += `<div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">`;
+  lines.forEach(line => {
+    let cleanLine = line.replace(/^[\-\*\•]\s*/, '').trim();
+    cleanLine = cleanLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    if (cleanLine.length > 5) {
+       html += `<div style="display: flex; align-items: flex-start; gap: 12px;">
+         <div style="min-width: 8px; width: 8px; height: 8px; border-radius: 50%; background: #00d2ff; margin-top: 6px; box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);"></div>
+         <div style="color: var(--text); font-size: 0.95rem; line-height: 1.5;">${cleanLine}</div>
+       </div>`;
+    }
+  });
+  html += `</div>`;
+  panel.innerHTML = html;
+  if (window.appContext) window.appContext.insights = responseText;
+}
+
 // ===== INSIGHTS =====
 async function loadInsights(retryCount = 0) {
   const panel = $('#insights-panel');
+  const cacheKey = 'dm_insights_' + (DataEngine.eda_results?.name || 'ds') + '_' + (DataEngine.eda_results?.shape?.rows || 0);
+  const cached = sessionStorage.getItem(cacheKey);
+  
+  if (cached) {
+      renderInsightsHTML(cached);
+      return;
+  }
+
   if (retryCount === 0) {
     panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text" style="width:80%"></div><div class="skeleton skeleton-text" style="width:60%"></div>`;
   }
@@ -1074,22 +1186,8 @@ async function loadInsights(retryCount = 0) {
     const data = await res.json();
     
     if (data.response) {
-      let lines = data.response.split('\n').filter(l => l.trim().length > 0);
-      let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2><p>AI-generated actionable findings</p></div>`;
-      html += `<div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">`;
-      lines.forEach(line => {
-        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').trim();
-        cleanLine = cleanLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        if (cleanLine.length > 5) {
-           html += `<div style="display: flex; align-items: flex-start; gap: 12px;">
-             <div style="min-width: 8px; width: 8px; height: 8px; border-radius: 50%; background: #00d2ff; margin-top: 6px; box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);"></div>
-             <div style="color: var(--text); font-size: 0.95rem; line-height: 1.5;">${cleanLine}</div>
-           </div>`;
-        }
-      });
-      html += `</div>`;
-      panel.innerHTML = html;
-      if (window.appContext) window.appContext.insights = data.response;
+      sessionStorage.setItem(cacheKey, data.response);
+      renderInsightsHTML(data.response);
       return;
     }
     throw new Error('No response content');
@@ -1288,6 +1386,8 @@ function updateSliderLabel(val) {
   _whatIfTimer = setTimeout(() => { runWhatIf(); }, 400);
 }
 
+let _whatifContext = {};
+
 async function runWhatIf() {
   const targetCol = $('#whatif-target')?.value;
   const adjustCol = $('#whatif-adjust')?.value;
@@ -1329,12 +1429,14 @@ async function runWhatIf() {
     const arrow = diff >= 0 ? '↑' : '↓';
     const color = diff >= 0 ? 'var(--success)' : 'var(--danger)';
 
+    _whatifContext = { adjustCol, adjustPct, targetCol, orig, proj, diffPct, pearson };
+
     resultDiv.innerHTML = `
       <strong>${targetCol}</strong>: ${orig} → <span style="color:${color};font-weight:700">${proj}</span>
       <span style="color:${color};font-size:0.85rem;margin-left:8px">${arrow} ${diffPct}%</span>
       <span style="color:${color};font-size:0.8rem;margin-left:8px">(r=${pearson.toFixed(2)})</span>
       <div id="whatif-ai-commentary" style="margin-top: 12px; font-size: 0.9rem; padding-left: 12px; border-left: 2px solid var(--primary);">
-         <span class="skeleton-text" style="width:100%"></span>
+         <span style="color:var(--text-dim);font-style:italic">Click "Run Scenario" for AI analysis.</span>
       </div>
     `;
 
@@ -1365,37 +1467,41 @@ async function runWhatIf() {
     
     Plotly.react('whatif-plotly', [trace], layout, { responsive: true, displaylogo: false });
 
-    // AI Commentary
-    fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [{
-          role: 'user',
-          content: `Scenario: If ${adjustCol} changes by ${adjustPct}%, ${targetCol} is projected to go from ${orig} to ${proj} (a ${diffPct}% change). The correlation is ${pearson.toFixed(2)}.`
-        }],
-        dataset_summary: DataEngine.eda_results,
-        action: 'what_if_insight'
-      })
-    }).then(r => r.json()).then(data => {
-      const commBox = document.getElementById('whatif-ai-commentary');
-      if (commBox && data.response) {
-        commBox.innerHTML = `<strong>AI Insight:</strong> ${data.response}`;
-        if (window.appContext) window.appContext.whatif = data.response;
-      }
-    }).catch(e => {
-       const commBox = document.getElementById('whatif-ai-commentary');
-       if (commBox) {
-         let fb = `Adjusting ${adjustCol} drives a ${diffPct}% shift in ${targetCol} due to their correlation.`;
-         commBox.innerHTML = `<strong>Insight:</strong> ${fb}`;
-         if (window.appContext) window.appContext.whatif = fb;
-       }
-    });
-
   } catch (e) {
     console.error(e);
     resultDiv.textContent = 'Error running scenario: ' + e.message;
   }
+}
+
+function fetchWhatIfCommentary() {
+  const commBox = document.getElementById('whatif-ai-commentary');
+  if (!commBox || !_whatifContext.targetCol) return;
+
+  commBox.innerHTML = '<span class="skeleton-text" style="width:100%"></span>';
+
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      messages: [{
+        role: 'user',
+        content: `Scenario: If ${_whatifContext.adjustCol} changes by ${_whatifContext.adjustPct}%, ${_whatifContext.targetCol} is projected to go from ${_whatifContext.orig} to ${_whatifContext.proj} (a ${_whatifContext.diffPct}% change). The correlation is ${_whatifContext.pearson.toFixed(2)}.`
+      }],
+      dataset_summary: DataEngine.eda_results,
+      action: 'what_if_insight'
+    })
+  }).then(r => r.json()).then(data => {
+    if (commBox && data.response) {
+      commBox.innerHTML = `<strong>AI Insight:</strong> ${data.response}`;
+      if (window.appContext) window.appContext.whatif = data.response;
+    }
+  }).catch(e => {
+     if (commBox) {
+       let fb = `Adjusting ${_whatifContext.adjustCol} drives a ${_whatifContext.diffPct}% shift in ${_whatifContext.targetCol} due to their correlation.`;
+       commBox.innerHTML = `<strong>Insight:</strong> ${fb}`;
+       if (window.appContext) window.appContext.whatif = fb;
+     }
+  });
 }
 
 // ===== EXPORT =====
@@ -1634,9 +1740,57 @@ function updateQualityGauge(score, breakdown) {
   }
 }
 
+// Helper for rendering recommendations
+function renderRecommendationsHTML(responseText) {
+  const panel = $('#recommendations-panel');
+  if (!panel) return;
+  let lines = responseText.split('\n').filter(l => l.trim().length > 0);
+  let parsedLines = [];
+  lines.forEach(line => {
+    let cleanLine = line.replace(/^[\-\*\•]\s*/, '').trim();
+    if (cleanLine.length > 5) {
+       let match = cleanLine.match(/\*\*(.*?)\*\*(?:[:\-\s]*)(.*)/);
+       if (match) {
+         parsedLines.push({ title: match[1].trim(), desc: match[2].trim() });
+       } else {
+         parsedLines.push({ title: 'Recommendation', desc: cleanLine.replace(/\*\*(.*?)\*\*/g, '$1') });
+       }
+    }
+  });
+  
+  let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2><p>${parsedLines.length} actionable strategies identified</p></div>`;
+  html += `<div style="display: flex; flex-direction: column; gap: 12px;">`;
+  
+  const colors = ['#ff3366', '#ffb400', '#ffb400', '#00e5ff', '#00d2ff'];
+  
+  parsedLines.forEach((item, idx) => {
+    let color = colors[idx % colors.length];
+    html += `<div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: flex-start;">
+      <div style="min-width: 32px; width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
+        <div style="width: 6px; height: 6px; border-radius: 50%; background: ${color};"></div>
+      </div>
+      <div>
+        <div style="font-weight: 600; font-size: 1rem; color: var(--text); margin-bottom: 4px;">${item.title}</div>
+        <div style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.5;">${item.desc}</div>
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+  panel.innerHTML = html;
+  if (window.appContext) window.appContext.recommendations = responseText;
+}
+
 // ===== BUSINESS RECOMMENDATIONS =====
 async function loadRecommendations() {
   const panel = $('#recommendations-panel');
+  const cacheKey = 'dm_recs_' + (DataEngine.eda_results?.name || 'ds') + '_' + (DataEngine.eda_results?.shape?.rows || 0);
+  const cached = sessionStorage.getItem(cacheKey);
+
+  if (cached) {
+      renderRecommendationsHTML(cached);
+      return;
+  }
+
   panel.innerHTML = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text" style="width:80%"></div>`;
   try {
     const res = await fetch(`/api/chat`, {
@@ -1653,40 +1807,8 @@ async function loadRecommendations() {
     const data = await res.json();
     
     if (data.response) {
-      let lines = data.response.split('\n').filter(l => l.trim().length > 0);
-      let parsedLines = [];
-      lines.forEach(line => {
-        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').trim();
-        if (cleanLine.length > 5) {
-           let match = cleanLine.match(/\*\*(.*?)\*\*(?:[:\-\s]*)(.*)/);
-           if (match) {
-             parsedLines.push({ title: match[1].trim(), desc: match[2].trim() });
-           } else {
-             parsedLines.push({ title: 'Recommendation', desc: cleanLine.replace(/\*\*(.*?)\*\*/g, '$1') });
-           }
-        }
-      });
-      
-      let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2><p>${parsedLines.length} actionable strategies identified</p></div>`;
-      html += `<div style="display: flex; flex-direction: column; gap: 12px;">`;
-      
-      const colors = ['#ff3366', '#ffb400', '#ffb400', '#00e5ff', '#00d2ff'];
-      
-      parsedLines.forEach((item, idx) => {
-        let color = colors[idx % colors.length];
-        html += `<div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: flex-start;">
-          <div style="min-width: 32px; width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
-            <div style="width: 6px; height: 6px; border-radius: 50%; background: ${color};"></div>
-          </div>
-          <div>
-            <div style="font-weight: 600; font-size: 1rem; color: var(--text); margin-bottom: 4px;">${item.title}</div>
-            <div style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.5;">${item.desc}</div>
-          </div>
-        </div>`;
-      });
-      html += `</div>`;
-      panel.innerHTML = html;
-      if (window.appContext) window.appContext.recommendations = data.response;
+      sessionStorage.setItem(cacheKey, data.response);
+      renderRecommendationsHTML(data.response);
     } else {
       panel.innerHTML = `<div class="section-header"><h2>Business Recommendations</h2></div><p style="color: var(--text-dim); padding: 12px;">Recommendations could not be generated.</p>`;
     }
