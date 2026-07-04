@@ -354,10 +354,16 @@ button, a, select, .chip, .dataset-card, .upload-zone, .chart-expand-btn { curso
   color: var(--text-dim);
 }
 .global-footer a {
-  color: var(--text-dim);
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.global-footer a i {
+  font-size: 1.1rem;
 }
 .global-footer a:hover { color: var(--accent); }
 
