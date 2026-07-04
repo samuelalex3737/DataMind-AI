@@ -920,13 +920,159 @@ button, a, select, .chip, .dataset-card, .upload-zone, .chart-expand-btn { curso
   .chat-toggle { display: flex !important; }
 }
 @media (max-width: 768px) {
-  .landing-title { font-size: 1.8rem; }
-  .landing-sub { font-size: 0.9rem; }
-  .dataset-options, .how-it-works { flex-direction: column; }
+  html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    min-height: 100% !important;
+  }
+  
+  #dm-shader-bg {
+    display: none !important;
+  }
+
+  .landing {
+    height: auto !important;
+    min-height: 100svh;
+    overflow: visible !important;
+    padding: 80px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .app-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: unset !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  #sidebar-panel,
+  #chat-panel,
+  .resize-handle {
+    display: none !important;
+  }
+
+  /* When panels are active on mobile via tabs */
+  #sidebar-panel.mobile-active,
+  #chat-panel.mobile-active {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative;
+    right: 0;
+    top: 0;
+    height: auto;
+    z-index: 10;
+  }
+
+  .main-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    padding: 16px !important;
+  }
+
+  .main-content.mobile-hidden {
+    display: none !important;
+  }
+
+  .landing-title,
+  .hero-title,
+  h1 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+    text-align: center !important;
+    word-break: break-word !important;
+  }
+
+  .landing-sub,
+  .hero-subtitle {
+    font-size: 0.95rem !important;
+    text-align: center !important;
+    padding: 0 8px !important;
+  }
+
+  .upload-zone {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 16px 0 !important;
+    padding: 32px 16px !important;
+  }
+
+  .dataset-cards,
+  .sample-cards,
+  .dataset-options, 
+  .how-it-works {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  .dataset-card,
+  .sample-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   .how-it-works .step-connector { width: 1px; height: 30px; flex: 0 0 30px; top: 0; }
   .kpi-row { grid-template-columns: 1fr 1fr; }
   .whatif-controls { flex-direction: column; }
+  
+  /* Mobile Bottom Navigation */
+  .mobile-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--panel-bg);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+    justify-content: space-around;
+    align-items: center;
+    backdrop-filter: var(--blur);
+  }
+  
+  .mobile-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    width: 25%;
+    padding: 8px 0;
+  }
+  
+  .mobile-nav-btn.active {
+    color: var(--accent);
+  }
+  
+  .mobile-nav-btn i, .mobile-nav-btn svg {
+    font-size: 1.2rem;
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Make room for bottom nav when active */
+  body.app-active {
+    padding-bottom: 60px;
+  }
+  
+  /* Hide chat FAB when bottom nav is showing */
+  body.app-active .chat-toggle,
+  body.app-active #dm-chat-fab {
+    display: none !important;
+  }
 }
+
+.mobile-nav { display: none; }
 @media (max-width: 375px) {
   .main-content { padding: 12px; }
   .kpi-row { grid-template-columns: 1fr; }

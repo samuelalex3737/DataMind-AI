@@ -222,7 +222,13 @@ async function generateDataset(type) {
 }
 
 // ===== ANALYSIS PIPELINE =====
-async function startAnalysis(datasetInfo) {
+window.startAnalysis = async function(datasetInfo) {
+  document.body.classList.add('app-active');
+  
+  if (window.innerWidth <= 768) {
+    document.getElementById('mobile-nav').style.display = 'flex';
+  }
+  
   // Clear chat history when a new dataset is loaded — DataMind must never bleed context
   window.chatHistory = [];
   const msgBox = document.getElementById('dm-messages');
@@ -1406,3 +1412,30 @@ async function loadRecommendations() {
   }
 }
 
+// ===== MOBILE NAVIGATION =====
+window.switchMobileTab = function(tabName) {
+  // Update active button state
+  document.querySelectorAll('.mobile-nav-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.querySelector(`.mobile-nav-btn[onclick="switchMobileTab('${tabName}')"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // Reset all panel visibility
+  const sidebar = document.getElementById('sidebar-panel');
+  const chatPanel = document.getElementById('dm-chat-popup');
+  const mainContent = document.querySelector('.main-content');
+
+  sidebar.classList.remove('mobile-active');
+  chatPanel.classList.remove('mobile-active', 'open');
+  mainContent.classList.add('mobile-hidden');
+
+  // Show selected panel
+  if (tabName === 'data') {
+    sidebar.classList.add('mobile-active');
+  } else if (tabName === 'dashboard') {
+    mainContent.classList.remove('mobile-hidden');
+  } else if (tabName === 'chat') {
+    chatPanel.classList.add('mobile-active');
+    // Ensure chat is open and full width on mobile
+    chatPanel.style.display = 'flex';
+  }
+};

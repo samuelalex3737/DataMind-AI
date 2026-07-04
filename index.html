@@ -333,6 +333,23 @@
   <button id="dm-chat-fab" aria-label="Open AI chat">
     <i class="ti ti-message-chatbot"></i>
   </button>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <button class="mobile-nav-btn active" onclick="switchMobileTab('dashboard')">
+      <i class="ti ti-chart-bar"></i>
+      <span>Dashboard</span>
+    </button>
+    <button class="mobile-nav-btn" onclick="switchMobileTab('data')">
+      <i class="ti ti-database"></i>
+      <span>Data</span>
+    </button>
+    <button class="mobile-nav-btn" onclick="switchMobileTab('chat')">
+      <i class="ti ti-message-chatbot"></i>
+      <span>Chat</span>
+    </button>
+  </nav>
+
   <script src="static/data_engine.js"></script>
   <script src="static/charts_engine.js"></script>
   <script src="/static/app.js?v=7"></script>
