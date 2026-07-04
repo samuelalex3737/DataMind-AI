@@ -698,6 +698,13 @@ function renderCharts(charts) {
       });
     }
   });
+
+  // Force Plotly to recalculate width after grid layout is complete
+  setTimeout(() => {
+    document.querySelectorAll('.chart-card-body > div[id^="chart-"]').forEach(gd => {
+       try { Plotly.Plots.resize(gd); } catch(e){}
+    });
+  }, 100);
 }
 
 function computeProgrammaticInsight(chart, condensedData) {
