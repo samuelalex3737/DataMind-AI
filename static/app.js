@@ -223,6 +223,18 @@ async function generateDataset(type) {
 
 // ===== ANALYSIS PIPELINE =====
 async function startAnalysis(datasetInfo) {
+  // Clear chat history when a new dataset is loaded — DataMind must never bleed context
+  window.chatHistory = [];
+  const msgBox = document.getElementById('dm-messages');
+  if (msgBox) {
+    msgBox.innerHTML = '';
+    // Re-add greeting
+    const greet = document.createElement('div');
+    greet.className = 'dm-msg bot';
+    greet.innerHTML = `<div class="dm-msg-icon"><i class="ti ti-robot"></i></div><div class="dm-bubble">Hello! I&apos;m DataMind, your personal AI data analyst — created by Samuel Alex. I&apos;m here to help you understand your data easily, even if you&apos;ve never worked with data before. Upload a CSV or select a sample dataset to get started, and I&apos;ll guide you through everything! &#129504;</div>`;
+    msgBox.appendChild(greet);
+  }
+
   // Update UI
   $('#topbar-dataset').textContent = datasetInfo.name;
   $('#topbar-dataset').classList.add('active');
@@ -277,6 +289,17 @@ async function startAnalysis(datasetInfo) {
     const filters = $('#date-filters-container');
     if (filters) filters.style.display = 'flex';
   }
+
+  // ── Data Quality Score ──
+  try {
+    const eda = DataEngine.eda_results;
+    const totalCells = (eda.shape?.rows || 1) * (eda.shape?.columns || 1);
+    const completeness = totalCells > 0 ? Math.round(Math.max(0, 100 - (eda.missing_values?.total_before || 0) / totalCells * 100) * 10) / 10 : 100;
+    const uniqueness = eda.duplicates?.rows_before > 0 ? Math.round((eda.duplicates.rows_after / eda.duplicates.rows_before) * 1000) / 10 : 100;
+    const outlierHealth = Math.round(Math.max(0, 100 - ((eda.total_unique_outlier_rows || 0) / (eda.duplicates?.rows_after || 1) * 100)) * 10) / 10;
+    const qualityScore = Math.round((completeness * 0.4 + uniqueness * 0.3 + outlierHealth * 0.3) * 10) / 10;
+    updateQualityGauge(qualityScore, { completeness, uniqueness, outlier_health: outlierHealth });
+  } catch(e) { console.warn('Quality gauge:', e); }
   
   showToast('✓ Dataset cleaned & charts ready', 'success');
 
@@ -775,7 +798,7 @@ async function loadInsights(isRetry = false) {
   let isOpen = false;
 
   // Initial greeting
-  addMsg("Hi! I'm your AI analyst. Load a dataset and ask me anything — trends, anomalies, insights.", 'bot');
+  addMsg("Hello! I'm DataMind, your personal AI data analyst — created by Samuel Alex. I'm here to help you understand your data easily, even if you've never worked with data before. Upload a CSV or select a sample dataset to get started, and I'll guide you through everything! \u{1F9E0}", 'bot');
 
   function toggleChat() {
     isOpen = !isOpen;

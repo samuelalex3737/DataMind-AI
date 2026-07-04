@@ -255,7 +255,7 @@ window.ChartsEngine = {
   // ──────────────────────────────────────────────────────────
   pieChart(df, catCol, numCol) {
     var agg = this.aggregate(df, catCol, numCol, false);
-    if (agg.length < 2 || agg.length > 8) return null;
+    if (agg.length < 2 || agg.length > 12) return null;
 
     var trace = {
       labels: agg.map(function(a){ return a.key; }),
@@ -279,7 +279,7 @@ window.ChartsEngine = {
   // ──────────────────────────────────────────────────────────
   doughnutChart(df, catCol, numCol) {
     var agg = this.aggregate(df, catCol, numCol, false);
-    if (agg.length < 2 || agg.length > 8) return null;
+    if (agg.length < 2 || agg.length > 12) return null;
 
     var total = 0;
     for (var i = 0; i < agg.length; i++) total += agg[i].val;
