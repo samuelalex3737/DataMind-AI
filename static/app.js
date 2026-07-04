@@ -1075,12 +1075,19 @@ async function loadInsights(retryCount = 0) {
     
     if (data.response) {
       let lines = data.response.split('\n').filter(l => l.trim().length > 0);
-      let html = `<div class="section-header"><h2>Key Insights</h2></div><ul style="padding-left: 20px; color: var(--text); font-size: 0.95rem; line-height: 1.6;">`;
+      let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> Key Insights</h2><p>AI-generated actionable findings</p></div>`;
+      html += `<div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">`;
       lines.forEach(line => {
-        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').replace(/<\/?strong>/g, '').trim();
-        if (cleanLine.length > 5) html += `<li style="margin-bottom: 8px;">${cleanLine}</li>`;
+        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').trim();
+        cleanLine = cleanLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        if (cleanLine.length > 5) {
+           html += `<div style="display: flex; align-items: flex-start; gap: 12px;">
+             <div style="min-width: 8px; width: 8px; height: 8px; border-radius: 50%; background: #00d2ff; margin-top: 6px; box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);"></div>
+             <div style="color: var(--text); font-size: 0.95rem; line-height: 1.5;">${cleanLine}</div>
+           </div>`;
+        }
       });
-      html += `</ul>`;
+      html += `</div>`;
       panel.innerHTML = html;
       if (window.appContext) window.appContext.insights = data.response;
       return;
@@ -1248,7 +1255,28 @@ async function loadInsights(retryCount = 0) {
 // ===== WHAT-IF SCENARIO =====
 async function setupWhatIf() {
   const section = $('#whatif-section');
-  if (section) section.classList.add('hidden');
+  if (!section) return;
+  
+  let numCols = Object.keys(DataEngine.dtypes).filter(c => DataEngine.dtypes[c] === 'numeric');
+  if (numCols.length < 2) {
+    section.classList.add('hidden');
+    return;
+  }
+  
+  section.classList.remove('hidden');
+  
+  const targetSelect = $('#whatif-target');
+  const adjustSelect = $('#whatif-adjust');
+  
+  let options = numCols.map(c => `<option value="${c}">${c}</option>`).join('');
+  if (targetSelect) {
+     targetSelect.innerHTML = options;
+     targetSelect.value = numCols[0];
+  }
+  if (adjustSelect) {
+     adjustSelect.innerHTML = options;
+     adjustSelect.value = numCols[1];
+  }
 }
 
 let _whatIfTimer = null;
@@ -1626,12 +1654,37 @@ async function loadRecommendations() {
     
     if (data.response) {
       let lines = data.response.split('\n').filter(l => l.trim().length > 0);
-      let html = `<div class="section-header"><h2>Business Recommendations</h2></div><ul style="padding-left: 20px; color: var(--text); font-size: 0.95rem; line-height: 1.6;">`;
+      let parsedLines = [];
       lines.forEach(line => {
-        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').replace(/<\/?strong>/g, '').trim();
-        if (cleanLine.length > 5) html += `<li style="margin-bottom: 8px;">${cleanLine}</li>`;
+        let cleanLine = line.replace(/^[\-\*\•]\s*/, '').trim();
+        if (cleanLine.length > 5) {
+           let match = cleanLine.match(/\*\*(.*?)\*\*(?:[:\-\s]*)(.*)/);
+           if (match) {
+             parsedLines.push({ title: match[1].trim(), desc: match[2].trim() });
+           } else {
+             parsedLines.push({ title: 'Recommendation', desc: cleanLine.replace(/\*\*(.*?)\*\*/g, '$1') });
+           }
+        }
       });
-      html += `</ul>`;
+      
+      let html = `<div class="section-header"><h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Business Recommendations</h2><p>${parsedLines.length} actionable strategies identified</p></div>`;
+      html += `<div style="display: flex; flex-direction: column; gap: 12px;">`;
+      
+      const colors = ['#ff3366', '#ffb400', '#ffb400', '#00e5ff', '#00d2ff'];
+      
+      parsedLines.forEach((item, idx) => {
+        let color = colors[idx % colors.length];
+        html += `<div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: flex-start;">
+          <div style="min-width: 32px; width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: ${color};"></div>
+          </div>
+          <div>
+            <div style="font-weight: 600; font-size: 1rem; color: var(--text); margin-bottom: 4px;">${item.title}</div>
+            <div style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.5;">${item.desc}</div>
+          </div>
+        </div>`;
+      });
+      html += `</div>`;
       panel.innerHTML = html;
       if (window.appContext) window.appContext.recommendations = data.response;
     } else {
