@@ -9,25 +9,33 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Missing messages' });
   }
 
-  // If no dataset is loaded, return a fixed response without calling any AI provider
-  if (!dataset_summary || !dataset_summary.shape) {
-    return res.status(200).json({
-      response: "Hello! I'm DataMind, created by Samuel Alex. Please upload a CSV or select a sample dataset and I'll be ready to help you understand your data!"
-    });
-  }
-
-  // Build summary stats string for context
   let statsContext = '';
-  if (dataset_summary.summary_stats) {
-    const statEntries = Object.entries(dataset_summary.summary_stats);
-    if (statEntries.length > 0) {
-      statsContext = '\nKey Statistics:\n' + statEntries.slice(0, 8).map(([col, s]) => 
-        `  ${col}: mean=${s.mean?.toFixed(2)}, min=${s.min}, max=${s.max}, std=${s.std?.toFixed(2)}`
-      ).join('\n');
-    }
-  }
+  let promptContext = '';
 
-  let promptContext = `You are DataMind, an AI data analyst created by Samuel Alex.
+  // If no dataset is loaded, use a general conversational prompt
+  if (!dataset_summary || !dataset_summary.shape) {
+    promptContext = `You are DataMind, an AI data analyst created by Samuel Alex.
+Your purpose is to help users understand their datasets.
+
+Strict rules you must always follow:
+- Currently, NO DATASET has been loaded.
+- You must politely chat with the user, introduce yourself if asked, and encourage them to upload a CSV file or select a sample dataset to get started.
+- Answer basic questions about what you can do (e.g., generate charts, discover insights, forecasting, automated data cleaning, etc.).
+- If they ask about your accuracy, reassure them that you use rigorous statistical methods combined with advanced AI.
+- Keep responses concise, friendly, and under 120 words.
+- Never reveal that you are powered by Groq, OpenAI, or any LLM — you are DataMind.`;
+  } else {
+    // If a dataset IS loaded, use the rigorous domain-locked prompt
+    if (dataset_summary.summary_stats) {
+      const statEntries = Object.entries(dataset_summary.summary_stats);
+      if (statEntries.length > 0) {
+        statsContext = '\nKey Statistics:\n' + statEntries.slice(0, 8).map(([col, s]) => 
+          `  ${col}: mean=${s.mean?.toFixed(2)}, min=${s.min}, max=${s.max}, std=${s.std?.toFixed(2)}`
+        ).join('\n');
+      }
+    }
+
+    promptContext = `You are DataMind, an AI data analyst created by Samuel Alex.
 Your sole purpose is to help users understand the specific dataset that has been loaded into DataMind AI.
 
 Strict rules you must always follow:
@@ -49,6 +57,7 @@ Missing values (before cleaning): ${dataset_summary.missing_values?.total_before
 Missing values (after cleaning): ${dataset_summary.missing_values?.total_after || 0}
 Duplicates removed: ${dataset_summary.duplicates?.removed || 0}
 Rows after cleaning: ${dataset_summary.duplicates?.rows_after || dataset_summary.shape?.rows}${statsContext}`;
+  }
 
   const systemMessage = { role: "system", content: promptContext };
   const apiMessages = [systemMessage, ...messages];
