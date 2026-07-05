@@ -417,6 +417,11 @@ window.clearDataset = function() {
   $('#dashboard').classList.remove('active');
   $('#app-layout').classList.add('sidebar-hidden');
   show($('#landing'));
+  
+  // Restart the landing page shader animation if it was stopped
+  if (typeof window.startLandingShader === 'function') {
+    window.startLandingShader();
+  }
 
   // 6. Reset Date filters
   if ($('#date-inputs-wrapper')) $('#date-inputs-wrapper').innerHTML = '';

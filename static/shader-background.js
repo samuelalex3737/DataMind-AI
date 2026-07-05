@@ -166,10 +166,15 @@
 
   // ── Render loop ────────────────────────────────────────────────────────────
   const startTime = Date.now();
+  let isRendering = false;
 
   function render() {
     // Stop rendering if canvas is no longer visible (dashboard loaded)
-    if (!canvas.isConnected || canvas.offsetParent === null) return;
+    if (!canvas.isConnected || canvas.offsetParent === null) {
+      isRendering = false;
+      return;
+    }
+    isRendering = true;
 
     const t = (Date.now() - startTime) / 1000;
 
@@ -187,6 +192,13 @@
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     requestAnimationFrame(render);
   }
+
+  window.startLandingShader = function() {
+    if (!isRendering) {
+      resize();
+      requestAnimationFrame(render);
+    }
+  };
 
   requestAnimationFrame(render);
 })();
