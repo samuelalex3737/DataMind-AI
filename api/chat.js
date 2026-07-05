@@ -204,12 +204,12 @@ ${dashboardContext}`;
 
   try {
     let responseText = "";
-    if (openaiKey) {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    if (groqKey) {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
-        headers: { "Authorization": `Bearer ${openaiKey}`, "Content-Type": "application/json" },
+        headers: { "Authorization": `Bearer ${groqKey}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "gpt-4o-mini",
+          model: "llama-3.3-70b-versatile",
           messages: apiMessages,
           max_tokens: maxTokens,
           temperature: 0.7
@@ -219,12 +219,12 @@ ${dashboardContext}`;
       if (data.error) throw new Error(data.error.message);
       responseText = data.choices[0].message.content;
     } 
-    else if (groqKey) {
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    else if (openaiKey) {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
-        headers: { "Authorization": `Bearer ${groqKey}`, "Content-Type": "application/json" },
+        headers: { "Authorization": `Bearer ${openaiKey}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
+          model: "gpt-4o-mini",
           messages: apiMessages,
           max_tokens: maxTokens,
           temperature: 0.7
