@@ -191,6 +191,12 @@ function showPreviewModal(data, proceedCallback) {
 
 async function uploadFile(file) {
   if (!file.name.toLowerCase().endsWith('.csv')) { showToast('Please upload a CSV file', 'error'); return; }
+  
+  if (file.size > 52428800) { // 50MB limit
+    showToast('File exceeds 50MB limit. Please upload a smaller file.', 'error');
+    return;
+  }
+
   showSpinner('Uploading & parsing CSV...');
   try {
     const data = await DataEngine.loadCSV(file);
@@ -202,7 +208,8 @@ async function uploadFile(file) {
     });
   } catch (e) {
     console.error(e);
-    showToast('Upload failed. The file may be in an unsupported format.', 'error');
+    let errorMsg = typeof e === 'string' ? e : 'Upload failed. The file may be in an unsupported format.';
+    showToast(errorMsg, 'error');
     hideSpinner();
   }
 }
@@ -1459,6 +1466,8 @@ async function loadInsights(retryCount = 0) {
         } else if (data.chart?.image_base64) {
            addBotChart(data.chart.image_base64);
         }
+      } else if (data.reply) {
+        addMsg(data.reply, 'bot');
       } else {
         addMsg(data.error || 'Sorry, I could not process that question.', 'bot');
       }

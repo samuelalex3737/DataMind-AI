@@ -12,16 +12,47 @@ window.DataEngine = {
 
   async loadCSV(file) {
     return new Promise((resolve, reject) => {
+      let limitHit = false;
       Papa.parse(file, {
         header: true,
         dynamicTyping: false,
         skipEmptyLines: true,
+        preview: 100000,
         complete: (results) => {
           if (results.errors.length > 0 && results.data.length === 0) {
-            return reject("Error parsing CSV");
+            return reject("Error parsing CSV. Please ensure the file is valid.");
           }
-          this.raw_data = results.data;
-          this.columns = results.meta.fields;
+          
+          let data = results.data;
+          let cols = results.meta.fields;
+          
+          if (!cols || cols.length < 2 || data.length < 10) {
+            return reject("Invalid CSV structure: Must have at least 2 columns and 10 rows for analysis.");
+          }
+
+          if (cols.length > 100) {
+            limitHit = true;
+            cols = cols.slice(0, 100);
+            data = data.map(row => {
+               let newRow = {};
+               cols.forEach(c => newRow[c] = row[c]);
+               return newRow;
+            });
+          }
+          
+          if (data.length === 100000) {
+             limitHit = true;
+          }
+
+          this.raw_data = data;
+          this.columns = cols;
+          
+          if (limitHit && typeof window.showToast === 'function') {
+            setTimeout(() => {
+              window.showToast('Large dataset detected. Capped at 100k rows and 100 columns for performance.', 'error');
+            }, 1000);
+          }
+          
           resolve(this.raw_data);
         },
         error: reject

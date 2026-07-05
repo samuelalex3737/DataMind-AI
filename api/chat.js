@@ -1,3 +1,39 @@
+// Rate limiting map: IP -> { count, startTime }
+const ipMap = new Map();
+const RATE_LIMIT = 20;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+
+// Periodic cleanup to prevent memory leaks in the container
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, record] of ipMap.entries()) {
+    if (now - record.startTime > RATE_LIMIT_WINDOW_MS) {
+      ipMap.delete(ip);
+    }
+  }
+}, RATE_LIMIT_WINDOW_MS);
+
+function getClientIp(req) {
+  return req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || 'unknown';
+}
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  let record = ipMap.get(ip);
+  if (!record) {
+    record = { count: 1, startTime: now };
+    ipMap.set(ip, record);
+    return true;
+  }
+  if (now - record.startTime > RATE_LIMIT_WINDOW_MS) {
+    record.count = 1;
+    record.startTime = now;
+    return true;
+  }
+  record.count++;
+  return record.count <= RATE_LIMIT;
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -7,6 +43,48 @@ module.exports = async function handler(req, res) {
   
   if (!messages) {
     return res.status(400).json({ error: 'Missing messages' });
+  }
+
+  // --- SECURITY: Rate Limiting ---
+  const ip = getClientIp(req);
+  if (!checkRateLimit(ip)) {
+    return res.status(429).json({ error: "You're sending messages too quickly — please wait a moment before trying again." });
+  }
+
+  // --- SECURITY: Input Sanitisation & Prompt Injection Check ---
+  if (Array.isArray(messages) && messages.length > 0) {
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg.role === 'user') {
+      let content = lastMsg.content || '';
+      
+      // 1. Length Cap
+      if (content.length > 500) {
+        return res.status(400).json({ error: 'Message exceeds the 500 character limit.' });
+      }
+      
+      // 2. Strip HTML tags
+      content = content.replace(/<[^>]*>?/gm, '');
+      
+      // 3. Prompt Injection Detection
+      const lowerContent = content.toLowerCase();
+      const injectionPhrases = [
+        "ignore previous", 
+        "forget your", 
+        "you are now", 
+        "act as",
+        "system prompt",
+        "override"
+      ];
+      
+      for (const phrase of injectionPhrases) {
+        if (lowerContent.includes(phrase)) {
+          // Return generic refusal
+          return res.status(200).json({ reply: "I'm only able to answer questions about your dataset." });
+        }
+      }
+      
+      lastMsg.content = content;
+    }
   }
 
   let statsContext = '';
