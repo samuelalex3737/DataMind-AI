@@ -1,4 +1,4 @@
-```markdown
+
 # 🧠 DataMind AI — Intelligent Data Analyst
 
 > AI-powered data analysis platform — upload any CSV and get instant EDA,
@@ -115,4 +115,4 @@ Navigate to **http://localhost:3000**
 ## 👤 Author
 
 **Samuel Alex** — [LinkedIn](https://linkedin.com/in/samuel-alex-47496a289) · [GitHub](https://github.com/samuelalex3737)
-```
+
