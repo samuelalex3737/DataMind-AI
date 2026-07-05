@@ -247,6 +247,7 @@ window.startAnalysis = async function(datasetInfo) {
   $('#topbar-dataset').textContent = datasetInfo.name;
   $('#topbar-dataset').classList.add('active');
   $('#export-dropdown').style.display = 'block';
+  $('#clear-dataset-btn').style.display = 'inline-flex';
   hide($('#landing')); $('#dashboard').classList.add('active');
   $('#app-layout').classList.remove('sidebar-hidden');
 
@@ -366,6 +367,78 @@ window.startAnalysis = async function(datasetInfo) {
     setupWhatIf().catch(e => console.warn('What-If:', e)),
   ]);
 }
+
+// ===== CLEAR DATASET =====
+window.clearDataset = function() {
+  if (!confirm("Are you sure? This will clear your current analysis.")) return;
+  
+  // 1. Clear charts and memory
+  document.querySelectorAll('.chart-card-body > div[id^="chart-"]').forEach(gd => {
+    try { Plotly.purge(gd); } catch(e) {}
+  });
+  const chartsGrid = $('#charts-grid');
+  if (chartsGrid) chartsGrid.innerHTML = '';
+  window._allCharts = [];
+
+  const existingSearch = document.querySelector('.chart-search-bar');
+  if (existingSearch) existingSearch.remove();
+
+  // 2. Clear EDA panel
+  if ($('#sidebar-rows')) $('#sidebar-rows').textContent = '—';
+  if ($('#sidebar-cols')) $('#sidebar-cols').textContent = '—';
+  if ($('#sidebar-name')) $('#sidebar-name').textContent = '—';
+  
+  // 3. Clear Chat History
+  window.chatHistory = [];
+  const msgBox = document.getElementById('dm-messages');
+  if (msgBox) {
+    msgBox.innerHTML = '';
+    const greet = document.createElement('div');
+    greet.className = 'dm-msg bot';
+    greet.innerHTML = `<div class="dm-msg-icon"><i class="ti ti-robot"></i></div><div class="dm-bubble">Hello! I&apos;m DataMind, your personal AI data analyst — created by Samuel Alex. I&apos;m here to help you understand your data easily, even if you&apos;ve never worked with data before. Upload a CSV or select a sample dataset to get started, and I&apos;ll guide you through everything! &#129504;</div>`;
+    msgBox.appendChild(greet);
+  }
+
+  // 4. Clear storage & context
+  sessionStorage.clear();
+  window.appContext = { charts: [], insights: '', recommendations: '', forecast: '' };
+  DataEngine.raw_data = [];
+  DataEngine.clean_data = [];
+  DataEngine.eda_results = {};
+
+  // 5. Hide dashboard & show landing
+  if ($('#topbar-dataset')) {
+    $('#topbar-dataset').textContent = '';
+    $('#topbar-dataset').classList.remove('active');
+  }
+  if ($('#export-dropdown')) $('#export-dropdown').style.display = 'none';
+  if ($('#clear-dataset-btn')) $('#clear-dataset-btn').style.display = 'none';
+  
+  $('#dashboard').classList.remove('active');
+  $('#app-layout').classList.add('sidebar-hidden');
+  show($('#landing'));
+
+  // 6. Reset Date filters
+  if ($('#date-inputs-wrapper')) $('#date-inputs-wrapper').innerHTML = '';
+  if ($('#date-filter-bar')) $('#date-filter-bar').classList.add('hidden');
+
+  // Also hide What-If
+  if ($('#whatif-section')) $('#whatif-section').classList.add('hidden');
+  if ($('#whatif-plotly')) $('#whatif-plotly').remove();
+  if ($('#whatif-result')) $('#whatif-result').innerHTML = '';
+  
+  // Reset KPI cards
+  document.querySelectorAll('.kpi-value').forEach(el => el.textContent = '—');
+  
+  // Hide quality gauge
+  if ($('#quality-section')) $('#quality-section').style.display = 'none';
+  
+  // Clear Insights & Recs panels
+  if ($('#insights-panel')) $('#insights-panel').innerHTML = '';
+  if ($('#recommendations-panel')) $('#recommendations-panel').innerHTML = '';
+
+  showToast('Dataset cleared. Ready for a new file.', 'success');
+};
 
 // ===== DATE FILTERS =====
 window.resetDateFilters = async () => {
