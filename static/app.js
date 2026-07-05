@@ -1241,20 +1241,60 @@ async function loadInsights(retryCount = 0) {
     const wrap = document.createElement('div');
     wrap.className = 'dm-msg ' + role;
     
-    // Convert newlines to breaks
+    // Sanitize input first
     const sanitised = text
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;')
-      .replace(/\n/g, '<br>');
+      .replace(/'/g, '&#039;');
+
+    // Simple markdown parser
+    function parseMarkdown(md) {
+      let lines = md.split('\n');
+      let inList = false;
+      let html = '';
+      
+      lines.forEach(line => {
+        let trimmed = line.trim();
+        
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+          if (!inList) {
+            html += '<ul style="margin: 4px 0 12px 0; padding-left: 20px;">';
+            inList = true;
+          }
+          html += `<li style="margin-bottom: 4px;">${trimmed.substring(2)}</li>`;
+        } else {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          if (trimmed.length === 0) {
+            // empty line
+          } else {
+            html += `<p style="margin: 0 0 12px 0; line-height: 1.5;">${trimmed}</p>`;
+          }
+        }
+      });
+      if (inList) html += '</ul>';
+      
+      html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      html = html.replace(/`(.*?)`/g, '<code style="background: rgba(255,255,255,0.1); padding: 2px 4px; border-radius: 4px; font-family: monospace;">$1</code>');
+      
+      // Remove last bottom margin for cleaner bubbles
+      html = html.replace(/margin: 0 0 12px 0;(?!.*margin: 0 0 12px 0;)/, 'margin: 0;');
+      
+      return html;
+    }
+
+    const parsedHTML = parseMarkdown(sanitised);
       
     if (role === 'bot') {
       wrap.innerHTML = `<div class="dm-msg-icon"><i class="ti ti-robot"></i></div>
-                        <div class="dm-bubble">${sanitised}</div>`;
+                        <div class="dm-bubble">${parsedHTML}</div>`;
     } else {
-      wrap.innerHTML = `<div class="dm-bubble">${sanitised}</div>`;
+      wrap.innerHTML = `<div class="dm-bubble">${parsedHTML}</div>`;
     }
     msgBox.appendChild(wrap);
     msgBox.scrollTop = msgBox.scrollHeight;
